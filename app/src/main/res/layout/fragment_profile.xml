@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".View.Profile">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/upper_view"
+    >
+
+            <com.github.florent37.shapeofview.shapes.DiagonalView
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:id="@+id/shape"
+                app:shape_diagonal_angle="10"
+                app:shape_diagonal_direction="left"
+                app:shape_diagonal_position="bottom"
+                >
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/orange"
+                    />
+
+
+            </com.github.florent37.shapeofview.shapes.DiagonalView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/person_card"
+        app:cardCornerRadius="40dp"
+        android:elevation="12dp"
+        android:layout_alignBottom="@+id/shape"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+
+
+        >
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:id="@+id/user_image"
+            android:background="@drawable/ic_user"
+            android:scaleType="centerCrop"
+
+            />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yaseer Farah"
+        android:layout_below="@+id/person_card"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:textSize="19sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:id="@+id/person_name"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="yasserfarah22@gmail.com"
+        android:layout_below="@+id/person_name"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="3dp"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/person_email"
+        />
+
+
+
+
+
+
+</RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/center_view"
+                android:layout_below="@+id/upper_view"
+                android:layout_marginTop="20dp"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/card_navigation"
+                        android:layout_marginBottom="10dp"
+
+                        >
+                        <ImageButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="@color/grey"
+                            android:id="@+id/setting"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ic_settings_black_24dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="First Name"
+                            android:id="@+id/first"
+                            android:layout_below="@+id/setting"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yaseer"
+                            android:id="@+id/anfirst"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@+id/setting"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Last Name"
+                            android:id="@+id/last"
+                            android:layout_below="@+id/first"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Farah"
+                            android:id="@+id/anlast"
+                            android:layout_below="@+id/first"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="City"
+                            android:id="@+id/city"
+                            android:layout_below="@+id/last"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cairo"
+                            android:id="@+id/ancity"
+                            android:layout_below="@+id/last"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Governorate"
+                            android:id="@+id/governorate"
+                            android:layout_below="@+id/city"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cairo"
+                            android:id="@+id/an_governorate"
+                            android:layout_below="@+id/city"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address"
+                            android:id="@+id/address"
+                            android:layout_below="@+id/governorate"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AL ashreen - Faisal"
+                            android:id="@+id/anaddress"
+                            android:layout_below="@+id/governorate"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phone Number"
+                            android:id="@+id/phone"
+                            android:layout_below="@+id/address"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01126372201"
+                            android:id="@+id/anphone"
+                            android:layout_below="@+id/address"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="20dp"
+                            />
+
+
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lower_view"
+                android:layout_below="@+id/center_view"
+                android:layout_marginTop="20dp"
+
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icons"
+                    android:layout_centerHorizontal="true"
+                    >
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_facebook"
+                        android:id="@+id/facebook"
+                        />
+
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_whatsapp"
+                        android:id="@+id/whatsapp"
+                        android:layout_toRightOf="@+id/facebook"
+                        android:layout_marginLeft="20dp"
+                        />
+
+
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_call"
+                        android:id="@+id/call"
+                        android:layout_toRightOf="@+id/whatsapp"
+                        android:layout_marginLeft="20dp"
+                        />
+
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_message"
+                        android:id="@+id/message"
+                        android:layout_toRightOf="@+id/call"
+                        android:layout_marginLeft="20dp"
+                        />
+
+
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_email"
+                        android:id="@+id/email"
+                        android:layout_toRightOf="@+id/message"
+                        android:layout_marginLeft="20dp"
+                        />
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/visa_master"
+                    android:layout_below="@+id/icons"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    >
+
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_visa"
+                        android:id="@+id/visa"
+                        />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_mastercard"
+                        android:id="@+id/master"
+                        android:layout_toRightOf="@+id/visa"
+                        android:layout_marginLeft="20dp"
+                        />
+
+
+
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aghezty.com 2020 ©. All Rights Reserved."
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/visa_master"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_centerHorizontal="true"
+
+                    />
+
+            </RelativeLayout>
+
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</FrameLayout>

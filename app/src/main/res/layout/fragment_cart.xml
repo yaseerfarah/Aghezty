@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.Cart">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/home_bar"
+            android:background="@android:color/white"
+
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/home_toolbar"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textSize="22sp"
+                    android:layout_gravity="center"
+                    android:id="@+id/toolbar_title" />
+
+
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/confirm"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/home_bar"
+        android:id="@+id/cart_recycleview"
+
+        />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/confirm"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:id="@+id/coupon_apply"
+                android:background="@drawable/button_background"
+                android:text="Apply"
+                android:textColor="@android:color/white"
+                android:textSize="11sp"
+
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="Coupon"
+                android:paddingLeft="10dp"
+                android:gravity="center"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/coupon_apply"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_e"
+                android:id="@+id/coupon_edit"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coupon Discount : "
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:layout_below="@+id/coupon_edit"
+                android:layout_marginTop="5dp"
+                android:id="@+id/coupon_discount"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="155"
+                android:layout_below="@+id/coupon_edit"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:layout_toRightOf="@+id/coupon_discount"
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:id="@+id/total_coupon_price"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".EGP"
+                android:layout_below="@+id/coupon_edit"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:layout_toRightOf="@+id/total_coupon_price"
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:layout_marginLeft="2dp"
+
+                />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total : "
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:layout_below="@+id/coupon_discount"
+                android:layout_marginTop="5dp"
+                android:id="@+id/total"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="155"
+                android:layout_below="@+id/coupon_discount"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:layout_toRightOf="@+id/total"
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:id="@+id/total_price"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".EGP"
+                android:layout_below="@+id/coupon_discount"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:layout_toRightOf="@+id/total_price"
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:layout_marginLeft="2dp"
+                android:id="@+id/total_priceegp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/total"
+                android:layout_marginTop="15dp"
+                android:id="@+id/card_confirm"
+                android:background="@drawable/button_background"
+                android:text="Check Out "
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+</FrameLayout>
