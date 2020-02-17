@@ -3,4 +3,19 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <array name="check_out_step">
+
+        <item >Shipping</item>
+        <item>Payment</item>
+        <item>Confirm</item>
+
+    </array>
+
+    <string name="home">Home</string>
+    <string name="offers">Offers</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="categories">Categories</string>
 </resources>

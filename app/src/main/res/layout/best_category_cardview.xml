@@ -22,15 +22,15 @@
             android:layout_centerVertical="true"
             android:text="Oven"
             android:layout_marginRight="15dp"
-            android:textSize="18sp"
+            android:layout_toRightOf="@+id/category_image"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:id="@+id/category_image"
-            android:layout_toLeftOf="@+id/category_name"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"

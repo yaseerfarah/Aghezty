@@ -23,7 +23,6 @@
             android:layout_marginRight="10dp"
             android:id="@+id/category_image"
             android:scaleType="fitCenter"
-            android:background="@mipmap/tv"
             />
 
 

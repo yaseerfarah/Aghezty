@@ -3,12 +3,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.CheckOut">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+
+      <com.google.android.material.appbar.AppBarLayout
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:id="@+id/home_bar"
+          android:background="@android:color/white"
+
+          >
+
+          <androidx.appcompat.widget.Toolbar
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/home_toolbar"
+              >
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/app_name"
+                  android:textSize="22sp"
+                  android:layout_gravity="center"
+                  android:id="@+id/toolbar_title" />
+
+
+
+
+          </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+      </com.google.android.material.appbar.AppBarLayout>
+
+
+
+      <com.badoualy.stepperindicator.StepperIndicator
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/stepper_indicator"
+          app:stpi_animDuration="200"
+          app:stpi_circleColor="@color/orange"
+          app:stpi_circleRadius="10dp"
+          app:stpi_indicatorColor="@color/orange"
+          app:stpi_lineDoneColor="@color/orange"
+          app:stpi_labels="@array/check_out_step"
+          app:stpi_circleStrokeWidth="2dp"
+          app:stpi_indicatorRadius="2dp"
+          app:stpi_showDoneIcon="true"
+          android:layout_below="@+id/home_bar"
+          android:layout_marginTop="10dp"
+          />
+
+
+
+
+
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_below="@+id/stepper_indicator"
+          android:layout_margin="20dp"
+          android:layout_above="@+id/buttons"
+          >
+
+
+          <androidx.viewpager.widget.ViewPager
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/check_out_viewpager"
+              />
+
+
+      </androidx.cardview.widget.CardView>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_marginBottom="10dp"
+          android:orientation="horizontal"
+          android:weightSum="2"
+          android:id="@+id/buttons"
+          android:layout_marginRight="20dp"
+          android:layout_marginLeft="20dp"
+          >
+
+
+          <Button
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="2"
+              android:background="@drawable/button_background"
+              android:text="NEXT"
+              android:textColor="@android:color/white"
+              android:textSize="17sp"
+              android:layout_marginRight="5dp"
+              android:id="@+id/next"
+              android:layout_marginBottom="5dp"
+              />
+
+
+
+          <Button
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/button_white_background"
+              android:layout_weight="1"
+              android:layout_marginLeft="5dp"
+              android:text="Back"
+              android:layout_toRightOf="@+id/next"
+              android:textColor="@android:color/black"
+              android:textSize="17sp"
+              android:layout_marginBottom="5dp"
+              android:id="@+id/back"
+
+              />
+
+      </LinearLayout>
+
+
+
+
+  </RelativeLayout>
+
 
 </FrameLayout>

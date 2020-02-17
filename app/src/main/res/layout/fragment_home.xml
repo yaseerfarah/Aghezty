@@ -88,11 +88,11 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/image_progress"
+                android:id="@+id/progress"
                 android:layout_marginTop="70dp"
                 android:layout_centerHorizontal="true"
                 android:indeterminateTint="@color/orange"
-
+                android:visibility="gone"
                 />
 
 
@@ -187,6 +187,7 @@
             android:id="@+id/best_categories"
             android:layout_below="@+id/best_categories_title"
             android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
             />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -195,7 +196,7 @@
             android:id="@+id/horizontal_recycler"
             android:layout_below="@+id/best_categories"
             android:layout_marginTop="10dp"
-
+            android:nestedScrollingEnabled="false"
             />
 
 

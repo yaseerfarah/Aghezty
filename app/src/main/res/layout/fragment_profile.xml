@@ -25,7 +25,7 @@
 
             <com.github.florent37.shapeofview.shapes.DiagonalView
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="180dp"
                 android:id="@+id/shape"
                 app:shape_diagonal_angle="10"
                 app:shape_diagonal_direction="left"
@@ -122,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/card_navigation"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="20dp"
 
                         >
                         <ImageButton
@@ -131,6 +131,7 @@
                             android:layout_alignParentRight="true"
                             android:backgroundTint="@color/grey"
                             android:id="@+id/setting"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@drawable/ic_settings_black_24dp"
                             />

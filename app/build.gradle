@@ -112,5 +112,8 @@ dependencies {
     //Custom Shape
     implementation 'com.github.florent37:shapeofview:1.3.2'
 
+    // step Layout
+    implementation 'com.github.badoualy:stepper-indicator:1.0.7'
+
 
 }
