@@ -1,6 +1,8 @@
 package com.example.aghezty.View;
 
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,9 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.aghezty.Adapter.CategoryCardViewAdapter;
 import com.example.aghezty.Adapter.HorizontalRecyclerCardViewAdapter;
@@ -34,6 +40,8 @@ import com.example.aghezty.ViewModel.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -60,6 +68,11 @@ public class Home extends Fragment {
     private SliderAdapter sliderAdapter;
     private HorizontalRecyclerCardViewAdapter horizontalRecyclerCardViewAdapter;
     private CategoryCardViewAdapter categoryCardViewAdapter;
+    private TextView[] dots;
+    private LinearLayout linearLayout;
+    private int page=0;
+    private Timer timer;
+    private boolean isStart=false;
 
 
     public Home() {
@@ -83,6 +96,9 @@ public class Home extends Fragment {
                 horizontalRecyclerCardViewAdapter.notifyDataSetChanged();
                 categoryCardViewAdapter.notifyDataSetChanged();
 
+                add_Dots(getContext(),0);
+
+                viewpager_timer(5);
 
             }
         };
@@ -93,6 +109,7 @@ public class Home extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        horizontalRecycler.setAdapter(horizontalRecyclerCardViewAdapter);
         productViewModel.getHomeData();
         productViewModel.getHomeDataLiveData().observe(this,homeObserver);
 
@@ -101,6 +118,8 @@ public class Home extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        horizontalRecycler.setAdapter(null);
+        cancel_timer();
         productViewModel.getHomeDataLiveData().removeObservers(this);
     }
 
@@ -127,22 +146,141 @@ public class Home extends Fragment {
         viewPager=view.findViewById(R.id.view_pager);
         horizontalRecycler=view.findViewById(R.id.horizontal_recycler);
         bestcategories=view.findViewById(R.id.best_categories);
+        linearLayout=view.findViewById(R.id.linear);
         navController= Navigation.findNavController(view);
 
         sliderAdapter=new SliderAdapter(getContext(),sliderInfoList);
         categoryCardViewAdapter=new CategoryCardViewAdapter(getContext(),categoryInfoList,navController,CategoryCardViewAdapter.BEST_CATEGORIES);
         horizontalRecyclerCardViewAdapter=new HorizontalRecyclerCardViewAdapter(getContext(),homeRecylerDataList,navController,getResources());
 
+
         viewPager.setAdapter(sliderAdapter);
         bestcategories.setAdapter(categoryCardViewAdapter);
-        horizontalRecycler.setAdapter(horizontalRecyclerCardViewAdapter);
+
 
 
         horizontalRecycler.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
 
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        int displayWidth = displayMetrics.widthPixels;
+
+
         bestcategories.setLayoutManager(new GridLayoutManager(getContext(),2));
-        bestcategories.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(5,getResources()),GridSpacingItemDecoration.ListLayout));
+        bestcategories.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(10,getResources()),GridSpacingItemDecoration.Category,displayWidth,(int)getResources().getDimension(R.dimen.best_category_card_size)));
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                page=viewPager.getCurrentItem();
+                add_Dots(getContext(),position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
 
     }
+
+
+
+    private void add_Dots(Context context, int i){
+        dots=new TextView[sliderAdapter.getCount()];
+        linearLayout.removeAllViews();
+        for (int b=0;b<dots.length;b++){
+            dots[b]=new TextView(context);
+            dots[b].setText(Html.fromHtml("&#8226"));
+            dots[b].setTextSize(35);
+            dots[b].setTextColor(getResources().getColor(R.color.grey));
+            linearLayout.addView(dots[b]);
+        }
+
+        dots[i].setTextColor(getResources().getColor(R.color.orange));
+
+    }
+
+
+
+
+
+
+
+    /// timer for viewpager///////////
+
+    private void viewpager_timer(int second){
+
+        // page=viewPager.getCurrentItem();
+        // Toast.makeText(getActivity(),"timer",Toast.LENGTH_LONG).show();
+        if (!isStart) {
+            isStart=true;
+            timer = new Timer();
+            timer.schedule(new Timer_task(), 5 * 1000, second * 1000);
+        }
+
+
+
+    }
+
+
+    ////////// cancel Timer//////////////////
+
+    public void cancel_timer(){
+        if (timer!=null) {
+            timer.cancel();
+            isStart = false;
+        }
+
+    }
+
+
+    //////////////////////////////// inner Class for Timer Task//////////////////////////////////////////////
+
+
+    class Timer_task extends TimerTask {
+
+
+
+
+
+        @Override
+        public void run() {
+
+            if(getActivity()!=null){
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if(page>sliderAdapter.getCount()){
+                            page=0;
+                        }
+                        else {
+                            page++;
+                        }
+                        viewPager.setCurrentItem(page);
+                    }
+                });
+            }
+
+
+
+        }
+    }
+
+
+
+
+
 }

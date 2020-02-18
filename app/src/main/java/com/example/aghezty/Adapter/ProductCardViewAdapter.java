@@ -2,6 +2,7 @@ package com.example.aghezty.Adapter;
 
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,19 +19,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.View.Home;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Locale;
 
 
 /**
@@ -87,6 +92,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
 
         Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image())
+                .apply(RequestOptions.timeoutOf(60*1000))
                 .into(new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -97,7 +103,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
                 });
 
 
-        if(type==HOME){
+       /* if(type==HOME){
             if(products.get(holder.getAdapterPosition()).getTitle_en().trim().toCharArray().length>10){
 
                 String title="";
@@ -114,21 +120,22 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
         else {
 
             holder.name.setText(products.get(holder.getAdapterPosition()).getTitle_en());
-        }
+        }*/
 
-
+        holder.name.setText(products.get(holder.getAdapterPosition()).getTitle_en());
 
 
 
 
         if(products.get(holder.getAdapterPosition()).getDiscount()!=null){
 
-            holder.ex_price.setText(String.valueOf(products.get(holder.getAdapterPosition()).getPrice()));
-            holder.price.setText(String.valueOf(products.get(holder.getAdapterPosition()).getPrice_after_discount()));
-            holder.discount.setText(String.valueOf((int)((100*Integer.valueOf(products.get(holder.getAdapterPosition()).getDiscount()))/products.get(holder.getAdapterPosition()).getPrice()))+"%");
+            holder.ex_price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice())));
+            holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice_after_discount())));
+            holder.discount.setText(String.valueOf(products.get(holder.getAdapterPosition()).getDiscount())+"% OFF");
         }else {
-            holder.discountLayout.setVisibility(View.GONE);
-            holder.price.setText(String.valueOf(products.get(holder.getAdapterPosition()).getPrice()));
+            holder.discountLayout.setVisibility(View.INVISIBLE);
+            holder.discount.setVisibility(View.GONE);
+            holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice())));
 
         }
 
@@ -178,7 +185,8 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
         ImageView pro_image;
         TextView name,price,ex_price,discount,evaluation;
 
-        RelativeLayout discountLayout,evaluationLayout;
+        RelativeLayout evaluationLayout;
+        LinearLayout discountLayout;
         CardView cardView;
         ProgressBar progressBar;
 
@@ -194,9 +202,11 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
             discount=(TextView)itemView.findViewById(R.id.pro_discount);
             price=(TextView)itemView.findViewById(R.id.pro_price);
             evaluation=(TextView)itemView.findViewById(R.id.pro_evaluation);
-            discountLayout=(RelativeLayout)itemView.findViewById(R.id.ex_dis);
+            discountLayout=(LinearLayout)itemView.findViewById(R.id.ex_dis);
             evaluationLayout=(RelativeLayout)itemView.findViewById(R.id.evaluation);
             progressBar=(ProgressBar)itemView.findViewById(R.id.progress);
+
+            progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.orange), PorterDuff.Mode.SRC_IN);
 
 
 

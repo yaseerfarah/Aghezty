@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
 
-    android:layout_width="150dp"
-    android:layout_height="260dp"
+    android:layout_width="@dimen/home_card_width"
+    android:layout_height="@dimen/home_card_height"
 
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="6dp"
     android:elevation="8dp"
 
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:id="@+id/card_view"
     >
 
@@ -81,7 +81,20 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/ic_star"/>
         </RelativeLayout>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/discount_background"
+            android:id="@+id/pro_discount"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:text="100%0OFF"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/details"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
 
 
         <RelativeLayout
@@ -93,97 +106,111 @@
             >
             <TextView
                 android:id="@+id/pro_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_alignParentStart="true"
-                android:textSize="16sp"
+                android:maxHeight="60dp"
+                android:textSize="14sp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="8dp"
                 android:textColor="@color/dark_blue"
                 android:text="Panadol Night"
                 android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pro_name"
-
+                android:weightSum="2"
+                android:orientation="vertical"
                 android:id="@+id/ex_dis"
 
                 >
-                <TextView
+
+
+
+
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/pro_exprice"
-                    android:text="155"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
+                    android:id="@+id/disc_price"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
-                    android:textStyle="normal"
-                    />
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pro_exprice"
+                        android:text="15555.99"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_marginLeft="5dp"
+                        android:textStyle="normal"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pro_exegp"
+                        android:text=".EGP"
+                        android:textSize="14sp"
+
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_toRightOf="@+id/pro_exprice"
+                        android:layout_marginLeft="1dp"
+                        android:typeface="serif"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/pro_linexprice"
+                        android:layout_marginLeft="5dp"
+
+                        android:layout_alignEnd="@+id/pro_exegp"
+                        android:background="@android:color/darker_gray"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ex_dis"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp">
 
                 <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/pro_price"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/pro_exegp"
-                    android:text=".EGP"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_toRightOf="@+id/pro_exprice"
-                    android:layout_marginLeft="1dp"
+                    android:textColor="@android:color/holo_blue_dark"
                     android:typeface="serif"
+                    android:text="149.99"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
                     />
-
                 <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/pro_egp"
+                    android:layout_alignBottom="@+id/pro_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/discount_background"
-                    android:id="@+id/pro_discount"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="8dp"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
-                    android:text="15%"
+                    android:layout_toEndOf="@+id/pro_price"
+
+                    android:textColor="@color/dark_blue"
+                    android:typeface="serif"
+                    android:text="EGP"
+                    android:textSize="13sp"
                     />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/pro_linexprice"
-                    android:layout_marginLeft="5dp"
-
-                    android:layout_alignEnd="@+id/pro_exegp"
-                    android:background="@android:color/darker_gray"/>
 
             </RelativeLayout>
 
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:id="@+id/pro_price"
-                android:layout_below="@+id/ex_dis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/dark_blue"
-                android:layout_marginTop="5dp"
-                android:typeface="serif"
-                android:text="149.99"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:layout_marginLeft="2dp"
-                android:id="@+id/pro_egp"
-                android:layout_below="@+id/ex_dis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/pro_price"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/dark_blue"
-                android:typeface="serif"
-                android:text=".EGP"
-                android:textSize="16sp"
-                />
 
 
 

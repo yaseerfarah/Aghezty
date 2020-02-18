@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.MainActivity">
+    tools:context=".View.MainActivity"
+    android:background="@color/white"
+    >
 
     <fragment
         android:id="@+id/fragment"
@@ -31,6 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:itemIconTint="@color/item_color"
         app:itemTextColor="@color/item_color"
+        android:background="@color/white"
         />
 
 

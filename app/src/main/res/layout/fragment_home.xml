@@ -26,14 +26,17 @@
                 android:id="@+id/home_toolbar"
                 >
 
-                <TextView
+
+
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textSize="22sp"
+                    android:background="@drawable/ic_logo"
                     android:layout_gravity="center"
-                    android:id="@+id/toolbar_title" />
-
+                    android:id="@+id/app_logo"
+                    />
 
 
 
@@ -96,7 +99,6 @@
                 />
 
 
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_height"
@@ -140,13 +142,21 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/view_search"
+            android:orientation="horizontal"
+            />
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/view_search"
+            android:layout_below="@+id/linear"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"

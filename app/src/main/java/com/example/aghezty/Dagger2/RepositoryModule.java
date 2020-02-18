@@ -46,44 +46,17 @@ public class RepositoryModule {
     @Provides
     public Retrofit retrofit(){
 
-       /* OkHttpClient client=new OkHttpClient()
+        OkHttpClient client=new OkHttpClient()
                 .newBuilder()
-                .addInterceptor(chain -> {
-                    if (!isOnline) {
-                        throw new NoConnectionPendingException();
-                    }
-                    try {
-                        return chain.proceed(chain.request());
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        throw e;
-                    }
-
-
-
-                })
-                .addNetworkInterceptor(chain -> {
-                    if (!isOnline) {
-                        throw new NoConnectionPendingException();
-                    }
-                    try {
-                        return chain.proceed(chain.request());
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        throw e;
-                    }
-
-
-
-                })
                 .readTimeout(1, TimeUnit.MINUTES)
                 .connectTimeout(1,TimeUnit.MINUTES)
-                .build();*/
+                .build();
 
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(client)
                 .build();
     }
 

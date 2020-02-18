@@ -2,44 +2,49 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="150dp"
-    android:layout_height="120dp"
+    android:layout_width="@dimen/best_category_card_size"
+    android:layout_height="@dimen/best_category_card_size"
     app:cardBackgroundColor="@color/orange"
     android:layout_margin="10dp"
     app:cardCornerRadius="5dp"
     android:id="@+id/cat_card"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:orientation="vertical"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/category_name"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="Oven"
-            android:layout_marginRight="15dp"
-            android:layout_toRightOf="@+id/category_image"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
             android:id="@+id/category_image"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
             />
 
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Kitchen Ventilating Fan"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
-    </RelativeLayout>
+
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>
