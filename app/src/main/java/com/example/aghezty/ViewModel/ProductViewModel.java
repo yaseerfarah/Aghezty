@@ -9,8 +9,10 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.aghezty.Data.AgheztyApi;
+import com.example.aghezty.Interface.InnerProductListener;
 import com.example.aghezty.POJO.HomeData;
 import com.example.aghezty.POJO.HomeResponse;
+import com.example.aghezty.POJO.InnerProductResponse;
 import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.View.Home;
@@ -34,7 +36,9 @@ public class ProductViewModel extends ViewModel {
     private AgheztyApi agheztyApi;
     private Context context;
     private HomeData homeData=null;
-    private ProductFilterData offerProducts;
+    private ProductFilterData productFilterData;
+    private List<ProductInfo> innerProductList;
+    private HashMap<String,Object> filter;
 
 
     @Inject
@@ -43,8 +47,8 @@ public class ProductViewModel extends ViewModel {
         this.agheztyApi=agheztyApi;
         this.homeDataMediatorLiveData=new MediatorLiveData<>();
         this.offerProductLiveData=new MediatorLiveData<>();
-
-
+        this.filter=new HashMap<>();
+        this.innerProductList=new ArrayList<>();
 
     }
 
@@ -71,41 +75,128 @@ public class ProductViewModel extends ViewModel {
 
         }
 
-
-
     }
 
 
 
 
     public void getOfferProducts(){
-
-        HashMap<String,Object> filter=new HashMap<>();
-
+        filter.clear();
         filter.put("offer","offer");
 
-        if (offerProducts==null) {
+        if (productFilterData==null) {
             disposables.add(agheztyApi.getSpecificProduct(filter,1)
                     .subscribeOn(Schedulers.io())
                     .map(retrofit2.Response::body)
                     .map(productFilterResponse -> {
 
                         ProductFilterData productFilterData=productFilterResponse.getProductFilterData();
+
+                        if (productFilterData.getNext_url() != null) {
+                            productFilterData.setHasNext(true);
+                        } else {
+                            productFilterData.setHasNext(false);
+                        }
+
+
                         productFilterData.setPage(1);
                         return productFilterData;
 
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::onOfferProductNext, this::onError, this::onOfferProductComplete)
+                    .subscribe(this::onOfferProductNext, this::onError, this::onProductFilterComplete)
 
             );
 
         }
     }
 
+
+
+    public void getNextProductFilter(){
+
+        int page =productFilterData.getPage()+1;
+
+
+        disposables.add(agheztyApi.getSpecificProduct(filter,page)
+                .subscribeOn(Schedulers.io())
+                .map(retrofit2.Response::body)
+                .map(productFilterResponse -> {
+
+                    ProductFilterData productFilterData=productFilterResponse.getProductFilterData();
+
+                    if (productFilterData.getNext_url() != null) {
+                        productFilterData.setHasNext(true);
+                    } else {
+                        productFilterData.setHasNext(false);
+                    }
+
+
+                    productFilterData.setPage(page);
+                    return productFilterData;
+
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onProductFilterNext, this::onError, this::onProductFilterComplete)
+
+        );
+
+    }
+
+
+
+
+    public void getInnerProductByID(ProductInfo productIdInfo, InnerProductListener innerProductListener){
+
+        ProductInfo productInfo;
+
+        for(ProductInfo info:innerProductList){
+            if (info.getId()==productIdInfo.getId()){
+                productInfo=info;
+                if (innerProductListener!=null)
+                innerProductListener.onSuccess(productInfo);
+                return;
+            }
+        }
+
+        disposables.add(agheztyApi.getInnerProductById(productIdInfo.getId())
+                .subscribeOn(Schedulers.io())
+                .map(retrofit2.Response::body)
+                .map(InnerProductResponse::getProductInfo)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(productInfo1 -> {
+
+                    if (productIdInfo.getStars()>0){
+                        productIdInfo.setRates(productInfo1.getRates());
+                    }
+                    innerProductList.add(productIdInfo);
+                    if (innerProductListener!=null)
+                    innerProductListener.onSuccess(productIdInfo);
+
+                },this::onError)
+
+        );
+
+
+
+
+
+    }
+
+
+
+
     private void onOfferProductNext(ProductFilterData productFilterData) {
 
-        this.offerProducts=productFilterData;
+        this.productFilterData=productFilterData;
+    }
+
+    private void onProductFilterNext(ProductFilterData productFilterData) {
+
+        this.productFilterData.addAll(productFilterData.getProductList());
+        this.productFilterData.setHasNext(productFilterData.isHasNext());
+        this.productFilterData.setPage(productFilterData.getPage());
+        this.productFilterData.setNext_url(productFilterData.getNext_url());
     }
 
 
@@ -128,12 +219,13 @@ public class ProductViewModel extends ViewModel {
 
 
     }
-    private void onOfferProductComplete(){
+    private void onProductFilterComplete(){
 
-        offerProductLiveData.postValue(offerProducts);
+        offerProductLiveData.postValue(productFilterData);
 
 
     }
+
 
 
     @Override

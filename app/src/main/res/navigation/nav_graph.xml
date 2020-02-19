@@ -29,4 +29,11 @@
         android:name="com.example.aghezty.View.Categories"
         android:label="fragment_categories"
         tools:layout="@layout/fragment_categories" />
+    <fragment
+        android:id="@+id/productDetails"
+        android:name="com.example.aghezty.View.ProductDetails"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" />
+
+    <action android:id="@+id/action_global_productDetails" app:destination="@id/productDetails"/>
 </navigation>

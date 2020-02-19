@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,11 +17,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.aghezty.Adapter.ProductCardViewAdapter;
 import com.example.aghezty.POJO.HomeData;
@@ -53,10 +56,14 @@ public class ProductList extends Fragment {
     private Observer listObserver;
     private NavController navController;
 
+    private final String TAG=getClass().getName();
 
+    private boolean isLoading=false;
     private RecyclerView listRecycler;
     private RelativeLayout orderBy,filterBy;
     private ProgressBar progressBar;
+    private NestedScrollView nestedScrollView;
+    private ProductFilterData productFilterData;
 
     private ProductCardViewAdapter productCardViewAdapter;
 
@@ -67,13 +74,15 @@ public class ProductList extends Fragment {
 
         listObserver=new Observer<ProductFilterData>() {
             @Override
-            public void onChanged(ProductFilterData productFilterData) {
+            public void onChanged(ProductFilterData productFilterData1) {
+                productFilterData=productFilterData1;
                 productInfoList.clear();
-                productInfoList.addAll(productFilterData.getProductList());
+                productInfoList.addAll(productFilterData1.getProductList());
 
 
                 productCardViewAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
+                isLoading=false;
 
             }
         };
@@ -124,6 +133,7 @@ public class ProductList extends Fragment {
         filterBy=view.findViewById(R.id.filter_by);
         progressBar=view.findViewById(R.id.prog);
         listRecycler=view.findViewById(R.id.list_recyclerview);
+        nestedScrollView=view.findViewById(R.id.scroll);
 
         navController= Navigation.findNavController(view);
 
@@ -147,7 +157,48 @@ public class ProductList extends Fragment {
 
 
 
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    Log.i(TAG, "Scroll UP");
+                }
+
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL");
+                }
+
+                if ((v.getChildAt(v.getChildCount()-1).getBottom()-(v.getHeight()+v.getScrollY()))==0){
+                    //Log.e("Scroll",(v.getChildAt(v.getChildCount()-1).getBottom())+"-"+v.getHeight()+"+"+v.getScrollY());
+                     //Toast.makeText(getContext(),"bottom",Toast.LENGTH_SHORT).show();
+                    onScroll();
+                }
+
+            }
+        });
 
     }
+
+
+
+
+    private void onScroll(){
+
+
+        if (productFilterData.isHasNext()&&!isLoading){
+
+            isLoading=true;
+            progressBar.setVisibility(View.VISIBLE);
+            productViewModel.getNextProductFilter();
+
+        }
+
+    }
+
+
+
 }

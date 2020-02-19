@@ -11,6 +11,7 @@
         >
 
 
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -42,18 +43,45 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prog"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/orange"
+
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/root"
+            android:layout_below="@+id/home_bar"
+            android:visibility="gone"
+            >
+
+
+
+
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/desc_add_tocart"
             android:layout_marginBottom="2dp"
-            android:layout_below="@+id/home_bar"
+
             >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+
+                >
+
+
+
+
 
 
                 <androidx.viewpager.widget.ViewPager
@@ -150,7 +178,7 @@
                                 android:id="@+id/pro_exegp"
                                 android:text=".EGP"
                                 android:layout_centerVertical="true"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 android:textColor="@android:color/darker_gray"
                                 android:layout_toRightOf="@+id/pro_exprice"
                                 android:layout_marginLeft="1dp"
@@ -164,7 +192,7 @@
                                 android:id="@+id/pro_discount"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginRight="20dp"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 android:layout_centerVertical="true"
                                 android:textColor="@android:color/white"
                                 android:text="15%"
@@ -204,7 +232,7 @@
                             android:layout_toRightOf="@+id/de_available_q_text"
                             android:textSize="18sp"
                             android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
+
                             android:layout_marginTop="8dp"
                             android:layout_marginLeft="15dp"
                             />
@@ -217,6 +245,7 @@
                             android:layout_below="@+id/ex_dis"
                             android:layout_marginRight="20dp"
                             android:layout_marginTop="10dp"
+                            android:id="@+id/evaluation"
                             android:background="@drawable/evaluation_background"
                             >
                             <TextView
@@ -224,7 +253,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toRightOf="@+id/star"
                                 android:id="@+id/pro_evaluation"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 android:textColor="@android:color/white"
                                 android:text="4.9"
                                 />
@@ -237,35 +266,43 @@
                                 android:background="@drawable/ic_star"/>
                         </RelativeLayout>
 
-                        <TextView
-                            android:layout_marginLeft="15dp"
-                            android:id="@+id/pro_price"
-                            android:layout_marginTop="15dp"
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
                             android:layout_below="@id/de_available_q"
                             android:layout_marginBottom="15dp"
-                            android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
-                            android:typeface="serif"
-                            android:text="149.99"
-                            android:textSize="20sp"
-                            />
-                        <TextView
-                            android:layout_marginLeft="2dp"
-                            android:id="@+id/pro_egp"
-                            android:layout_marginTop="15dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/pro_price"
-                            android:layout_below="@+id/de_available_q"
-                            android:layout_marginBottom="10dp"
-                            android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
-                            android:typeface="serif"
-                            android:text=".EGP"
-                            android:textSize="20sp"
-                            />
+                            >
+
+                            <TextView
+                                android:layout_marginLeft="15dp"
+                                android:id="@+id/pro_price"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+
+                                android:textColor="@android:color/holo_blue_dark"
+                                android:textStyle="bold"
+                                android:typeface="serif"
+                                android:text="149.99"
+                                android:textSize="20sp"
+                                />
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:id="@+id/pro_egp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/pro_price"
+                                android:textColor="@color/dark_blue"
+                                android:textStyle="bold"
+                                android:typeface="serif"
+                                android:text="EGP"
+                                android:layout_alignBottom="@+id/pro_price"
+                                android:textSize="15sp"
+                                />
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 
@@ -377,6 +414,7 @@
                             android:textOn="Details "
                             android:textOff="Details"
                             android:textAllCaps="false"
+                            android:id="@+id/details_toggle"
                             android:background="@drawable/product_details_toggle"
                             />
 
@@ -386,6 +424,7 @@
                             android:layout_weight="1"
                             android:textOn="Evaluation "
                             android:textOff="Evaluation"
+                            android:id="@+id/evaluation_toggle"
                             android:textAllCaps="false"
                             android:background="@drawable/product_details_toggle"
                             />
@@ -402,8 +441,8 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
-                        android:id="@+id/details"
-
+                        android:id="@+id/details_layout"
+                        android:visibility="gone"
                         android:layout_below="@+id/tab"
                         >
 
@@ -432,7 +471,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
-                        android:id="@+id/evaluation"
+                        android:id="@+id/evaluation_layout"
                         android:layout_below="@+id/tab"
                         android:visibility="gone"
                         >
@@ -754,7 +793,7 @@
                 />
         </RelativeLayout>
 
-
+        </RelativeLayout>
 
     </RelativeLayout>
 

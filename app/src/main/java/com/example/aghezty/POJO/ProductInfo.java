@@ -1,10 +1,13 @@
 package com.example.aghezty.POJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ProductInfo {
+public class ProductInfo implements Parcelable {
 
     @SerializedName("id")
     private int id;
@@ -40,7 +43,7 @@ public class ProductInfo {
     private int stock;
     @SerializedName("stars")
     private int stars;
-
+    @SerializedName("rates")
     private List<Rate> rates;
 
     public List<Rate> getRates() {
@@ -156,5 +159,76 @@ public class ProductInfo {
     public int getStars(){
         return this.stars;
     }
+
+
+
+
+    private ProductInfo(Parcel in){
+
+        id=in.readInt();
+        title_en=in.readString();
+        title_ar=in.readString();
+        main_image=in.readString();
+        price=in.readInt();
+        discount=in.readString();
+        price_after_discount=in.readInt();
+        special=in.readInt();
+        active=in.readInt();
+        description_en=in.readString();
+        description_ar=in.readString();
+        short_description_ar=in.readString();
+        short_description_en=in.readString();
+        category_id=in.readInt();
+        brand_id=in.readInt();
+        stock=in.readInt();
+        stars=in.readInt();
+        rates=in.createTypedArrayList(Rate.CREATOR);
+
+    }
+
+
+
+
+    public static final Creator<ProductInfo> CREATOR = new Creator<ProductInfo>() {
+
+        @Override
+        public ProductInfo createFromParcel(Parcel source) {
+            return new ProductInfo(source);
+        }
+
+        @Override
+        public ProductInfo[] newArray(int size) {
+            return new ProductInfo[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title_en);
+        dest.writeString(title_ar);
+        dest.writeString(main_image);
+        dest.writeInt(price);
+        dest.writeString(discount);
+        dest.writeInt(price_after_discount);
+        dest.writeInt(special);
+        dest.writeInt(active);
+        dest.writeString(description_en);
+        dest.writeString(description_ar);
+        dest.writeString(short_description_ar);
+        dest.writeString(short_description_en);
+        dest.writeInt(category_id);
+        dest.writeInt(brand_id);
+        dest.writeInt(stock);
+        dest.writeInt(stars);
+        dest.writeTypedList(rates);
+
+
+    }
+
 
 }

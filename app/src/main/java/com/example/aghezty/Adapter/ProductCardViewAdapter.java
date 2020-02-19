@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.aghezty.View.ProductDetails.PRODUCT_INFO;
+
 
 /**
  * Created by DELL on 1/17/2019.
@@ -131,7 +133,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
             holder.ex_price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice())));
             holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice_after_discount())));
-            holder.discount.setText(String.valueOf(products.get(holder.getAdapterPosition()).getDiscount())+"% OFF");
+            holder.discount.setText(String.valueOf(products.get(holder.getAdapterPosition()).getDiscount())+" OFF");
         }else {
             holder.discountLayout.setVisibility(View.INVISIBLE);
             holder.discount.setVisibility(View.GONE);
@@ -154,6 +156,12 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
             public void onClick(View view) {
 
                // Go To Product Details
+
+                Bundle bundle=new Bundle();
+
+                bundle.putParcelable(PRODUCT_INFO,products.get(holder.getAdapterPosition()));
+
+                navController.navigate(R.id.action_global_productDetails,bundle);
 
             }
         });

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.aghezty">
 
 
@@ -14,6 +15,7 @@
         android:name=".View.AppController"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
+        tools:replace="android:supportsRtl"
         android:theme="@style/AppTheme">
         <activity android:name=".View.MainActivity">
             <intent-filter>

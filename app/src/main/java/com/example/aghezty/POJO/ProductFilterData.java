@@ -13,6 +13,16 @@ public class ProductFilterData {
 
     private int Page;
 
+    boolean isHasNext;
+
+
+    public boolean isHasNext() {
+        return isHasNext;
+    }
+
+    public void setHasNext(boolean hasNext) {
+        isHasNext = hasNext;
+    }
 
     public int getPage() {
         return Page;

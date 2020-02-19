@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.aghezty.POJO.HomeRecylerData;
 import com.example.aghezty.R;
+import com.example.aghezty.Util.SpeadyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class HorizontalRecyclerCardViewAdapter extends RecyclerView.Adapter<Hori
         holder.icon.setBackground(resources.getDrawable(homeRecylerDataList.get(holder.getAdapterPosition()).getIconId()));
         holder.title.setText(homeRecylerDataList.get(holder.getAdapterPosition()).getName());
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        final SpeadyLinearLayoutManager linearLayoutManager = new SpeadyLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.recyclerView.setLayoutManager(linearLayoutManager);
 
         final ProductCardViewAdapter productCardViewAdapter=new ProductCardViewAdapter(context,homeRecylerDataList.get(holder.getAdapterPosition()).getProductInfos(),ProductCardViewAdapter.HOME,navController);

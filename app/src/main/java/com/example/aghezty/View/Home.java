@@ -3,10 +3,12 @@ package com.example.aghezty.View;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,6 +25,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aghezty.Adapter.CategoryCardViewAdapter;
@@ -48,6 +52,8 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 
+import static com.example.aghezty.Adapter.SliderAdapter.HOME;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -59,10 +65,12 @@ public class Home extends Fragment {
     private Observer homeObserver;
     private ViewPager viewPager;
     private RecyclerView bestcategories,horizontalRecycler;
+    private ProgressBar progressBar;
+    private RelativeLayout root;
 
     private List<HomeRecylerData> homeRecylerDataList=new ArrayList<>();
     private List<CategoryInfo> categoryInfoList=new ArrayList<>();
-    private List<SliderInfo> sliderInfoList=new ArrayList<>();
+    private List<String> sliderInfoList=new ArrayList<>();
 
     private NavController navController;
     private SliderAdapter sliderAdapter;
@@ -89,12 +97,15 @@ public class Home extends Fragment {
                 categoryInfoList.addAll(homeData.getHomepage_cat());
 
                 sliderInfoList.clear();
-                sliderInfoList.addAll(homeData.getSlides());
+                sliderInfoList.addAll(convertToStringList(homeData.getSlides()));
 
 
                 sliderAdapter.notifyDataSetChanged();
                 horizontalRecyclerCardViewAdapter.notifyDataSetChanged();
                 categoryCardViewAdapter.notifyDataSetChanged();
+
+                progressBar.setVisibility(View.GONE);
+                root.setVisibility(View.VISIBLE);
 
                 add_Dots(getContext(),0);
 
@@ -147,9 +158,14 @@ public class Home extends Fragment {
         horizontalRecycler=view.findViewById(R.id.horizontal_recycler);
         bestcategories=view.findViewById(R.id.best_categories);
         linearLayout=view.findViewById(R.id.linear);
+        progressBar=view.findViewById(R.id.prog);
+        root=view.findViewById(R.id.root);
         navController= Navigation.findNavController(view);
 
-        sliderAdapter=new SliderAdapter(getContext(),sliderInfoList);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
+
+
+        sliderAdapter=new SliderAdapter(getContext(),sliderInfoList,getActivity(),HOME);
         categoryCardViewAdapter=new CategoryCardViewAdapter(getContext(),categoryInfoList,navController,CategoryCardViewAdapter.BEST_CATEGORIES);
         horizontalRecyclerCardViewAdapter=new HorizontalRecyclerCardViewAdapter(getContext(),homeRecylerDataList,navController,getResources());
 
@@ -215,6 +231,19 @@ public class Home extends Fragment {
 
 
 
+    private List<String> convertToStringList(List<SliderInfo> sliderInfos){
+        List<String> stringList=new ArrayList<>();
+
+
+        for (SliderInfo sliderInfo:sliderInfos){
+
+            stringList.add(sliderInfo.getImage());
+
+        }
+
+        return stringList;
+
+    }
 
 
     /// timer for viewpager///////////
