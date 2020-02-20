@@ -41,214 +41,237 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-        <TextView
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CLEAR"
-            android:textSize="15sp"
-            android:textColor="@color/light_red"
+            android:id="@+id/prog"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/orange"
+
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/home_bar"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:id="@+id/clear"
-            />
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/heavy_sub_cat"
-            android:layout_below="@+id/clear"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:id="@+id/root"
+            android:visibility="gone"
             >
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Heavy Machines"
-                android:textSize="18sp"
-                android:textColor="@color/dark_blue"
-                android:id="@+id/heavy_cat"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_more"
+                android:text="CLEAR"
+                android:textSize="15sp"
+                android:textColor="@color/light_red"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/heavy_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"
-                android:textSize="16sp"
-                android:textColor="@color/gray"
-                android:id="@+id/heavy_choice"
-                android:layout_toLeftOf="@+id/heavy_more"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:id="@+id/clear"
                 />
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/heavy_sub_cat"
+                android:layout_below="@+id/clear"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Heavy Machines"
+                    android:textSize="18sp"
+                    android:textColor="@color/dark_blue"
+                    android:id="@+id/heavy_cat"
+                    />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_more"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/heavy_more"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nothing"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray"
+                    android:id="@+id/heavy_choice"
+                    android:layout_toLeftOf="@+id/heavy_more"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/light_sub_cat"
+                android:layout_below="@+id/heavy_sub_cat"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Light Devices"
+                    android:textSize="18sp"
+                    android:textColor="@color/dark_blue"
+                    android:id="@+id/light_cat"
+                    />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_more"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/light_more"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nothing"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray"
+                    android:id="@+id/light_choice"
+                    android:layout_toLeftOf="@+id/light_more"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/brand_sub_cat"
+                android:layout_below="@+id/light_sub_cat"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brand"
+                    android:textSize="18sp"
+                    android:textColor="@color/dark_blue"
+                    android:id="@+id/brand_cat"
+                    />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_more"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/brand_more"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nothing"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray"
+                    android:id="@+id/brand_choice"
+                    android:layout_toLeftOf="@+id/brand_more"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/price_sub_cat"
+                android:layout_below="@+id/brand_sub_cat"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="18sp"
+                    android:textColor="@color/dark_blue"
+                    android:id="@+id/price_cat"
+                    />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_more"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/price_more"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray"
+                    android:id="@+id/price_choice"
+                    android:layout_toLeftOf="@+id/price_more"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:id="@+id/apply"
+                android:background="@drawable/button_background"
+                android:text="Apply"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                />
+
 
 
         </RelativeLayout>
-
-
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/light_sub_cat"
-            android:layout_below="@+id/heavy_sub_cat"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Light Devices"
-                android:textSize="18sp"
-                android:textColor="@color/dark_blue"
-                android:id="@+id/light_cat"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_more"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/light_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"
-                android:textSize="16sp"
-                android:textColor="@color/gray"
-                android:id="@+id/light_choice"
-                android:layout_toLeftOf="@+id/light_more"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                />
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/brand_sub_cat"
-            android:layout_below="@+id/light_sub_cat"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Brand"
-                android:textSize="18sp"
-                android:textColor="@color/dark_blue"
-                android:id="@+id/brand_cat"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_more"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/brand_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"
-                android:textSize="16sp"
-                android:textColor="@color/gray"
-                android:id="@+id/brand_choice"
-                android:layout_toLeftOf="@+id/brand_more"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                />
-
-
-        </RelativeLayout>
-
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/price_sub_cat"
-            android:layout_below="@+id/brand_sub_cat"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Price"
-                android:textSize="18sp"
-                android:textColor="@color/dark_blue"
-                android:id="@+id/price_cat"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_more"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/price_more"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3000 EGP - 10000 EGP"
-                android:textSize="16sp"
-                android:textColor="@color/gray"
-                android:id="@+id/price_choice"
-                android:layout_toLeftOf="@+id/price_more"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                />
-
-
-        </RelativeLayout>
-
-
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/card_confirm"
-            android:background="@drawable/button_background"
-            android:text="Apply"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:textSize="17sp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            />
-
 
 
 

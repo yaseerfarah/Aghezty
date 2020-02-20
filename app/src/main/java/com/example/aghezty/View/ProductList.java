@@ -50,6 +50,7 @@ import static com.example.aghezty.Adapter.ProductCardViewAdapter.LIST;
 public class ProductList extends Fragment {
 
 
+
     @Inject
     ViewModelFactory viewModelFactory;
     private ProductViewModel productViewModel;
@@ -62,6 +63,7 @@ public class ProductList extends Fragment {
     private RecyclerView listRecycler;
     private RelativeLayout orderBy,filterBy;
     private ProgressBar progressBar;
+    private RelativeLayout root;
     private NestedScrollView nestedScrollView;
     private ProductFilterData productFilterData;
 
@@ -75,14 +77,21 @@ public class ProductList extends Fragment {
         listObserver=new Observer<ProductFilterData>() {
             @Override
             public void onChanged(ProductFilterData productFilterData1) {
-                productFilterData=productFilterData1;
-                productInfoList.clear();
-                productInfoList.addAll(productFilterData1.getProductList());
+                if (productFilterData1!=null) {
+                    productFilterData = productFilterData1;
+                    productInfoList.clear();
+                    productInfoList.addAll(productFilterData1.getProductList());
 
 
-                productCardViewAdapter.notifyDataSetChanged();
+                    productCardViewAdapter.notifyDataSetChanged();
+
+                    isLoading = false;
+                   // Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
+                    root.setVisibility(View.VISIBLE);
+
+                }
+
                 progressBar.setVisibility(View.GONE);
-                isLoading=false;
 
             }
         };
@@ -94,15 +103,16 @@ public class ProductList extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        productViewModel.getOfferProducts();
-        productViewModel.getOfferProductsLiveData().observe(this,listObserver);
+        productViewModel.getProductFilter();
+        productViewModel.getProductFilterLiveData().observe(this,listObserver);
 
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        productViewModel.getOfferProductsLiveData().removeObservers(this);
+        productViewModel.getProductFilterLiveData().removeObservers(this);
+        productViewModel.clearFilter();
     }
 
 
@@ -134,10 +144,14 @@ public class ProductList extends Fragment {
         progressBar=view.findViewById(R.id.prog);
         listRecycler=view.findViewById(R.id.list_recyclerview);
         nestedScrollView=view.findViewById(R.id.scroll);
+        root=view.findViewById(R.id.root);
 
         navController= Navigation.findNavController(view);
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
+        if (productInfoList.isEmpty())
+        progressBar.setVisibility(View.VISIBLE);
+
 
 
         productCardViewAdapter=new ProductCardViewAdapter(getContext(),productInfoList,LIST,navController);
@@ -174,12 +188,21 @@ public class ProductList extends Fragment {
 
                 if ((v.getChildAt(v.getChildCount()-1).getBottom()-(v.getHeight()+v.getScrollY()))==0){
                     //Log.e("Scroll",(v.getChildAt(v.getChildCount()-1).getBottom())+"-"+v.getHeight()+"+"+v.getScrollY());
-                     //Toast.makeText(getContext(),"bottom",Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(),"bottom",Toast.LENGTH_SHORT).show();
                     onScroll();
                 }
 
             }
         });
+
+
+        filterBy.setOnClickListener(v -> {
+
+
+            navController.navigate(R.id.action_productList_to_filter);
+
+        });
+
 
     }
 

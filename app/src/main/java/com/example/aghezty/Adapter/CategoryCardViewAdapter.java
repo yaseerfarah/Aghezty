@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +20,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.aghezty.POJO.CategoryInfo;
+import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.R;
+import com.example.aghezty.ViewModel.ProductViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,13 +35,15 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
     static public   final int BEST_CATEGORIES=1;
     static public   final int CATEGORIES=2;
     private NavController navController;
+    ProductViewModel productViewModel;
     private int type;
 
 
-    public CategoryCardViewAdapter(Context context, List<CategoryInfo> category, NavController navController,int type) {
+    public CategoryCardViewAdapter(Context context, List<CategoryInfo> category, NavController navController, ProductViewModel productViewModel, int type) {
         this.context = context;
         this.categoryInfoList=category;
         this.type=type;
+        this.productViewModel=productViewModel;
         this.navController=navController;
 
 
@@ -74,6 +80,16 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
 
         holder.textView.setText(categoryInfoList.get(holder.getAdapterPosition()).getTitle_en());
 
+
+        holder.cardView.setOnClickListener(v -> {
+            List<FilterInfo> categoryID=new ArrayList<>();
+            categoryID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(),categoryInfoList.get(holder.getAdapterPosition()).getTitle_en()) );
+            productViewModel.setFilter(categoryID,null,ProductViewModel.ALL,false);
+            navController.navigate(R.id.action_global_productList);
+
+        });
+
+
     }
 
 
@@ -94,12 +110,14 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
 
     //////////////////////////////////////////////////////////
     public class Cat_holder extends RecyclerView.ViewHolder{
+        CardView cardView;
         ImageView imageView;
         TextView textView;
 
 
         public Cat_holder(View itemView) {
             super(itemView);
+            cardView=itemView.findViewById(R.id.cat_card);
           imageView=(ImageView) itemView.findViewById(R.id.category_image);
           textView=(TextView) itemView.findViewById(R.id.category_name);
         }

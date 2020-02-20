@@ -166,7 +166,7 @@ public class Home extends Fragment {
 
 
         sliderAdapter=new SliderAdapter(getContext(),sliderInfoList,getActivity(),HOME);
-        categoryCardViewAdapter=new CategoryCardViewAdapter(getContext(),categoryInfoList,navController,CategoryCardViewAdapter.BEST_CATEGORIES);
+        categoryCardViewAdapter=new CategoryCardViewAdapter(getContext(),categoryInfoList,navController,productViewModel,CategoryCardViewAdapter.BEST_CATEGORIES);
         horizontalRecyclerCardViewAdapter=new HorizontalRecyclerCardViewAdapter(getContext(),homeRecylerDataList,navController,getResources());
 
 

@@ -10,11 +10,17 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.aghezty.Data.AgheztyApi;
 import com.example.aghezty.Interface.InnerProductListener;
+import com.example.aghezty.POJO.BrandCategoriesResponse;
+import com.example.aghezty.POJO.BrandInfo;
+import com.example.aghezty.POJO.CategoryInfo;
+import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.POJO.HomeData;
 import com.example.aghezty.POJO.HomeResponse;
 import com.example.aghezty.POJO.InnerProductResponse;
+import com.example.aghezty.POJO.ParentCategoriesResponse;
 import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
+import com.example.aghezty.View.Filter;
 import com.example.aghezty.View.Home;
 
 import java.util.ArrayList;
@@ -30,14 +36,25 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ProductViewModel extends ViewModel {
 
+    static public final int LESS_FROM_1000=1000;
+    static public final int FROM_1000_TO_3000=3000;
+    static public final int FROM_3000_TO_6000=6000;
+    static public final int FROM_6000_TO_10000=10000;
+    static public final int MORE_THAN_10000=20000;
+    static public final int ALL=0;
+
     private MediatorLiveData<HomeData> homeDataMediatorLiveData;
-    private MediatorLiveData<ProductFilterData> offerProductLiveData;
+    private MediatorLiveData<ProductFilterData> productFilterDataLiveData;
+    private MediatorLiveData<List<CategoryInfo>> parentCategoriesLiveData;
+    private MediatorLiveData<List<BrandInfo>> brandCategoriesLiveData;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private AgheztyApi agheztyApi;
     private Context context;
     private HomeData homeData=null;
     private ProductFilterData productFilterData;
     private List<ProductInfo> innerProductList;
+    private List<CategoryInfo> parentCategoriesInfoList;
+    private List<BrandInfo> brandCategoriesInfoList;
     private HashMap<String,Object> filter;
 
 
@@ -46,9 +63,13 @@ public class ProductViewModel extends ViewModel {
         this.context = context;
         this.agheztyApi=agheztyApi;
         this.homeDataMediatorLiveData=new MediatorLiveData<>();
-        this.offerProductLiveData=new MediatorLiveData<>();
+        this.productFilterDataLiveData=new MediatorLiveData<>();
+        this.parentCategoriesLiveData=new MediatorLiveData<>();
+        this.brandCategoriesLiveData=new MediatorLiveData<>();
         this.filter=new HashMap<>();
         this.innerProductList=new ArrayList<>();
+        this.parentCategoriesInfoList=new ArrayList<>();
+        this.brandCategoriesInfoList=new ArrayList<>();
 
     }
 
@@ -56,8 +77,16 @@ public class ProductViewModel extends ViewModel {
     public LiveData<HomeData> getHomeDataLiveData(){
         return homeDataMediatorLiveData;
     }
-    public LiveData<ProductFilterData> getOfferProductsLiveData(){
-        return offerProductLiveData;
+    public LiveData<ProductFilterData> getProductFilterLiveData(){
+        return productFilterDataLiveData;
+    }
+
+    public LiveData<List<BrandInfo>> getBrandCategoriesLiveData() {
+        return brandCategoriesLiveData;
+    }
+
+    public LiveData<List<CategoryInfo>> getParentCategoriesLiveData() {
+        return parentCategoriesLiveData;
     }
 
     public void getHomeData(){
@@ -80,11 +109,14 @@ public class ProductViewModel extends ViewModel {
 
 
 
-    public void getOfferProducts(){
-        filter.clear();
-        filter.put("offer","offer");
+    public void getProductFilter(){
 
-        if (productFilterData==null) {
+        if (filter.isEmpty()){
+            filter.put("offer","offer");
+        }
+
+
+
             disposables.add(agheztyApi.getSpecificProduct(filter,1)
                     .subscribeOn(Schedulers.io())
                     .map(retrofit2.Response::body)
@@ -104,11 +136,16 @@ public class ProductViewModel extends ViewModel {
 
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::onOfferProductNext, this::onError, this::onProductFilterComplete)
+                    .subscribe(productFilterData1 -> {
+
+                        this.productFilterData=productFilterData1;
+                        productFilterDataLiveData.postValue(productFilterData);
+
+                    }, this::onError)
 
             );
 
-        }
+
     }
 
 
@@ -137,7 +174,7 @@ public class ProductViewModel extends ViewModel {
 
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onProductFilterNext, this::onError, this::onProductFilterComplete)
+                .subscribe(this::onProductFilterNext, this::onError)
 
         );
 
@@ -178,25 +215,136 @@ public class ProductViewModel extends ViewModel {
         );
 
 
+    }
 
 
+
+
+    public void getParentCategories(){
+
+
+        if (parentCategoriesInfoList.isEmpty()) {
+            disposables.add(agheztyApi.getParentCategories()
+                    .subscribeOn(Schedulers.io())
+                    .map(retrofit2.Response::body)
+                    .map(ParentCategoriesResponse::getParentCategories)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(categoryInfos -> {
+
+                        parentCategoriesInfoList.clear();
+                        parentCategoriesInfoList.addAll(categoryInfos);
+                        parentCategoriesLiveData.postValue(parentCategoriesInfoList);
+
+                    }, this::onError)
+
+            );
+
+        }
+
+    }
+
+
+
+    public void getBrandCategories(){
+
+
+        if (brandCategoriesInfoList.isEmpty()) {
+            disposables.add(agheztyApi.getBrandCategories()
+                    .subscribeOn(Schedulers.io())
+                    .map(retrofit2.Response::body)
+                    .map(BrandCategoriesResponse::getBrandInfoList)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(brandInfos -> {
+
+                        brandCategoriesInfoList.addAll(brandInfos);
+                        brandCategoriesLiveData.postValue(brandCategoriesInfoList);
+
+                    }, this::onError)
+
+            );
+
+        }
 
     }
 
 
 
 
-    private void onOfferProductNext(ProductFilterData productFilterData) {
+    public void setFilter(List<FilterInfo> categoryID, List<FilterInfo> brandID, int priceRange, boolean offers){
 
-        this.productFilterData=productFilterData;
+        filter.clear();
+
+        if (categoryID!=null){
+            for (FilterInfo filterInfo:categoryID){
+
+                filter.put("category_id[]",filterInfo.getId());
+            }
+        }
+
+        if (brandID!=null){
+            for (FilterInfo filterInfo:brandID){
+
+                filter.put("brand_id[]",filterInfo.getId());
+            }
+        }
+
+        if (priceRange!=ALL){
+
+            switch (priceRange){
+
+                case LESS_FROM_1000:
+                    filter.put("from",0);
+                    filter.put("to",1000);
+                    break;
+
+                case FROM_1000_TO_3000:
+                    filter.put("from",1000);
+                    filter.put("to",3000);
+                    break;
+
+                case FROM_3000_TO_6000:
+                    filter.put("from",3000);
+                    filter.put("to",6000);
+                    break;
+
+                case FROM_6000_TO_10000:
+                    filter.put("from",6000);
+                    filter.put("to",10000);
+                    break;
+
+                case MORE_THAN_10000:
+                    filter.put("from",10000);
+                    filter.put("to",1000000);
+                    break;
+
+            }
+
+
+        }
+
+        if (offers){
+            filter.put("offer","offer");
+        }
+
+
     }
 
-    private void onProductFilterNext(ProductFilterData productFilterData) {
+    public void clearFilter(){
+        filter.clear();
+        productFilterDataLiveData=new MediatorLiveData<>();
+    }
 
-        this.productFilterData.addAll(productFilterData.getProductList());
-        this.productFilterData.setHasNext(productFilterData.isHasNext());
-        this.productFilterData.setPage(productFilterData.getPage());
-        this.productFilterData.setNext_url(productFilterData.getNext_url());
+
+
+    private void onProductFilterNext(ProductFilterData productFilterData1) {
+
+        this.productFilterData.addAll(productFilterData1.getProductList());
+        this.productFilterData.setHasNext(productFilterData1.isHasNext());
+        this.productFilterData.setPage(productFilterData1.getPage());
+        this.productFilterData.setNext_url(productFilterData1.getNext_url());
+
+        productFilterDataLiveData.postValue(this.productFilterData);
+
     }
 
 
@@ -219,12 +367,7 @@ public class ProductViewModel extends ViewModel {
 
 
     }
-    private void onProductFilterComplete(){
 
-        offerProductLiveData.postValue(productFilterData);
-
-
-    }
 
 
 

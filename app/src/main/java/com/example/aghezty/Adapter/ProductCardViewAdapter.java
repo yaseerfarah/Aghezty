@@ -92,6 +92,8 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
             holder.soldOut.setVisibility(View.VISIBLE);
         }*/
 
+      holder.pro_image.setImageDrawable(null);
+      holder.progressBar.setVisibility(View.VISIBLE);
 
         Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image())
                 .apply(RequestOptions.timeoutOf(60*1000))
@@ -133,7 +135,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
             holder.ex_price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice())));
             holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice_after_discount())));
-            holder.discount.setText(String.valueOf(products.get(holder.getAdapterPosition()).getDiscount())+" OFF");
+            holder.discount.setText(String.valueOf(products.get(holder.getAdapterPosition()).getDiscount())+" EGP");
         }else {
             holder.discountLayout.setVisibility(View.INVISIBLE);
             holder.discount.setVisibility(View.GONE);

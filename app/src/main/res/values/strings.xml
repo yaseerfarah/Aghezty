@@ -18,4 +18,18 @@
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
     <string name="categories">Categories</string>
+
+
+    <string-array name="price_range_filter">
+
+        <item>ALL</item>
+        <item>LESS_FROM_1000</item>
+        <item>FROM_1000_TO_3000</item>
+        <item>FROM_3000_TO_6000</item>
+        <item>FROM_6000_TO_10000</item>
+        <item>MORE_THAN_10000</item>
+
+
+    </string-array>
+
 </resources>

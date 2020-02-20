@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CategoryInfo {
+public class BrandInfo {
 
     @SerializedName("id")
     private int id;
@@ -12,14 +12,10 @@ public class CategoryInfo {
     private String title_en;
     @SerializedName("title_ar")
     private String title_ar;
-    @SerializedName("coding")
-    private String coding;
-    @SerializedName("parent_id")
-    private int parent_id;
     @SerializedName("image")
     private String image;
-    @SerializedName("sub_cats")
-    private List<CategoryInfo> sub_cats;
+    @SerializedName("category")
+    private List<CategoryInfo> subCategoryInfoList;
 
 
     public int getId() {
@@ -46,22 +42,6 @@ public class CategoryInfo {
         this.title_ar = title_ar;
     }
 
-    public String getCoding() {
-        return coding;
-    }
-
-    public void setCoding(String coding) {
-        this.coding = coding;
-    }
-
-    public int getParent_id() {
-        return parent_id;
-    }
-
-    public void setParent_id(int parent_id) {
-        this.parent_id = parent_id;
-    }
-
     public String getImage() {
         return image;
     }
@@ -70,11 +50,11 @@ public class CategoryInfo {
         this.image = image;
     }
 
-    public List<CategoryInfo> getSub_cats() {
-        return sub_cats;
+    public List<CategoryInfo> getSubCategoryInfoList() {
+        return subCategoryInfoList;
     }
 
-    public void setSub_cats(List<CategoryInfo> sub_cats) {
-        this.sub_cats = sub_cats;
+    public void setSubCategoryInfoList(List<CategoryInfo> subCategoryInfoList) {
+        this.subCategoryInfoList = subCategoryInfoList;
     }
 }

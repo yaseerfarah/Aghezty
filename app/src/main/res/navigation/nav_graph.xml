@@ -13,7 +13,13 @@
         android:id="@+id/productList"
         android:name="com.example.aghezty.View.ProductList"
         android:label="fragment_product_list"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/action_productList_to_filter"
+            app:destination="@id/filter"
+
+            />
+    </fragment>
     <fragment
         android:id="@+id/cart"
         android:name="com.example.aghezty.View.Cart"
@@ -36,4 +42,14 @@
         tools:layout="@layout/fragment_product_details" />
 
     <action android:id="@+id/action_global_productDetails" app:destination="@id/productDetails"/>
+    <action android:id="@+id/action_global_productList" app:destination="@id/productList" />
+    <fragment
+        android:id="@+id/filter"
+        android:name="com.example.aghezty.View.Filter"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" >
+        <action
+            android:id="@+id/action_filter_to_productList"
+            app:destination="@id/productList" />
+    </fragment>
 </navigation>

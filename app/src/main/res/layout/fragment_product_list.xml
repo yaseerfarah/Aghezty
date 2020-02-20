@@ -152,7 +152,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/root"
+                >
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -182,7 +184,7 @@
             android:id="@+id/prog"
             android:layout_centerInParent="true"
             android:indeterminateTint="@color/orange"
-
+            android:visibility="gone"
             />
 
 

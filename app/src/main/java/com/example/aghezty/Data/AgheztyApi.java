@@ -1,6 +1,8 @@
 package com.example.aghezty.Data;
 
+import com.example.aghezty.POJO.BrandCategoriesResponse;
 import com.example.aghezty.POJO.HomeResponse;
+import com.example.aghezty.POJO.ParentCategoriesResponse;
 import com.example.aghezty.POJO.ProductFilterResponse;
 import com.example.aghezty.POJO.InnerProductResponse;
 
@@ -20,9 +22,14 @@ public interface AgheztyApi {
     @GET("home")
     Observable<Response<HomeResponse>> getHome();
 
+    @GET("categorys")
+    Single<Response<ParentCategoriesResponse>> getParentCategories();
+
+    @GET("brands")
+    Single<Response<BrandCategoriesResponse>> getBrandCategories();
 
     @GET("products")
-    Observable<Response<ProductFilterResponse>> getSpecificProduct(
+    Single<Response<ProductFilterResponse>> getSpecificProduct(
             @QueryMap Map<String, Object> options
     ,@Query("page") int page );
 
