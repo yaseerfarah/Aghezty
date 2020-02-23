@@ -33,6 +33,7 @@ import com.example.aghezty.Adapter.CategoryCardViewAdapter;
 import com.example.aghezty.Adapter.HorizontalRecyclerCardViewAdapter;
 import com.example.aghezty.Adapter.SliderAdapter;
 import com.example.aghezty.POJO.CategoryInfo;
+import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.POJO.HomeData;
 import com.example.aghezty.POJO.HomeRecylerData;
 import com.example.aghezty.POJO.ProductInfo;
@@ -69,7 +70,7 @@ public class Home extends Fragment {
     private RelativeLayout root;
 
     private List<HomeRecylerData> homeRecylerDataList=new ArrayList<>();
-    private List<CategoryInfo> categoryInfoList=new ArrayList<>();
+    private List<FilterInfo> categoryInfoList=new ArrayList<>();
     private List<String> sliderInfoList=new ArrayList<>();
 
     private NavController navController;
@@ -94,7 +95,12 @@ public class Home extends Fragment {
                 homeRecylerDataList.add(new HomeRecylerData("Just For You",R.drawable.ic_gift,homeData.getSelected_for_you()));
 
                 categoryInfoList.clear();
-                categoryInfoList.addAll(homeData.getHomepage_cat());
+                for (CategoryInfo categoryInfo:homeData.getHomepage_cat()){
+
+                    categoryInfoList.add(new FilterInfo(categoryInfo.getId(),categoryInfo.getTitle_en(),categoryInfo.getImage(),FilterInfo.CATEGORY));
+                }
+
+
 
                 sliderInfoList.clear();
                 sliderInfoList.addAll(convertToStringList(homeData.getSlides()));

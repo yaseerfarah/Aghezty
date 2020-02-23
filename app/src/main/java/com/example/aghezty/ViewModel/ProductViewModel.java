@@ -14,6 +14,7 @@ import com.example.aghezty.POJO.BrandCategoriesResponse;
 import com.example.aghezty.POJO.BrandInfo;
 import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.FilterInfo;
+import com.example.aghezty.POJO.FilterOption;
 import com.example.aghezty.POJO.HomeData;
 import com.example.aghezty.POJO.HomeResponse;
 import com.example.aghezty.POJO.InnerProductResponse;
@@ -56,6 +57,7 @@ public class ProductViewModel extends ViewModel {
     private List<CategoryInfo> parentCategoriesInfoList;
     private List<BrandInfo> brandCategoriesInfoList;
     private HashMap<String,Object> filter;
+    private FilterOption filterOption;
 
 
     @Inject
@@ -89,6 +91,10 @@ public class ProductViewModel extends ViewModel {
         return parentCategoriesLiveData;
     }
 
+    public FilterOption getFilterOption() {
+        return filterOption;
+    }
+
     public void getHomeData(){
 
 
@@ -111,10 +117,10 @@ public class ProductViewModel extends ViewModel {
 
     public void getProductFilter(){
 
-        if (filter.isEmpty()){
+      /*  if (filter.isEmpty()){
             filter.put("offer","offer");
         }
-
+*/
 
 
             disposables.add(agheztyApi.getSpecificProduct(filter,1)
@@ -271,21 +277,32 @@ public class ProductViewModel extends ViewModel {
 
 
     public void setFilter(List<FilterInfo> categoryID, List<FilterInfo> brandID, int priceRange, boolean offers){
+        filterOption=new FilterOption();
+        filterOption.setOffer(offers);
+        filterOption.setPriceRange(priceRange);
 
-        filter.clear();
+        clearFilter();
 
         if (categoryID!=null){
+            filterOption.setCategoriesID(categoryID);
             for (FilterInfo filterInfo:categoryID){
 
                 filter.put("category_id[]",filterInfo.getId());
             }
+        }else {
+            filterOption.setCategoriesID(new ArrayList<>());
         }
 
         if (brandID!=null){
+            filterOption.setBrandID(brandID);
             for (FilterInfo filterInfo:brandID){
 
                 filter.put("brand_id[]",filterInfo.getId());
             }
+        }
+        else {
+
+            filterOption.setBrandID(new ArrayList<>());
         }
 
         if (priceRange!=ALL){
@@ -332,6 +349,7 @@ public class ProductViewModel extends ViewModel {
     public void clearFilter(){
         filter.clear();
         productFilterDataLiveData=new MediatorLiveData<>();
+
     }
 
 

@@ -22,12 +22,12 @@
 
     <string-array name="price_range_filter">
 
-        <item>ALL</item>
-        <item>LESS_FROM_1000</item>
-        <item>FROM_1000_TO_3000</item>
-        <item>FROM_3000_TO_6000</item>
-        <item>FROM_6000_TO_10000</item>
-        <item>MORE_THAN_10000</item>
+        <item>All</item>
+        <item>Less Than 1000</item>
+        <item>From 1000 TO 3000</item>
+        <item>From 3000 TO 6000</item>
+        <item>From 6000 TO 10000</item>
+        <item>More Than 10000</item>
 
 
     </string-array>

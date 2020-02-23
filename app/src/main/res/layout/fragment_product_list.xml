@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.ProductList"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -141,6 +141,20 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
+        <com.gturedi.views.StatefulLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/stateful"
+            android:layout_below="@+id/home_bar"
+            app:stfAnimationEnabled="false"
+
+
+            >
+
+
+
+
+
 
 
         <androidx.core.widget.NestedScrollView
@@ -174,7 +188,7 @@
 
         </androidx.core.widget.NestedScrollView>
 
-
+        </com.gturedi.views.StatefulLayout>
 
 
 

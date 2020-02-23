@@ -4,6 +4,7 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:id="@+id/parent_category"
+    android:clickable="true"
     >
 
     <androidx.cardview.widget.CardView
@@ -25,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Android"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:gravity="center_horizontal|center_vertical"

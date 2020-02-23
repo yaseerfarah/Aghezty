@@ -20,6 +20,12 @@
 
             />
     </fragment>
+
+
+
+
+
+
     <fragment
         android:id="@+id/cart"
         android:name="com.example.aghezty.View.Cart"
@@ -48,8 +54,6 @@
         android:name="com.example.aghezty.View.Filter"
         android:label="fragment_filter"
         tools:layout="@layout/fragment_filter" >
-        <action
-            android:id="@+id/action_filter_to_productList"
-            app:destination="@id/productList" />
+
     </fragment>
 </navigation>

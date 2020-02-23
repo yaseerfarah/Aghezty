@@ -40,21 +40,42 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:id="@+id/parent_categories_recycler"
-            android:layout_below="@+id/home_bar"
-            />
-
-
-        <androidx.recyclerview.widget.RecyclerView
+        <com.gturedi.views.StatefulLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/categories_recycler"
-            android:layout_toRightOf="@+id/parent_categories_recycler"
-            android:layout_below="@+id/home_bar"/>
+            android:layout_below="@+id/home_bar"
+            android:id="@+id/stateful"
+            >
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="145dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/parent_categories_recycler"
+
+                    />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/categories_recycler"
+                    android:layout_toRightOf="@+id/parent_categories_recycler"
+                    />
+
+
+
+            </RelativeLayout>
+
+
+        </com.gturedi.views.StatefulLayout>
+
+
 
 
     </RelativeLayout>

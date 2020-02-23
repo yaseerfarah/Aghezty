@@ -32,6 +32,7 @@
             android:id="@+id/category_name"
             android:text="Oven"
             android:textSize="14sp"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/category_image"
             android:textColor="@color/dark_blue"

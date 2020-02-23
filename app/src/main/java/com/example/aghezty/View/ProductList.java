@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.app.MediaRouteButton;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ import com.example.aghezty.R;
 import com.example.aghezty.Util.GridSpacingItemDecoration;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,7 @@ public class ProductList extends Fragment {
     private boolean isLoading=false;
     private RecyclerView listRecycler;
     private RelativeLayout orderBy,filterBy;
-    private ProgressBar progressBar;
+    private StatefulLayout statefulLayout;
     private RelativeLayout root;
     private NestedScrollView nestedScrollView;
     private ProductFilterData productFilterData;
@@ -70,6 +72,7 @@ public class ProductList extends Fragment {
     private ProductCardViewAdapter productCardViewAdapter;
 
     private List<ProductInfo> productInfoList=new ArrayList<>();
+    private ProgressBar progressBar;
 
 
     public ProductList() {
@@ -79,19 +82,34 @@ public class ProductList extends Fragment {
             public void onChanged(ProductFilterData productFilterData1) {
                 if (productFilterData1!=null) {
                     productFilterData = productFilterData1;
-                    productInfoList.clear();
-                    productInfoList.addAll(productFilterData1.getProductList());
+                   // productInfoList.clear();
+                    //productInfoList.addAll(productFilterData1.getProductList());
+                    //productCardViewAdapter.notifyDataSetChanged();
 
+                    productCardViewAdapter.updateProductList(productFilterData1.getProductList());
 
-                    productCardViewAdapter.notifyDataSetChanged();
 
                     isLoading = false;
                    // Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
                     root.setVisibility(View.VISIBLE);
 
-                }
+                    if (productFilterData.getProductList().size()>0){
+                        statefulLayout.showContent();
+                    }else {
+                        statefulLayout.showEmpty("No Match");
+                    }
 
+
+
+
+
+                }else {
+
+                    statefulLayout.showEmpty("No Data");
+                }
                 progressBar.setVisibility(View.GONE);
+
+
 
             }
         };
@@ -108,11 +126,22 @@ public class ProductList extends Fragment {
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+       // Toast.makeText(getContext(),String.valueOf(productCardViewAdapter.getItemCount()),Toast.LENGTH_SHORT).show();
+
+
+    }
+
     @Override
     public void onStop() {
         super.onStop();
         productViewModel.getProductFilterLiveData().removeObservers(this);
-        productViewModel.clearFilter();
+        listRecycler.setAdapter(null);
+       // Toast.makeText(getContext(),"onChange",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -131,32 +160,39 @@ public class ProductList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_product_list, container, false);
+
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+       // Toast.makeText(getContext(),"onViewCreated",Toast.LENGTH_SHORT).show();
         orderBy=view.findViewById(R.id.order_by);
         filterBy=view.findViewById(R.id.filter_by);
+        statefulLayout=view.findViewById(R.id.stateful);
         progressBar=view.findViewById(R.id.prog);
         listRecycler=view.findViewById(R.id.list_recyclerview);
         nestedScrollView=view.findViewById(R.id.scroll);
         root=view.findViewById(R.id.root);
-
+        statefulLayout.showLoading(" ");
         navController= Navigation.findNavController(view);
 
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
-        if (productInfoList.isEmpty())
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
+
 
 
 
         productCardViewAdapter=new ProductCardViewAdapter(getContext(),productInfoList,LIST,navController);
 
+
+       /* if (productCardViewAdapter.getItemCount()==0)
+            progressBar.setVisibility(View.VISIBLE);*/
+
         listRecycler.setAdapter(productCardViewAdapter);
+
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -197,7 +233,6 @@ public class ProductList extends Fragment {
 
 
         filterBy.setOnClickListener(v -> {
-
 
             navController.navigate(R.id.action_productList_to_filter);
 

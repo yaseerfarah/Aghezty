@@ -56,6 +56,8 @@ import static com.example.aghezty.Adapter.FilterOrderCardViewAdapter.ORDER;
  */
 public class Filter extends Fragment {
 
+
+
     @Inject
     ViewModelFactory viewModelFactory;
     private ProductViewModel productViewModel;
@@ -71,8 +73,7 @@ public class Filter extends Fragment {
     List<String> priceRange;
 
 
-    List<FilterInfo> heavyMachines_select=new ArrayList<>();
-    List<FilterInfo> lightDevices_select=new ArrayList<>();
+    List<FilterInfo> categories_select=new ArrayList<>();
     List<FilterInfo> brandInfoList_select=new ArrayList<>();
     List<FilterInfo> priceRange_select=new ArrayList<>();
 
@@ -102,6 +103,9 @@ public class Filter extends Fragment {
     @BindView(R.id.price_choice)
     TextView price_choice;
 
+    @BindView(R.id.clear)
+    TextView clear_choices;
+
     @BindView(R.id.apply)
     Button apply;
 
@@ -127,13 +131,13 @@ public class Filter extends Fragment {
                         if (categoryInfo.getId()==3&&categoryInfo.getSub_cats()!=null){
 
                             for (CategoryInfo Info:categoryInfo.getSub_cats()){
-                                heavyMachines.add(new FilterInfo( Info.getId(),Info.getTitle_en()));
+                                heavyMachines.add(new FilterInfo( Info.getId(),Info.getTitle_en(),null,FilterInfo.CATEGORY));
                             }
 
 
                         }else if (categoryInfo.getId()==13&&categoryInfo.getSub_cats()!=null){
                             for (CategoryInfo Info:categoryInfo.getSub_cats()){
-                                lightDevices.add(new FilterInfo( Info.getId(),Info.getTitle_en()));
+                                lightDevices.add(new FilterInfo( Info.getId(),Info.getTitle_en(),null,FilterInfo.CATEGORY));
                             }
 
                         }
@@ -154,7 +158,7 @@ public class Filter extends Fragment {
 
                 if (brandInfos!=null){
                     for (BrandInfo Info:brandInfos){
-                        brandInfoList.add(new FilterInfo(Info.getId(),Info.getTitle_en()) );
+                        brandInfoList.add(new FilterInfo(Info.getId(),Info.getTitle_en(),null,FilterInfo.BRAND) );
                     }
                     isBrandCatDone=true;
                     progress();
@@ -171,6 +175,7 @@ public class Filter extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        clear();
         productViewModel.getProductFilter();
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
         productViewModel.getBrandCategoriesLiveData().observe(this,brandCategoriesObserver);
@@ -215,13 +220,13 @@ public class Filter extends Fragment {
 
         navController= Navigation.findNavController(view);
 
-        priceRange_select.add(new FilterInfo(0,priceRange.get(0)));
+        priceRange_select.add(new FilterInfo(0,priceRange.get(0),null,FilterInfo.CATEGORY));
 
         heavy_layout.setOnClickListener(v -> {
 
 
 
-            create_dialog("Heavy Machines",heavyMachines,heavyMachines_select,heavy_choice,FILTER);
+            create_dialog("Heavy Machines",heavyMachines,categories_select,heavy_choice,FILTER);
 
         });
 
@@ -229,7 +234,7 @@ public class Filter extends Fragment {
 
 
 
-            create_dialog("Light Devices",lightDevices,lightDevices_select,light_choice,FILTER);
+            create_dialog("Light Devices",lightDevices,categories_select,light_choice,FILTER);
 
         });
 
@@ -247,12 +252,12 @@ public class Filter extends Fragment {
 
             List<FilterInfo>items=new ArrayList<>();
 
-            items.add(new FilterInfo(0,priceRange.get(0)) );
-            items.add(new FilterInfo(1000,priceRange.get(1)) );
-            items.add(new FilterInfo(3000,priceRange.get(2)) );
-            items.add(new FilterInfo(6000,priceRange.get(3)) );
-            items.add(new FilterInfo(10000,priceRange.get(4)) );
-            items.add(new FilterInfo(20000,priceRange.get(5)) );
+            items.add(new FilterInfo(0,priceRange.get(0),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(1000,priceRange.get(1),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(3000,priceRange.get(2),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(6000,priceRange.get(3),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(10000,priceRange.get(4),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(20000,priceRange.get(5),null,FilterInfo.CATEGORY) );
 
 
 
@@ -264,15 +269,20 @@ public class Filter extends Fragment {
 
         apply.setOnClickListener(v -> {
 
-            List<FilterInfo> catIDList=new ArrayList<>();
-            catIDList.addAll(heavyMachines_select);
-            catIDList.addAll(lightDevices_select);
 
-            productViewModel.setFilter(catIDList,brandInfoList_select,priceRange_select.get(0).getId(),false);
 
-            navController.navigate(R.id.action_filter_to_productList);
+            productViewModel.setFilter(categories_select,brandInfoList_select,priceRange_select.get(0).getId(),false);
+
+            navController.navigate(R.id.action_global_productList);
 
         });
+
+
+        clear_choices.setOnClickListener(v -> {
+            clear();
+        });
+
+
 
 
     }
@@ -326,6 +336,27 @@ public class Filter extends Fragment {
 
     }
 
+
+
+    private void clear(){
+
+        if( productViewModel.getFilterOption()!=null){
+            categories_select.clear();
+            brandInfoList_select.clear();
+            priceRange_select.clear();
+
+            categories_select.addAll(productViewModel.getFilterOption().getCategoriesID());
+            brandInfoList_select.addAll(productViewModel.getFilterOption().getBrandID());
+            priceRange_select.add(new FilterInfo(productViewModel.getFilterOption().getPriceRange(),null,null,FilterInfo.CATEGORY));
+
+
+
+        }
+
+
+
+
+    }
 
 
 }

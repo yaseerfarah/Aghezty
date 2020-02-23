@@ -126,5 +126,8 @@ dependencies {
     //Photo Viewer
     implementation 'com.ablanco.zoomy:zoomy:1.1.0'
 
+    //state-ful layout
+    implementation 'com.github.gturedi:stateful-layout:1.2.1'
+
 
 }

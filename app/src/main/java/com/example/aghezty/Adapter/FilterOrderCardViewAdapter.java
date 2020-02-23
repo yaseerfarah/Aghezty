@@ -99,7 +99,7 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
 
             for (FilterInfo filterInfo:itemListPrevSelected){
 
-                if (itemList.get(holder.getAdapterPosition()).getName().matches(filterInfo.getName())){
+                if (itemList.get(holder.getAdapterPosition()).getId()==filterInfo.getId()){
                     holder.radioButton.setChecked(true);
                 }
             }

@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.R;
+import com.example.aghezty.Util.ProductDiffUtil;
 import com.example.aghezty.View.Home;
 
 import java.text.NumberFormat;
@@ -59,6 +61,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
         this.products = products;
         this.type = type;
         this.navController = navController;
+
     }
 
     @NonNull
@@ -92,10 +95,9 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
             holder.soldOut.setVisibility(View.VISIBLE);
         }*/
 
-      holder.pro_image.setImageDrawable(null);
-      holder.progressBar.setVisibility(View.VISIBLE);
 
         Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image())
+                .error(Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image()))
                 .apply(RequestOptions.timeoutOf(60*1000))
                 .into(new SimpleTarget<Drawable>() {
                     @Override
@@ -174,6 +176,8 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
 
 
+
+
     @Override
     public int getItemCount() {
         return products.size();
@@ -181,7 +185,27 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
 
 
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
 
+        products.clear();
+
+        updateProductList(products);
+
+       // Toast.makeText(context,"hi",Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void updateProductList(List<ProductInfo> productInfos){
+        ProductDiffUtil productDiffUtil=new ProductDiffUtil(context,this.products,productInfos);
+        DiffUtil.DiffResult diffResult=DiffUtil.calculateDiff(productDiffUtil);
+
+        this.products.clear();
+        this.products.addAll(productInfos);
+        diffResult.dispatchUpdatesTo(this);
+
+    }
 
 
 

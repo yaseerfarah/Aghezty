@@ -22,6 +22,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.R;
+import com.example.aghezty.View.Filter;
 import com.example.aghezty.ViewModel.ProductViewModel;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import java.util.List;
 public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardViewAdapter.Cat_holder>  {
 
     private Context context;
-    private List<CategoryInfo> categoryInfoList;
+    private List<FilterInfo> categoryInfoList;
     static public   final int BEST_CATEGORIES=1;
     static public   final int CATEGORIES=2;
     private NavController navController;
@@ -39,7 +40,7 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
     private int type;
 
 
-    public CategoryCardViewAdapter(Context context, List<CategoryInfo> category, NavController navController, ProductViewModel productViewModel, int type) {
+    public CategoryCardViewAdapter(Context context, List<FilterInfo> category, NavController navController, ProductViewModel productViewModel, int type) {
         this.context = context;
         this.categoryInfoList=category;
         this.type=type;
@@ -68,7 +69,7 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
     public void onBindViewHolder(@NonNull Cat_holder holder, int position) {
 
 
-        Glide.with(context).load(categoryInfoList.get(holder.getAdapterPosition()).getImage()).into(new SimpleTarget<Drawable>() {
+        Glide.with(context).load(categoryInfoList.get(holder.getAdapterPosition()).getImageUrl()).into(new SimpleTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
 
@@ -78,15 +79,24 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
         });
 
 
-        holder.textView.setText(categoryInfoList.get(holder.getAdapterPosition()).getTitle_en());
+        holder.textView.setText(categoryInfoList.get(holder.getAdapterPosition()).getName());
 
 
         holder.cardView.setOnClickListener(v -> {
-            List<FilterInfo> categoryID=new ArrayList<>();
-            categoryID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(),categoryInfoList.get(holder.getAdapterPosition()).getTitle_en()) );
-            productViewModel.setFilter(categoryID,null,ProductViewModel.ALL,false);
-            navController.navigate(R.id.action_global_productList);
+            if (categoryInfoList.get(holder.getAdapterPosition()).getType()==FilterInfo.CATEGORY) {
 
+                List<FilterInfo> categoryID = new ArrayList<>();
+                categoryID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName(), null, FilterInfo.CATEGORY));
+                productViewModel.setFilter(categoryID, null, ProductViewModel.ALL, false);
+                navController.navigate(R.id.action_global_productList);
+
+            }else {
+
+                List<FilterInfo> brandID = new ArrayList<>();
+                brandID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName(), null, FilterInfo.BRAND));
+                productViewModel.setFilter(null, brandID, ProductViewModel.ALL, false);
+                navController.navigate(R.id.action_global_productList);
+            }
         });
 
 
