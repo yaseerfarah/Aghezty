@@ -191,10 +191,14 @@ public class ProductInfo implements Parcelable {
 
     public boolean compare(ProductInfo productInfo){
 
-        if (productInfo.getTitle_en().trim().matches(getTitle_en().trim())&&productInfo.getStock()==getStock()&&productInfo.getPrice_after_discount()==getPrice_after_discount()&&productInfo.getPrice()==getPrice()){
+       try {
+           if (productInfo.getTitle_en().trim().matches(getTitle_en().trim())&&productInfo.getStock()==getStock()&&productInfo.getPrice_after_discount()==getPrice_after_discount()&&productInfo.getPrice()==getPrice()){
 
-            return true;
-        }
+               return true;
+           }
+       }catch (Exception  e){
+           return false;
+       }
         return false;
 
     }

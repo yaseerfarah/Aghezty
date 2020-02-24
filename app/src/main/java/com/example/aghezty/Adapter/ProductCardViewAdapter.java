@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,14 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestFutureTarget;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.R;
@@ -82,11 +89,15 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
     }
 
 
-
-
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull final Pro_holder holder, final int position) {
+
+
 
 
 
@@ -99,14 +110,22 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
         Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image())
                 .error(Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image()))
                 .apply(RequestOptions.timeoutOf(60*1000))
-                .into(new SimpleTarget<Drawable>() {
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                        holder.pro_image.setImageDrawable(resource);
-
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.e(getClass().getName(),e.getMessage());
+                        Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        return false;
                     }
-                });
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        return false;
+                    }
+                })
+                .into(holder.pro_image);
 
 
        /* if(type==HOME){

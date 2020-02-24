@@ -125,6 +125,9 @@ public class ProductViewModel extends ViewModel {
 
             disposables.add(agheztyApi.getSpecificProduct(filter,1)
                     .subscribeOn(Schedulers.io())
+                    .doOnError(throwable -> {
+
+                    })
                     .map(retrofit2.Response::body)
                     .map(productFilterResponse -> {
 
@@ -146,6 +149,7 @@ public class ProductViewModel extends ViewModel {
 
                         this.productFilterData=productFilterData1;
                         productFilterDataLiveData.postValue(productFilterData);
+
 
                     }, this::onError)
 
@@ -245,6 +249,8 @@ public class ProductViewModel extends ViewModel {
 
             );
 
+        }else {
+            parentCategoriesLiveData.postValue(parentCategoriesInfoList);
         }
 
     }
@@ -269,6 +275,8 @@ public class ProductViewModel extends ViewModel {
 
             );
 
+        }else {
+            brandCategoriesLiveData.postValue(brandCategoriesInfoList);
         }
 
     }
@@ -277,11 +285,11 @@ public class ProductViewModel extends ViewModel {
 
 
     public void setFilter(List<FilterInfo> categoryID, List<FilterInfo> brandID, int priceRange, boolean offers){
-        filterOption=new FilterOption();
+        clearFilter();
         filterOption.setOffer(offers);
         filterOption.setPriceRange(priceRange);
 
-        clearFilter();
+
 
         if (categoryID!=null){
             filterOption.setCategoriesID(categoryID);
@@ -341,18 +349,24 @@ public class ProductViewModel extends ViewModel {
 
         if (offers){
             filter.put("offer","offer");
+
         }
 
 
     }
 
-    public void clearFilter(){
+    private void clearFilter(){
+        filterOption=new FilterOption();
         filter.clear();
         productFilterDataLiveData=new MediatorLiveData<>();
 
     }
 
 
+    public void clearApiCall(){
+        disposables.clear();
+        //Toast.makeText(context,"Clear",Toast.LENGTH_SHORT).show();
+    }
 
     private void onProductFilterNext(ProductFilterData productFilterData1) {
 
@@ -389,9 +403,13 @@ public class ProductViewModel extends ViewModel {
 
 
 
+
+
+
     @Override
     protected void onCleared() {
         super.onCleared();
-        disposables.clear();
+        //Toast.makeText(context,"Clear",Toast.LENGTH_SHORT).show();
+       // disposables.clear();
     }
 }

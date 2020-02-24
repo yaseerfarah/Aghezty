@@ -2,7 +2,6 @@ package com.example.aghezty.View;
 
 
 import android.app.Dialog;
-import android.app.MediaRouteButton;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -36,8 +35,6 @@ import android.widget.Toast;
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
 import com.example.aghezty.Adapter.ProductCardViewAdapter;
 import com.example.aghezty.POJO.FilterInfo;
-import com.example.aghezty.POJO.HomeData;
-import com.example.aghezty.POJO.HomeRecylerData;
 import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.R;
@@ -59,8 +56,7 @@ import static com.example.aghezty.Adapter.ProductCardViewAdapter.LIST;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductList extends Fragment {
-
+public class Offers extends Fragment {
 
 
     @Inject
@@ -85,14 +81,17 @@ public class ProductList extends Fragment {
     private ProgressBar progressBar;
 
 
-    public ProductList() {
+    public Offers() {
 
         listObserver=new Observer<ProductFilterData>() {
             @Override
             public void onChanged(ProductFilterData productFilterData1) {
+
+                progressBar.setVisibility(View.INVISIBLE);
+
                 if (productFilterData1!=null) {
                     productFilterData = productFilterData1;
-                   // productInfoList.clear();
+                    // productInfoList.clear();
                     //productInfoList.addAll(productFilterData1.getProductList());
                     //productCardViewAdapter.notifyDataSetChanged();
 
@@ -100,7 +99,7 @@ public class ProductList extends Fragment {
 
 
                     isLoading = false;
-                   // Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(),"onchange",Toast.LENGTH_SHORT).show();
                     root.setVisibility(View.VISIBLE);
 
                     if (productFilterData.getProductList().size()>0){
@@ -117,9 +116,7 @@ public class ProductList extends Fragment {
 
                     statefulLayout.showEmpty("No Data");
                 }
-                progressBar.post(() -> {
-                    progressBar.setVisibility(View.INVISIBLE);
-                });
+
 
 
 
@@ -133,9 +130,10 @@ public class ProductList extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        //productViewModel.setFilter(null,null,ProductViewModel.ALL,true);
         productViewModel.getProductFilter();
         productViewModel.getProductFilterLiveData().observe(this,listObserver);
-
+        //Toast.makeText(getContext(),"OnStart",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -143,7 +141,7 @@ public class ProductList extends Fragment {
     public void onResume() {
         super.onResume();
 
-       // Toast.makeText(getContext(),String.valueOf(productCardViewAdapter.getItemCount()),Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getContext(),String.valueOf(productCardViewAdapter.getItemCount()),Toast.LENGTH_SHORT).show();
 
 
     }
@@ -153,7 +151,7 @@ public class ProductList extends Fragment {
         super.onStop();
         productViewModel.getProductFilterLiveData().removeObservers(this);
         listRecycler.setAdapter(null);
-       // Toast.makeText(getContext(),"onChange",Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -173,7 +171,7 @@ public class ProductList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_product_list, container, false);
+        return inflater.inflate(R.layout.fragment_offers, container, false);
 
     }
 
@@ -181,7 +179,7 @@ public class ProductList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       // Toast.makeText(getContext(),"onViewCreated",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getContext(),"onViewCreated",Toast.LENGTH_SHORT).show();
         orderBy=view.findViewById(R.id.order_by);
         filterBy=view.findViewById(R.id.filter_by);
         statefulLayout=view.findViewById(R.id.stateful);
@@ -204,6 +202,9 @@ public class ProductList extends Fragment {
             progressBar.setVisibility(View.VISIBLE);*/
 
         listRecycler.setAdapter(productCardViewAdapter);
+        //listRecycler.setItemViewCacheSize(0);
+
+        listRecycler.getRecycledViewPool().setMaxRecycledViews(0,1000);
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -214,6 +215,7 @@ public class ProductList extends Fragment {
 
         listRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
         listRecycler.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(5,getResources()),GridSpacingItemDecoration.ListLayout,displayWidth,(int)getResources().getDimension(R.dimen.list_card_width)));
+
 
 
 
@@ -246,8 +248,8 @@ public class ProductList extends Fragment {
 
         filterBy.setOnClickListener(v -> {
             Bundle bundle=new Bundle();
-            bundle.putBoolean(Filter.IS_OFFERS,false);
-            navController.navigate(R.id.action_productList_to_filter,bundle);
+            bundle.putBoolean(Filter.IS_OFFERS,true);
+            navController.navigate(R.id.action_offers_to_filter,bundle);
 
         });
 
@@ -257,7 +259,6 @@ public class ProductList extends Fragment {
             orderByDialog();
 
         });
-
 
 
     }
@@ -277,7 +278,6 @@ public class ProductList extends Fragment {
         }
 
     }
-
 
 
 
@@ -320,6 +320,7 @@ public class ProductList extends Fragment {
 
 
     }
+
 
 
 

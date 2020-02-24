@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -168,6 +169,7 @@ public class ProductDetails extends Fragment {
             }
         };
 
+        if (sliderInfoList.isEmpty())
         productViewModel.getInnerProductByID(productInfo,innerProductListener);
 
     }
@@ -243,6 +245,7 @@ public class ProductDetails extends Fragment {
 
         if (productInfo.getRates()!=null){
             toggleState(detailsToggle,evaluationToggle,productInfo);
+
         }else {
             evaluationToggle.setEnabled(false);
             detailsToggle.setEnabled(false);
@@ -282,10 +285,20 @@ public class ProductDetails extends Fragment {
 
     private void toggleState(ToggleButton detailsToggle,ToggleButton evaluationToggle,ProductInfo productInfo){
 
+        evaluationToggle.setEnabled(true);
+        detailsToggle.setEnabled(false);
+        pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
+        details_layout.setVisibility(View.VISIBLE);
+
         detailsToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             if (isChecked){
                 evaluationToggle.setChecked(false);
+                evaluationToggle.setTextColor(getResources().getColor(R.color.black));
+                detailsToggle.setTextColor(getResources().getColor(R.color.orange));
+                evaluationToggle.setEnabled(true);
+                detailsToggle.setEnabled(false);
+
                 evaluation_layout.setVisibility(View.GONE);
                 details_layout.setVisibility(View.VISIBLE);
 
@@ -299,15 +312,27 @@ public class ProductDetails extends Fragment {
 
             if (isChecked){
                 detailsToggle.setChecked(false);
+                detailsToggle.setTextColor(getResources().getColor(R.color.black));
+                evaluationToggle.setTextColor(getResources().getColor(R.color.orange));
+                evaluationToggle.setEnabled(false);
+                detailsToggle.setEnabled(true);
+
                 details_layout.setVisibility(View.GONE);
                 evaluation_layout.setVisibility(View.VISIBLE);
 
                 pro_rate.setText(productInfo.getStars()+"/5");
+                rateStar.setRating(productInfo.getStars());
                 pro_rateNumber.setText(String.valueOf(productInfo.getRates().size()));
                 assignSeekBar(productInfo.getRates());
             }
 
         });
+
+
+
+
+
+
 
     }
 
@@ -315,7 +340,7 @@ public class ProductDetails extends Fragment {
 
     private void assignSeekBar(List<Rate> rateList){
 
-        int[] rates=new int[4];
+        int[] rates=new int[5];
 
         for (Rate rate:rateList){
 
@@ -343,12 +368,24 @@ public class ProductDetails extends Fragment {
                     break;
             }
         }
+        rate1.setMax(rateList.size());
+        rate2.setMax(rateList.size());
+        rate3.setMax(rateList.size());
+        rate4.setMax(rateList.size());
+        rate5.setMax(rateList.size());
 
         rate1.setProgress(rates[0]);
         rate2.setProgress(rates[1]);
         rate3.setProgress(rates[2]);
         rate4.setProgress(rates[3]);
         rate5.setProgress(rates[4]);
+
+        rate1.setOnTouchListener((v, event) -> true);
+        rate2.setOnTouchListener((v, event) -> true);
+        rate3.setOnTouchListener((v, event) -> true);
+        rate4.setOnTouchListener((v, event) -> true);
+        rate5.setOnTouchListener((v, event) -> true);
+
 
     }
 

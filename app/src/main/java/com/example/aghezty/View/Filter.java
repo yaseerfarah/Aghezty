@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
 import com.example.aghezty.POJO.BrandInfo;
@@ -36,6 +37,7 @@ import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.StatefulLayout;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ import static com.example.aghezty.Adapter.FilterOrderCardViewAdapter.ORDER;
 public class Filter extends Fragment {
 
 
+    static public final String IS_OFFERS="isOffers";
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -110,10 +113,10 @@ public class Filter extends Fragment {
     Button apply;
 
 
-    @BindView(R.id.prog)
-    ProgressBar progressBar;
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
 
-
+    boolean isOffers;
 
 
 
@@ -147,6 +150,8 @@ public class Filter extends Fragment {
                     isparentCatDone=true;
                     progress();
 
+
+
                 }
             }
 
@@ -162,6 +167,8 @@ public class Filter extends Fragment {
                     }
                     isBrandCatDone=true;
                     progress();
+
+
                 }
 
             }
@@ -176,7 +183,9 @@ public class Filter extends Fragment {
     public void onStart() {
         super.onStart();
         clear();
-        productViewModel.getProductFilter();
+        statefulLayout.showLoading(" ");
+        productViewModel.getParentCategories();
+        productViewModel.getBrandCategories();
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
         productViewModel.getBrandCategoriesLiveData().observe(this,brandCategoriesObserver);
 
@@ -197,7 +206,7 @@ public class Filter extends Fragment {
         AndroidSupportInjection.inject(this);
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
         priceRange= Arrays.asList(getResources().getStringArray(R.array.price_range_filter));
-
+        isOffers=getArguments().getBoolean(IS_OFFERS);
     }
 
 
@@ -215,7 +224,7 @@ public class Filter extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
 
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
+       // progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
 
         navController= Navigation.findNavController(view);
@@ -269,11 +278,13 @@ public class Filter extends Fragment {
 
         apply.setOnClickListener(v -> {
 
-
-
             productViewModel.setFilter(categories_select,brandInfoList_select,priceRange_select.get(0).getId(),false);
 
-            navController.navigate(R.id.action_global_productList);
+            if (isOffers) {
+                navController.navigate(R.id.action_global_offers);
+            }else {
+                navController.navigate(R.id.action_global_productList);
+            }
 
         });
 
@@ -292,8 +303,7 @@ public class Filter extends Fragment {
 
         if (isBrandCatDone&&isparentCatDone){
 
-            progressBar.setVisibility(View.GONE);
-            root.setVisibility(View.VISIBLE);
+          statefulLayout.showContent();
 
         }
     }

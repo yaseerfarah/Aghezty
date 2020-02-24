@@ -1,10 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".View.ProductList"
-    android:background="@color/white">
+    tools:context=".View.Offers">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -161,36 +161,36 @@
 
 
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scroll"
-            android:layout_below="@+id/home_bar"
-            >
-
-            <RelativeLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/root"
+                android:id="@+id/scroll"
+                android:layout_below="@+id/home_bar"
                 >
 
-
-                <androidx.recyclerview.widget.RecyclerView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/list_recyclerview"
+                    android:id="@+id/root"
                     >
 
-                </androidx.recyclerview.widget.RecyclerView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/list_recyclerview"
+                        >
+
+                    </androidx.recyclerview.widget.RecyclerView>
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
 
 
-        </androidx.core.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </com.gturedi.views.StatefulLayout>
 
@@ -210,4 +210,3 @@
     </RelativeLayout>
 
 </FrameLayout>
-

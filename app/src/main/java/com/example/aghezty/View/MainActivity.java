@@ -75,12 +75,13 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                 try {
                     //TODO provide proper API instead of using Exceptions as Control-Flow.
 
-                    if (menuItem.getItemId()==R.id.productList){
+                    if (menuItem.getItemId()==R.id.offers){
                         productViewModel.setFilter(null,null,ProductViewModel.ALL,true);
 
                     }
 
                     if (navController.getCurrentDestination().getId()!=menuItem.getItemId()) {
+                        productViewModel.clearApiCall();
                         navController.navigate(menuItem.getItemId(), null, options);
                     }
 

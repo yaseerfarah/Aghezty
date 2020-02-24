@@ -121,8 +121,7 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     @Override
     public void onStart() {
         super.onStart();
-
-        productViewModel.getProductFilter();
+        parentCategoriesList.clear();
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
         productViewModel.getBrandCategoriesLiveData().observe(this,brandCategoriesObserver);
 
@@ -133,7 +132,7 @@ public class Categories extends Fragment implements OnParentCategoryClick {
         super.onStop();
         productViewModel.getParentCategoriesLiveData().removeObservers(this);
         productViewModel.getBrandCategoriesLiveData().removeObservers(this);
-        parentCategoriesList.clear();
+
     }
 
 
@@ -195,7 +194,6 @@ public class Categories extends Fragment implements OnParentCategoryClick {
             getSubCategory(id);
 
         }else {
-
             getSubBrand();
         }
 
