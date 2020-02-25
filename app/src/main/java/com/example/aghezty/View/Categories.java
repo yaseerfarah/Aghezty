@@ -57,6 +57,8 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     private Observer brandCategoriesObserver;
     private NavController navController;
 
+    boolean isparentCatDone=false;
+    boolean isBrandCatDone=false;
 
     private List<FilterInfo> parentCategoriesList=new ArrayList<>();
     private List<FilterInfo> categoriesList=new ArrayList<>();
@@ -84,7 +86,7 @@ public class Categories extends Fragment implements OnParentCategoryClick {
         parentCategoriesObserver=new Observer<List<CategoryInfo>>() {
             @Override
             public void onChanged(List<CategoryInfo> categoryInfos) {
-                if (categoryInfos!=null){
+                if (categoryInfos!=null&&!isparentCatDone){
                     parentSubCategoryList=categoryInfos;
                   for (CategoryInfo categoryInfo:categoryInfos){
 
@@ -93,9 +95,11 @@ public class Categories extends Fragment implements OnParentCategoryClick {
                   }
 
                   parentCategoryCardViewAdapter.notifyDataSetChanged();
-                    statefulLayout.showContent();
+                  isparentCatDone=true;
+
 
                 }
+                progress();
             }
 
         };
@@ -103,13 +107,16 @@ public class Categories extends Fragment implements OnParentCategoryClick {
         brandCategoriesObserver=new Observer<List<BrandInfo>>() {
             @Override
             public void onChanged(List<BrandInfo> brandInfos) {
-                brandSubCategoryList=brandInfos;
-                parentCategoriesList.add(new FilterInfo(0,"Brand",null,FilterInfo.BRAND));
+                if (brandInfos != null && !isBrandCatDone) {
+                    brandSubCategoryList = brandInfos;
+                    parentCategoriesList.add(new FilterInfo(0, "Brand", null, FilterInfo.BRAND));
 
-                parentCategoryCardViewAdapter.notifyDataSetChanged();
-                statefulLayout.showContent();
+                    parentCategoryCardViewAdapter.notifyDataSetChanged();
+                    isBrandCatDone=true;
+
+                }
+                progress();
             }
-
 
         };
 
@@ -121,10 +128,10 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     @Override
     public void onStart() {
         super.onStart();
-        parentCategoriesList.clear();
+        productViewModel.getBrandCategories();
+        productViewModel.getParentCategories();
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
         productViewModel.getBrandCategoriesLiveData().observe(this,brandCategoriesObserver);
-
     }
 
     @Override
@@ -232,7 +239,14 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     }
 
 
+    private void progress(){
 
+        if (isBrandCatDone&&isparentCatDone){
+
+            statefulLayout.showContent();
+
+        }
+    }
 
 
 

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -171,6 +172,7 @@ public class Home extends Fragment {
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
 
+
         sliderAdapter=new SliderAdapter(getContext(),sliderInfoList,getActivity(),HOME);
         categoryCardViewAdapter=new CategoryCardViewAdapter(getContext(),categoryInfoList,navController,productViewModel,CategoryCardViewAdapter.BEST_CATEGORIES);
         horizontalRecyclerCardViewAdapter=new HorizontalRecyclerCardViewAdapter(getContext(),homeRecylerDataList,navController,getResources());
@@ -212,6 +214,16 @@ public class Home extends Fragment {
             }
         });
 
+
+
+        // Finch App if Back Button Pressed
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        });
 
 
     }

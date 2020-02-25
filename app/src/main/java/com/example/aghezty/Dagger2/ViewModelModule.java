@@ -5,7 +5,9 @@ import android.content.Context;
 import androidx.lifecycle.ViewModel;
 
 import com.example.aghezty.Data.AgheztyApi;
+import com.example.aghezty.Data.SharedPreferencesMethod;
 import com.example.aghezty.ViewModel.ProductViewModel;
+import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 
 import java.lang.annotation.ElementType;
@@ -47,6 +49,16 @@ public class ViewModelModule {
     @ViewModelKey(ProductViewModel.class)
     ViewModel productViewModel(Context context, AgheztyApi agheztyApi) {
         return new ProductViewModel(context,agheztyApi);
+    }
+
+
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @ViewModelKey(UserViewModel.class)
+    ViewModel userViewModel(Context context, SharedPreferencesMethod sharedPreferencesMethod) {
+        return new UserViewModel(context,sharedPreferencesMethod);
     }
 
 

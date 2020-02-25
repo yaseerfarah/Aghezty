@@ -58,6 +58,7 @@ public class ProductViewModel extends ViewModel {
     private List<BrandInfo> brandCategoriesInfoList;
     private HashMap<String,Object> filter;
     private FilterOption filterOption;
+    private boolean isFilter=false;
 
 
     @Inject
@@ -95,6 +96,10 @@ public class ProductViewModel extends ViewModel {
         return filterOption;
     }
 
+    public boolean isFilter() {
+        return isFilter;
+    }
+
     public void getHomeData(){
 
 
@@ -117,44 +122,42 @@ public class ProductViewModel extends ViewModel {
 
     public void getProductFilter(){
 
-      /*  if (filter.isEmpty()){
-            filter.put("offer","offer");
-        }
-*/
+      if (isFilter) {
+
+          disposables.add(agheztyApi.getSpecificProduct(filter, 1)
+                  .subscribeOn(Schedulers.io())
+                  .doOnError(throwable -> {
+
+                  })
+                  .map(retrofit2.Response::body)
+                  .map(productFilterResponse -> {
+
+                      ProductFilterData productFilterData = productFilterResponse.getProductFilterData();
+
+                      if (productFilterData.getNext_url() != null) {
+                          productFilterData.setHasNext(true);
+                      } else {
+                          productFilterData.setHasNext(false);
+                      }
 
 
-            disposables.add(agheztyApi.getSpecificProduct(filter,1)
-                    .subscribeOn(Schedulers.io())
-                    .doOnError(throwable -> {
+                      productFilterData.setPage(1);
+                      return productFilterData;
 
-                    })
-                    .map(retrofit2.Response::body)
-                    .map(productFilterResponse -> {
+                  })
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(productFilterData1 -> {
 
-                        ProductFilterData productFilterData=productFilterResponse.getProductFilterData();
-
-                        if (productFilterData.getNext_url() != null) {
-                            productFilterData.setHasNext(true);
-                        } else {
-                            productFilterData.setHasNext(false);
-                        }
+                      this.productFilterData = productFilterData1;
+                      productFilterDataLiveData.postValue(productFilterData);
+                      isFilter = false;
 
 
-                        productFilterData.setPage(1);
-                        return productFilterData;
+                  }, this::onError)
 
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(productFilterData1 -> {
+          );
 
-                        this.productFilterData=productFilterData1;
-                        productFilterDataLiveData.postValue(productFilterData);
-
-
-                    }, this::onError)
-
-            );
-
+      }
 
     }
 
@@ -352,6 +355,7 @@ public class ProductViewModel extends ViewModel {
 
         }
 
+        isFilter=true;
 
     }
 

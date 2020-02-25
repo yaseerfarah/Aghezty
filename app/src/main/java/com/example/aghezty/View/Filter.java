@@ -127,7 +127,7 @@ public class Filter extends Fragment {
         parentCategoriesObserver=new Observer<List<CategoryInfo>>() {
             @Override
             public void onChanged(List<CategoryInfo> categoryInfos) {
-                if (categoryInfos!=null){
+                if (categoryInfos!=null&&!isparentCatDone){
 
                     for (CategoryInfo categoryInfo:categoryInfos){
 
@@ -161,7 +161,7 @@ public class Filter extends Fragment {
             @Override
             public void onChanged(List<BrandInfo> brandInfos) {
 
-                if (brandInfos!=null){
+                if (brandInfos!=null&&!isBrandCatDone){
                     for (BrandInfo Info:brandInfos){
                         brandInfoList.add(new FilterInfo(Info.getId(),Info.getTitle_en(),null,FilterInfo.BRAND) );
                     }
@@ -183,7 +183,7 @@ public class Filter extends Fragment {
     public void onStart() {
         super.onStart();
         clear();
-        statefulLayout.showLoading(" ");
+
         productViewModel.getParentCategories();
         productViewModel.getBrandCategories();
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
@@ -226,6 +226,7 @@ public class Filter extends Fragment {
 
        // progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
+        statefulLayout.showLoading(" ");
 
         navController= Navigation.findNavController(view);
 
@@ -281,9 +282,11 @@ public class Filter extends Fragment {
             productViewModel.setFilter(categories_select,brandInfoList_select,priceRange_select.get(0).getId(),false);
 
             if (isOffers) {
-                navController.navigate(R.id.action_global_offers);
+               // navController.navigate(R.id.action_global_offers);
+                navController.navigateUp();
             }else {
-                navController.navigate(R.id.action_global_productList);
+                //navController.navigate(R.id.action_global_productList);
+                navController.navigateUp();
             }
 
         });
@@ -326,10 +329,12 @@ public class Filter extends Fragment {
 
         recyclerView.setAdapter(filterOrderCardViewAdapter);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setHasFixedSize(true);
 
         done.setOnClickListener(v -> {
             selected.clear();
             selected.addAll(filterOrderCardViewAdapter.getItemListSelected());
+           // Toast.makeText(getContext(),String.valueOf(categories_select.size()),Toast.LENGTH_SHORT).show();
             if (!selected.isEmpty()) {
                 choice.setText(selected.get(0).getName());
             }else {

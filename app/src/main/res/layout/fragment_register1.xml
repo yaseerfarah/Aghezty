@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".View.Register1">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.github.florent37.shapeofview.shapes.DiagonalView
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:id="@+id/shape_top"
+            app:shape_diagonal_angle="12"
+            app:shape_diagonal_direction="left"
+            app:shape_diagonal_position="bottom"
+            android:background="@color/dark_blue"
+            >
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/orange"
+                />
+
+
+        </com.github.florent37.shapeofview.shapes.DiagonalView>
+
+
+
+
+        <com.github.florent37.shapeofview.shapes.DiagonalView
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:id="@+id/shape_down"
+            app:shape_diagonal_angle="12"
+            app:shape_diagonal_direction="right"
+            app:shape_diagonal_position="top"
+            android:layout_alignParentBottom="true"
+            >
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/orange"
+                />
+
+
+        </com.github.florent37.shapeofview.shapes.DiagonalView>
+
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:layout_centerInParent="true"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginLeft="30dp"
+
+            >
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign Up"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="23sp"
+                    android:id="@+id/sign_up"
+
+                    android:layout_centerInParent="true"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/first_info"
+                    android:layout_below="@+id/sign_up"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="First Name"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:hint="First name"
+                        android:gravity="center"
+                        android:imeOptions="actionNext"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_e"
+                        android:id="@+id/first_edit"
+                        android:inputType="textPersonName"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/last_info"
+                    android:layout_below="@+id/first_info"
+
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Last Name"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:hint="Last Name"
+                        android:gravity="center"
+                        android:imeOptions="actionNext"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_e"
+                        android:id="@+id/last_edit"
+                        android:inputType="textPersonName"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/email_info"
+                    android:layout_below="@+id/last_info"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="E-mail"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:hint="E-mail"
+                        android:gravity="center"
+                        android:imeOptions="actionNext"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_e"
+                        android:id="@+id/email_edit"
+                        android:inputType="textEmailAddress"
+                        />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/phone_info"
+                    android:layout_below="@+id/email_info"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Phone Number"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:hint="Phone Number"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_e"
+                        android:id="@+id/phone_edit"
+                        android:inputType="phone"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:id="@+id/next"
+                    android:layout_below="@+id/phone_info"
+                    android:background="@drawable/button_background"
+                    android:text="Next"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/sign_in"
+                    android:layout_below="@+id/next"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Already have an Account ?"
+                        android:textColor="@color/grey"
+                        android:textSize="15sp"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Sign In"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="15sp"
+
+                        />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+    </RelativeLayout>
+
+</FrameLayout>

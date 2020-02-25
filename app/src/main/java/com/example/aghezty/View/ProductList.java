@@ -3,6 +3,7 @@ package com.example.aghezty.View;
 
 import android.app.Dialog;
 import android.app.MediaRouteButton;
+import android.app.assist.AssistStructure;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -76,13 +78,14 @@ public class ProductList extends Fragment {
     private RelativeLayout orderBy,filterBy;
     private StatefulLayout statefulLayout;
     private RelativeLayout root;
-    private NestedScrollView nestedScrollView;
     private ProductFilterData productFilterData;
 
     private ProductCardViewAdapter productCardViewAdapter;
 
     private List<ProductInfo> productInfoList=new ArrayList<>();
     private ProgressBar progressBar;
+    private boolean isScrolling;
+    private GridLayoutManager productLayout;
 
 
     public ProductList() {
@@ -92,15 +95,12 @@ public class ProductList extends Fragment {
             public void onChanged(ProductFilterData productFilterData1) {
                 if (productFilterData1!=null) {
                     productFilterData = productFilterData1;
-                   // productInfoList.clear();
-                    //productInfoList.addAll(productFilterData1.getProductList());
-                    //productCardViewAdapter.notifyDataSetChanged();
 
                     productCardViewAdapter.updateProductList(productFilterData1.getProductList());
-
-
+                    productInfoList.clear();
+                    productInfoList.addAll(productFilterData1.getProductList());
                     isLoading = false;
-                   // Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
+
                     root.setVisibility(View.VISIBLE);
 
                     if (productFilterData.getProductList().size()>0){
@@ -108,11 +108,6 @@ public class ProductList extends Fragment {
                     }else {
                         statefulLayout.showEmpty("No Match");
                     }
-
-
-
-
-
                 }else {
 
                     statefulLayout.showEmpty("No Data");
@@ -143,8 +138,6 @@ public class ProductList extends Fragment {
     public void onResume() {
         super.onResume();
 
-       // Toast.makeText(getContext(),String.valueOf(productCardViewAdapter.getItemCount()),Toast.LENGTH_SHORT).show();
-
 
     }
 
@@ -152,8 +145,6 @@ public class ProductList extends Fragment {
     public void onStop() {
         super.onStop();
         productViewModel.getProductFilterLiveData().removeObservers(this);
-        listRecycler.setAdapter(null);
-       // Toast.makeText(getContext(),"onChange",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -187,21 +178,19 @@ public class ProductList extends Fragment {
         statefulLayout=view.findViewById(R.id.stateful);
         progressBar=view.findViewById(R.id.prog);
         listRecycler=view.findViewById(R.id.list_recyclerview);
-        nestedScrollView=view.findViewById(R.id.scroll);
         root=view.findViewById(R.id.root);
         statefulLayout.showLoading(" ");
         navController= Navigation.findNavController(view);
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
-
+        productLayout=new GridLayoutManager(getContext(),2);
 
 
 
         productCardViewAdapter=new ProductCardViewAdapter(getContext(),productInfoList,LIST,navController);
 
 
-       /* if (productCardViewAdapter.getItemCount()==0)
-            progressBar.setVisibility(View.VISIBLE);*/
+
 
         listRecycler.setAdapter(productCardViewAdapter);
 
@@ -212,32 +201,41 @@ public class ProductList extends Fragment {
         int displayWidth = displayMetrics.widthPixels;
 
 
-        listRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
+        listRecycler.setLayoutManager(productLayout);
         listRecycler.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(5,getResources()),GridSpacingItemDecoration.ListLayout,displayWidth,(int)getResources().getDimension(R.dimen.list_card_width)));
 
 
 
 
-
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        listRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-                if (scrollY > oldScrollY) {
-                    Log.i(TAG, "Scroll DOWN");
-                }
-                if (scrollY < oldScrollY) {
-                    Log.i(TAG, "Scroll UP");
-                }
+                if (newState== AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
 
-                if (scrollY == 0) {
-                    Log.i(TAG, "TOP SCROLL");
+                    isScrolling=true;
+
                 }
 
-                if ((v.getChildAt(v.getChildCount()-1).getBottom()-(v.getHeight()+v.getScrollY()))==0){
-                    //Log.e("Scroll",(v.getChildAt(v.getChildCount()-1).getBottom())+"-"+v.getHeight()+"+"+v.getScrollY());
-                    // Toast.makeText(getContext(),"bottom",Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int childCount=productLayout.getChildCount();
+                int pastVisibleItem;
+                int totalItem=productLayout.getItemCount();
+
+                pastVisibleItem =productLayout.findFirstVisibleItemPosition();
+
+                if (isScrolling&&((childCount+pastVisibleItem)>=totalItem)){
+
+                    isScrolling=false;
                     onScroll();
+
                 }
 
             }

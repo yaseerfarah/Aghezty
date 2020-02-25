@@ -2,6 +2,7 @@ package com.example.aghezty.Dagger2;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.room.Room;
 
@@ -20,6 +21,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.aghezty.Constants.BASE_URL;
+import static com.example.aghezty.Constants.USER_FILE_NAME;
 
 
 @Module
@@ -30,7 +32,12 @@ public class RepositoryModule {
 
 
 
+    @Provides
+    @Singleton
+    public SharedPreferences sharedPreferences(Context context){
 
+        return context.getSharedPreferences(USER_FILE_NAME,Context.MODE_PRIVATE);
+    }
 
 
     @Provides

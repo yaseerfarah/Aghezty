@@ -97,15 +97,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
     @Override
     public void onBindViewHolder(@NonNull final Pro_holder holder, final int position) {
 
-
-
-
-
-      /*  if (Integer.valueOf(products.get(holder.getAdapterPosition()).getStock())==0){
-            holder.sold_layout.setVisibility(View.VISIBLE);
-            holder.soldOut.setVisibility(View.VISIBLE);
-        }*/
-
+        holder.progressBar.setVisibility(View.VISIBLE);
 
         Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image())
                 .error(Glide.with(context).load(products.get(holder.getAdapterPosition()).getMain_image()))
@@ -204,17 +196,6 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
 
 
-    @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-
-        products.clear();
-
-        updateProductList(products);
-
-       // Toast.makeText(context,"hi",Toast.LENGTH_SHORT).show();
-
-    }
 
     public void updateProductList(List<ProductInfo> productInfos){
         ProductDiffUtil productDiffUtil=new ProductDiffUtil(context,this.products,productInfos);

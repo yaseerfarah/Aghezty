@@ -2,6 +2,7 @@ package com.example.aghezty.View;
 
 
 import android.app.Dialog;
+import android.app.assist.AssistStructure;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -26,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -72,13 +74,14 @@ public class Offers extends Fragment {
     private RelativeLayout orderBy,filterBy;
     private StatefulLayout statefulLayout;
     private RelativeLayout root;
-    private NestedScrollView nestedScrollView;
     private ProductFilterData productFilterData;
 
     private ProductCardViewAdapter productCardViewAdapter;
 
     private List<ProductInfo> productInfoList=new ArrayList<>();
     private ProgressBar progressBar;
+    private boolean isScrolling;
+    private GridLayoutManager productLayout;
 
 
     public Offers() {
@@ -96,7 +99,8 @@ public class Offers extends Fragment {
                     //productCardViewAdapter.notifyDataSetChanged();
 
                     productCardViewAdapter.updateProductList(productFilterData1.getProductList());
-
+                    productInfoList.clear();
+                    productInfoList.addAll(productFilterData1.getProductList());
 
                     isLoading = false;
                     // Toast.makeText(getContext(),"onchange",Toast.LENGTH_SHORT).show();
@@ -108,17 +112,10 @@ public class Offers extends Fragment {
                         statefulLayout.showEmpty("No Match");
                     }
 
-
-
-
-
                 }else {
 
                     statefulLayout.showEmpty("No Data");
                 }
-
-
-
 
             }
         };
@@ -130,10 +127,9 @@ public class Offers extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //productViewModel.setFilter(null,null,ProductViewModel.ALL,true);
         productViewModel.getProductFilter();
         productViewModel.getProductFilterLiveData().observe(this,listObserver);
-        //Toast.makeText(getContext(),"OnStart",Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -150,7 +146,7 @@ public class Offers extends Fragment {
     public void onStop() {
         super.onStop();
         productViewModel.getProductFilterLiveData().removeObservers(this);
-        listRecycler.setAdapter(null);
+
 
     }
 
@@ -179,30 +175,24 @@ public class Offers extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Toast.makeText(getContext(),"onViewCreated",Toast.LENGTH_SHORT).show();
         orderBy=view.findViewById(R.id.order_by);
         filterBy=view.findViewById(R.id.filter_by);
         statefulLayout=view.findViewById(R.id.stateful);
         progressBar=view.findViewById(R.id.prog);
         listRecycler=view.findViewById(R.id.list_recyclerview);
-        nestedScrollView=view.findViewById(R.id.scroll);
         root=view.findViewById(R.id.root);
         statefulLayout.showLoading(" ");
         navController= Navigation.findNavController(view);
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
-
+        productLayout=new GridLayoutManager(getContext(),2);
 
 
 
         productCardViewAdapter=new ProductCardViewAdapter(getContext(),productInfoList,LIST,navController);
 
 
-       /* if (productCardViewAdapter.getItemCount()==0)
-            progressBar.setVisibility(View.VISIBLE);*/
-
         listRecycler.setAdapter(productCardViewAdapter);
-        //listRecycler.setItemViewCacheSize(0);
 
         listRecycler.getRecycledViewPool().setMaxRecycledViews(0,1000);
 
@@ -213,7 +203,7 @@ public class Offers extends Fragment {
         int displayWidth = displayMetrics.widthPixels;
 
 
-        listRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
+        listRecycler.setLayoutManager(productLayout);
         listRecycler.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(5,getResources()),GridSpacingItemDecoration.ListLayout,displayWidth,(int)getResources().getDimension(R.dimen.list_card_width)));
 
 
@@ -221,25 +211,37 @@ public class Offers extends Fragment {
 
 
 
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+
+
+        listRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-                if (scrollY > oldScrollY) {
-                    Log.i(TAG, "Scroll DOWN");
-                }
-                if (scrollY < oldScrollY) {
-                    Log.i(TAG, "Scroll UP");
-                }
+                if (newState== AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
 
-                if (scrollY == 0) {
-                    Log.i(TAG, "TOP SCROLL");
+                    isScrolling=true;
+
                 }
 
-                if ((v.getChildAt(v.getChildCount()-1).getBottom()-(v.getHeight()+v.getScrollY()))==0){
-                    //Log.e("Scroll",(v.getChildAt(v.getChildCount()-1).getBottom())+"-"+v.getHeight()+"+"+v.getScrollY());
-                    // Toast.makeText(getContext(),"bottom",Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int childCount=productLayout.getChildCount();
+                int pastVisibleItem;
+                int totalItem=productLayout.getItemCount();
+
+                pastVisibleItem =productLayout.findFirstVisibleItemPosition();
+
+                if (isScrolling&&((childCount+pastVisibleItem)>=totalItem)){
+
+                    isScrolling=false;
                     onScroll();
+
                 }
 
             }

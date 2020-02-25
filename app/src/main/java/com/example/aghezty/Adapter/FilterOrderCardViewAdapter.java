@@ -59,14 +59,15 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
     @Override
     public void onBindViewHolder(@NonNull Item_holder holder, int position) {
 
+
         if (type==FILTER){
+
 
             for (FilterInfo filterInfo:itemListPrevSelected){
 
-                if (itemList.get(holder.getAdapterPosition()).getName().matches(filterInfo.getName())){
+                if (itemList.get(holder.getAdapterPosition()).getId()==filterInfo.getId()){
                     holder.checkBox.setChecked(true);
                 }
-
             }
 
 
@@ -146,6 +147,7 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
         for(int i=0;i<itemListSelected.size();i++){
             if (itemListSelected.get(i).getId()==filterInfo.getId()){
                 itemListSelected.remove(i);
+              //  Toast.makeText(context,String.valueOf(itemListSelected.size()),Toast.LENGTH_SHORT).show();
             }
 
         }

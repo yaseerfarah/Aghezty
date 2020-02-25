@@ -12,6 +12,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.ProductViewModel;
+import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     ViewModelFactory viewModelFactory;
 
     private ProductViewModel productViewModel;
+    private UserViewModel userViewModel;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         setContentView(R.layout.activity_main);
 
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
+        userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
 
 
         bottomNavigationView=findViewById(R.id.bottom_nav);
@@ -71,18 +75,33 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                 if ((menuItem.getOrder() & Menu.CATEGORY_SECONDARY) == 0) {
                     builder.setPopUpTo(findStartDestination(navController.getGraph()).getId(), false);
                 }
+
                 NavOptions options = builder.build();
                 try {
                     //TODO provide proper API instead of using Exceptions as Control-Flow.
 
-                    if (menuItem.getItemId()==R.id.offers){
-                        productViewModel.setFilter(null,null,ProductViewModel.ALL,true);
-
-                    }
 
                     if (navController.getCurrentDestination().getId()!=menuItem.getItemId()) {
-                        productViewModel.clearApiCall();
-                        navController.navigate(menuItem.getItemId(), null, options);
+
+                        if (menuItem.getItemId()==R.id.cart||menuItem.getItemId()==R.id.profile){
+
+                            if (userViewModel.isLogin()) {
+                                productViewModel.clearApiCall();
+                                navController.navigate(menuItem.getItemId(), null, options);
+                            }
+                            else {
+                                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                                return false;
+                            }
+
+                        }else {
+
+                            productViewModel.clearApiCall();
+                            productViewModel.setFilter(null,null,ProductViewModel.ALL,true);
+                            navController.navigate(menuItem.getItemId(), null, options);
+                        }
+
+
                     }
 
 
@@ -103,14 +122,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                     bottomNavigationView.getMenu().getItem(0).setChecked(true);
 
                 }
-
-
-
-
             }
         });
-
-
 
 
     }

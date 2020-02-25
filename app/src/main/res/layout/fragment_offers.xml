@@ -161,17 +161,13 @@
 
 
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/scroll"
-                android:layout_below="@+id/home_bar"
-                >
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/root"
+                    android:layout_below="@+id/home_bar"
                     >
 
 
@@ -181,6 +177,7 @@
                         android:nestedScrollingEnabled="false"
                         android:layout_marginTop="5dp"
                         android:id="@+id/list_recyclerview"
+
                         >
 
                     </androidx.recyclerview.widget.RecyclerView>
@@ -190,7 +187,6 @@
 
 
 
-            </androidx.core.widget.NestedScrollView>
 
         </com.gturedi.views.StatefulLayout>
 
