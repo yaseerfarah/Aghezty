@@ -11,7 +11,10 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_login_to_register1"
-            app:destination="@id/register1" />
+            app:destination="@id/register1"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/login_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/register1"
@@ -21,6 +24,12 @@
         <action
             android:id="@+id/action_register1_to_register2"
             app:destination="@id/register2" />
+        <action
+            android:id="@+id/action_register1_to_login"
+            app:destination="@id/login"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/login_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/register2"
@@ -28,6 +37,9 @@
         android:label="Register2" >
         <action
             android:id="@+id/action_register2_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/login_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

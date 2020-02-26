@@ -57,8 +57,8 @@ public class ViewModelModule {
     @Singleton
     @IntoMap
     @ViewModelKey(UserViewModel.class)
-    ViewModel userViewModel(Context context, SharedPreferencesMethod sharedPreferencesMethod) {
-        return new UserViewModel(context,sharedPreferencesMethod);
+    ViewModel userViewModel(Context context, SharedPreferencesMethod sharedPreferencesMethod,AgheztyApi agheztyApi) {
+        return new UserViewModel(context,sharedPreferencesMethod,agheztyApi);
     }
 
 

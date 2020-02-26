@@ -16,7 +16,9 @@ import com.example.aghezty.R;
 import com.example.aghezty.View.Filter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrderCardViewAdapter.Item_holder>  {
@@ -29,6 +31,7 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
     private List<FilterInfo> itemListSelected;
     private List<FilterInfo> itemListPrevSelected;
     private List<RadioButton> radioButtons;
+    private Map<Integer,Boolean> checkedHolderPositions=new HashMap<>();
     private int type;
 
 
@@ -40,6 +43,24 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
         this.radioButtons=new ArrayList<>();
         this.itemListPrevSelected=itemListPrevSelected;
         this.itemListSelected.addAll(itemListPrevSelected);
+
+        for (int i=0;i<itemList.size();i++){
+            for (FilterInfo filterInfo:itemListPrevSelected){
+                if (itemList.get(i).getId()==filterInfo.getId()){
+                    checkedHolderPositions.put(i,true);
+                    break;
+                }
+            }
+
+            if (checkedHolderPositions.get(i)==null){
+                checkedHolderPositions.put(i,false);
+            }
+
+        }
+
+
+
+
     }
 
 
@@ -62,14 +83,8 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
 
         if (type==FILTER){
 
-
-            for (FilterInfo filterInfo:itemListPrevSelected){
-
-                if (itemList.get(holder.getAdapterPosition()).getId()==filterInfo.getId()){
-                    holder.checkBox.setChecked(true);
-                }
-            }
-
+            holder.checkBox.setOnCheckedChangeListener(null);
+          holder.checkBox.setChecked(checkedHolderPositions.get(holder.getAdapterPosition()));
 
             holder.radioButton.setVisibility(View.GONE);
             holder.checkBox.setText(itemList.get(holder.getAdapterPosition()).getName());
@@ -78,11 +93,13 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
                 if (isChecked){
 
                     itemListSelected.add(itemList.get(holder.getAdapterPosition()));
+                    checkedHolderPositions.put(holder.getAdapterPosition(),true);
 
                     //Toast.makeText(context,String.valueOf(itemListSelected.size()),Toast.LENGTH_SHORT).show();
                 }else {
 
                     removeitem(itemList.get(holder.getAdapterPosition()));
+                    checkedHolderPositions.put(holder.getAdapterPosition(),false);
                     //itemListSelected.remove(itemList.get(holder.getAdapterPosition()));
                     ///Toast.makeText(context,String.valueOf(itemListSelected.size()),Toast.LENGTH_SHORT).show();
                 }
@@ -122,12 +139,15 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
 
 
     public List<FilterInfo> getItemListSelected() {
+
         return itemListSelected;
     }
 
     @Override
     public int getItemCount() {
+
         return itemList.size();
+
     }
 
 
@@ -147,7 +167,7 @@ public class FilterOrderCardViewAdapter extends RecyclerView.Adapter<FilterOrder
         for(int i=0;i<itemListSelected.size();i++){
             if (itemListSelected.get(i).getId()==filterInfo.getId()){
                 itemListSelected.remove(i);
-              //  Toast.makeText(context,String.valueOf(itemListSelected.size()),Toast.LENGTH_SHORT).show();
+
             }
 
         }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.Register2">
+
+
 
 
 
@@ -57,233 +59,241 @@
         </com.github.florent37.shapeofview.shapes.DiagonalView>
 
 
-
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+        <com.gturedi.views.StatefulLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="10dp"
             android:layout_centerInParent="true"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/white"
             android:layout_marginLeft="30dp"
-
+            android:id="@+id/stateful"
             >
 
-
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
 
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@color/white"
+
+
+                android:id="@+id/cardview"
                 >
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sign Up"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center"
-                    android:textColor="@color/dark_blue"
-                    android:textStyle="bold"
-                    android:textSize="23sp"
-                    android:id="@+id/sign_up"
-
-                    android:layout_centerInParent="true"
-                    />
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/city_info"
-                    android:layout_below="@+id/sign_up"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginTop="20dp"
+
                     >
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="City"
-                        android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:hint="City"
+                        android:text="Sign Up"
+                        android:layout_alignParentTop="true"
                         android:gravity="center"
-                        android:imeOptions="actionNext"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/border_e"
-                        android:id="@+id/city_edit"
-                        android:inputType="textPersonName"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/governorate_info"
-                    android:layout_below="@+id/city_info"
-
-                    android:layout_marginTop="20dp"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="Governorate"
                         android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:textStyle="bold"
+                        android:textSize="23sp"
+                        android:id="@+id/sign_up"
 
-                    <EditText
+                        android:layout_centerInParent="true"
+                        />
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:hint="Governorate"
-                        android:gravity="center"
-                        android:imeOptions="actionNext"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/border_e"
-                        android:id="@+id/governorate_edit"
-                        android:inputType="textPersonName"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/address_info"
-                    android:layout_below="@+id/governorate_info"
-                    android:layout_marginTop="20dp"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="Address"
-                        android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:orientation="vertical"
+                        android:id="@+id/city_info"
+                        android:layout_below="@+id/governorate_info"
+                        android:layout_marginTop="20dp"
+                        android:visibility="gone"
+                        >
 
-                    <EditText
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="City"
+                            android:textColor="@color/dark_blue"
+                            android:textSize="15sp" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:hint="City"
+                            android:gravity="center"
+                            android:imeOptions="actionNext"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/city_edit"
+                            android:layout_gravity="center"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:hint="Address"
-                        android:gravity="center"
-                        android:imeOptions="actionDone"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/border_e"
-                        android:id="@+id/address_edit"
-                        android:inputType="textPassword"
-                        />
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/password_info"
-                    android:layout_below="@+id/address_info"
-                    android:layout_marginTop="20dp"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="Password"
-                        android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:orientation="vertical"
+                        android:id="@+id/governorate_info"
+                        android:layout_below="@+id/sign_up"
+                        android:layout_marginTop="20dp"
+                        >
 
-                    <EditText
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Governorate"
+                            android:textColor="@color/dark_blue"
+                            android:textSize="15sp" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center"
+                            android:imeOptions="actionNext"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/governorate_edit"
+                            android:inputType="textPersonName"
+                            android:layout_gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:hint="Password"
-                        android:gravity="center"
-                        android:imeOptions="actionNext"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/border_e"
-                        android:id="@+id/phone_edit"
-                        android:inputType="textPassword"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/address_info"
+                        android:layout_below="@+id/city_info"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Address"
+                            android:textColor="@color/dark_blue"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:hint="Address"
+                            android:gravity="center"
+                            android:imeOptions="actionNext"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/border_e"
+                            android:id="@+id/address_edit"
+                            android:inputType="textPersonName"
+                            />
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/password_info"
+                        android:layout_below="@+id/address_info"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Password"
+                            android:textColor="@color/dark_blue"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:hint="Password"
+                            android:gravity="center"
+                            android:imeOptions="actionDone"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/border_e"
+                            android:id="@+id/password_edit"
+                            android:inputType="textPassword"
+                            />
+
+                    </LinearLayout>
+
+
+
+
+
+
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:id="@+id/register"
+                        android:layout_below="@+id/password_info"
+                        android:background="@drawable/button_background"
+                        android:text="Sign Up"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="20dp"
+
+
                         />
 
-                </LinearLayout>
-
-
-
-
-
-
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:id="@+id/register"
-                    android:layout_below="@+id/password_info"
-                    android:background="@drawable/button_background"
-                    android:text="Sign Up"
-                    android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:layout_marginTop="20dp"
-
-
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/sign_in"
-                    android:layout_below="@+id/register"
-                    android:layout_marginTop="15dp"
-                    >
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Already have an Account ?"
-                        android:textColor="@color/grey"
-                        android:textSize="15sp"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/sign_in"
+                        android:layout_below="@+id/register"
+                        android:layout_marginTop="15dp"
+                        >
 
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Already have an Account ?"
+                            android:textColor="@color/grey"
+                            android:textSize="15sp"
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Sign In"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="@color/dark_blue"
-                        android:textSize="15sp"
-
-                        />
-
-                </LinearLayout>
+                            />
 
 
-            </RelativeLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Sign In"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/dark_blue"
+                            android:textSize="15sp"
+
+                            />
+
+                    </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </com.gturedi.views.StatefulLayout>
+
+
 
 
 
@@ -293,4 +303,4 @@
 
 
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

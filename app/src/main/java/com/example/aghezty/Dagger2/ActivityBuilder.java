@@ -1,5 +1,6 @@
 package com.example.aghezty.Dagger2;
 
+import com.example.aghezty.View.LoginActivity;
 import com.example.aghezty.View.MainActivity;
 
 import dagger.Module;
@@ -15,7 +16,8 @@ public abstract class ActivityBuilder {
     abstract MainActivity contributeMainActivity();
 
 
-
+    @ContributesAndroidInjector(modules = LoginActivityFragments.class)
+    abstract LoginActivity contributeLoginActivity();
 
 
 

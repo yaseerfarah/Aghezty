@@ -2,9 +2,12 @@ package com.example.aghezty.Data;
 
 import android.content.SharedPreferences;
 
+import com.example.aghezty.POJO.UserInfo;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
+
+import static com.example.aghezty.Constants.USER_INFO;
 
 
 /**
@@ -73,7 +76,15 @@ public class SharedPreferencesMethod {
     }
 
 
+    public UserInfo getUserInfo(){
 
+        Gson gson=new Gson();
+
+        String json=sharedPreferences.getString(USER_INFO,"");
+
+        return gson.fromJson(json,UserInfo.class);
+
+    }
 
 
 }
