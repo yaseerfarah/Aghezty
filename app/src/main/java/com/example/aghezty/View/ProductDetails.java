@@ -26,15 +26,18 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.aghezty.Adapter.SliderAdapter;
+import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.Interface.InnerProductListener;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.Rate;
 import com.example.aghezty.POJO.SliderInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.ProductViewModel;
+import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 
 import java.text.NumberFormat;
@@ -47,6 +50,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import es.dmoral.toasty.Toasty;
 
 import static com.example.aghezty.Adapter.SliderAdapter.DETAILS;
 
@@ -61,6 +65,7 @@ public class ProductDetails extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private ProductViewModel productViewModel;
+    private UserViewModel userViewModel;
 
     private NavController navController;
 
@@ -188,6 +193,7 @@ public class ProductDetails extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
+        userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
 
         productInfo=getArguments().getParcelable(PRODUCT_INFO);
 
@@ -208,6 +214,28 @@ public class ProductDetails extends Fragment {
         ButterKnife.bind(this,view);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
+        if (userViewModel.checkInCart(productInfo)){
+            addToCart.setEnabled(false);
+            addToCart.setText("Already in Cart");
+        }
+
+
+        addToCart.setOnClickListener(v -> {
+            addToCart.setEnabled(false);
+            userViewModel.addCartInfo(productInfo, quantity, new CompletableListener() {
+                @Override
+                public void onSuccess() {
+                    Toasty.success(getContext(),"Success Add to Cart", Toast.LENGTH_SHORT).show();
+                    addToCart.setText("Already in Cart");
+                }
+                @Override
+                public void onFailure(Throwable e) {
+                    Toasty.error(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+                    addToCart.setEnabled(true);
+                }
+            });
+
+        });
 
 
     }

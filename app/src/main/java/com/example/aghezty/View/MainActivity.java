@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -14,15 +15,20 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,10 +36,12 @@ import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import q.rorbin.badgeview.QBadgeView;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
 
+    private final Observer cartObserver;
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
     @Inject
@@ -43,6 +51,22 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     private UserViewModel userViewModel;
 
     private BottomNavigationView bottomNavigationView;
+
+    private QBadgeView cartBadge;
+
+
+    public MainActivity() {
+        cartObserver=new Observer<List<CartInfo>>() {
+            @Override
+            public void onChanged(List<CartInfo> cartInfos) {
+                if (!cartInfos.isEmpty()) {
+                   addBadge(cartInfos.size());
+                }else {
+                    removeBadge();
+                }
+            }
+        };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                         if (menuItem.getItemId()==R.id.cart||menuItem.getItemId()==R.id.profile){
 
                             if (userViewModel.isLogin()) {
+                                Log.e("TOKEN",userViewModel.getCurrentUserInfo().getToken());
                                 productViewModel.clearApiCall();
                                 navController.navigate(menuItem.getItemId(), null, options);
                             }
@@ -126,6 +151,12 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         });
 
 
+        cartBadge=(QBadgeView) new QBadgeView(this)
+                .setGravityOffset(12, 2, true)
+                .bindTarget(bottomNavigationView.findViewById(R.id.cart));
+
+
+
     }
 
 
@@ -134,7 +165,15 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         super.onStart();
         productViewModel.getBrandCategories();
         productViewModel.getParentCategories();
+        userViewModel.getCartListMediatorLiveData().observe(this,cartObserver);
 
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        userViewModel.getCartListMediatorLiveData().removeObservers(this);
     }
 
     @Override
@@ -143,6 +182,18 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
 
+
+
+    private void addBadge(int number) {
+        // add badge
+        cartBadge.setVisibility(View.VISIBLE);
+        cartBadge.setBadgeNumber(number);
+    }
+
+    private void removeBadge() {
+        cartBadge.hide(true);
+        cartBadge.setVisibility(View.INVISIBLE);
+    }
 
     static NavDestination findStartDestination(@NonNull NavGraph graph) {
         NavDestination startDestination = graph;

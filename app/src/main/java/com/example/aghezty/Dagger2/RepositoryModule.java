@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import androidx.room.Room;
 
 import com.example.aghezty.Data.AgheztyApi;
+import com.example.aghezty.Data.CartInfoRoomMethod;
+import com.example.aghezty.Data.CartRoomDatabase;
 
 import java.nio.channels.NoConnectionPendingException;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +23,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.aghezty.Constants.BASE_URL;
+import static com.example.aghezty.Constants.DB_CART_NAME;
 import static com.example.aghezty.Constants.USER_FILE_NAME;
 
 
@@ -30,6 +33,26 @@ public class RepositoryModule {
 
 
 
+
+
+    @Provides
+    @Singleton
+    public CartInfoRoomMethod cartInfoRoomMethod(Context context, CartRoomDatabase cartRoomDatabase){
+
+        return new CartInfoRoomMethod(context,cartRoomDatabase);
+
+    }
+
+
+
+    @Provides
+    @Singleton
+    public CartRoomDatabase cartRoomDatabase(Context context){
+
+        return Room.databaseBuilder(context, CartRoomDatabase.class, DB_CART_NAME)
+                .build();
+
+    }
 
 
     @Provides

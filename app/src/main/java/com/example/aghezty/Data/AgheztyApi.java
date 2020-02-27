@@ -11,10 +11,13 @@ import com.example.aghezty.POJO.RegisterParentResponse;
 import com.example.aghezty.POJO.RegisterResponse;
 import com.example.aghezty.POJO.UserInfo;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -54,7 +57,7 @@ public interface AgheztyApi {
 
 
     @POST("register")
-    Single<Response<RegisterParentResponse>> registerNewUser(@Body UserInfo userInfo);
+    Single<Response<ResponseBody>> registerNewUser(@Body UserInfo userInfo);
 
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="105dp"
+    android:layout_height="115dp"
 
     >
 
@@ -28,20 +28,41 @@
                 android:id="@+id/card_image"
                 />
 
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="London Sweetshirt"
-                android:id="@+id/card_title"
-                android:textColor="@color/dark_blue"
-                android:textSize="18sp"
                 android:layout_toRightOf="@+id/card_image"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                />
+                android:layout_marginRight="10dp"
+                android:id="@+id/title_layout"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="London Sweetshirt"
+                    android:id="@+id/card_title"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="16sp"
+                    android:layout_weight="2"
+                    android:textStyle="bold"
+                    />
 
 
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_close_black_24dp"
+
+                    android:id="@+id/card_close"
+                    />
+
+
+            </LinearLayout>
 
 
 
@@ -53,7 +74,7 @@
                 android:id="@+id/card_quantity"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
-                android:layout_below="@+id/card_title"
+                android:layout_below="@+id/title_layout"
                 android:layout_toRightOf="@+id/card_image"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -70,7 +91,7 @@
                 android:textColor="@color/dark_blue"
                 android:textStyle="bold"
                 android:textSize="15sp"
-                android:layout_below="@+id/card_title"
+                android:layout_below="@+id/title_layout"
                 android:layout_toRightOf="@+id/card_quantity"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -89,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="50.00"
                 android:id="@+id/card_price"
-                android:textColor="@color/dark_blue"
+                android:textColor="@android:color/holo_blue_dark"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_alignParentBottom="true"
@@ -103,11 +124,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=".EGP"
+                android:text="EGP"
                 android:id="@+id/card_egp"
                 android:textColor="@color/dark_blue"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
+                android:layout_marginLeft="5dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="8dp"
@@ -117,15 +139,7 @@
 
                 />
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/ic_close_black_24dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="8dp"
-                android:id="@+id/card_close"
-                />
+
 
         </RelativeLayout>
 

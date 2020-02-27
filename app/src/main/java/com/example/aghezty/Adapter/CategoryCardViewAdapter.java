@@ -3,11 +3,14 @@ package com.example.aghezty.Adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +20,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.FilterInfo;
@@ -68,15 +77,25 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
     @Override
     public void onBindViewHolder(@NonNull Cat_holder holder, int position) {
 
+        holder.progressBar.setVisibility(View.VISIBLE);
 
-        Glide.with(context).load(categoryInfoList.get(holder.getAdapterPosition()).getImageUrl()).into(new SimpleTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+        Glide.with(context).load(categoryInfoList.get(holder.getAdapterPosition()).getImageUrl())
+                .apply(RequestOptions.timeoutOf(60*1000))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.e(getClass().getName(),e.getMessage());
+                        return false;
+                    }
 
-                holder.imageView.setImageDrawable(resource);
-
-            }
-        });
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        return false;
+                    }
+                })
+                .into(holder.imageView);
 
 
         holder.textView.setText(categoryInfoList.get(holder.getAdapterPosition()).getName());
@@ -123,6 +142,7 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
         CardView cardView;
         ImageView imageView;
         TextView textView;
+        ProgressBar progressBar;
 
 
         public Cat_holder(View itemView) {
@@ -130,6 +150,7 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
             cardView=itemView.findViewById(R.id.cat_card);
           imageView=(ImageView) itemView.findViewById(R.id.category_image);
           textView=(TextView) itemView.findViewById(R.id.category_name);
+          progressBar=(ProgressBar) itemView.findViewById(R.id.progress);
         }
     }
 

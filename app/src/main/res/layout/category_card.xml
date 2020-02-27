@@ -15,15 +15,32 @@
         android:layout_height="wrap_content">
 
 
-
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/category_image"
-            android:scaleType="fitCenter"
-            />
+            android:id="@+id/img_cont"
+            >
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                style="@style/CustomHorizontalProgress"
+                android:id="@+id/progress"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/category_image"
+                android:scaleType="fitCenter"
+                />
+
+
+        </RelativeLayout>
+
 
 
         <TextView
@@ -34,7 +51,7 @@
             android:textSize="14sp"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/category_image"
+            android:layout_below="@+id/img_cont"
             android:textColor="@color/dark_blue"
             android:layout_marginBottom="5dp"/>
 

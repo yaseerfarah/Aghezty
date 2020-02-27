@@ -10,4 +10,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="CustomHorizontalProgress" parent="android:Widget.Material.Light.ProgressBar.Small.Inverse">
+        <item name="colorAccent">@color/orange</item></style>
+
 </resources>

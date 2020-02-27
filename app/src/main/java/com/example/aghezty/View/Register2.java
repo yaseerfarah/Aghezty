@@ -119,7 +119,9 @@ public class Register2 extends Fragment {
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 governorate.setAdapter(arrayAdapter);
-
+                if (userInfo.getGovernorate()!=null){
+                    governorate.setSelection(userInfo.getGovernoratePosition());
+                }
 
 
             }
@@ -142,6 +144,9 @@ public class Register2 extends Fragment {
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 city.setAdapter(arrayAdapter);
+
+                if (userInfo.getCity()!=null)
+                city.setSelection(getCityPosition(cityInfos,userInfo.getCity()));
 
             }
         };
@@ -193,14 +198,17 @@ public class Register2 extends Fragment {
         navController= Navigation.findNavController(view);
 
         userInfo=userViewModel.getCurrentUserInfo();
-
+        assignFields();
         //progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
         statefulLayout.showLoading(" ");
 
+
         governorate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                userInfo.setGovernorate(governorateInfoList.get(position).getGovernorate_en());
+                userInfo.setGovernoratePosition(position);
                 userViewModel.getCitiesByGovernorateId(governorateInfoList.get(position).getId());
                 cityInfo.setVisibility(View.GONE);
             }
@@ -215,6 +223,7 @@ public class Register2 extends Fragment {
         city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                userInfo.setCity(cityInfoList.get(position).getCity_en());
                 cityId=cityInfoList.get(position);
             }
 
@@ -251,12 +260,32 @@ public class Register2 extends Fragment {
         }else {
             Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
         }
+    }
 
+
+
+    private void assignFields(){
+
+        address.setText(userInfo.getAddress()!=null?userInfo.getAddress():"");
+        password.setText(userInfo.getPassword()!=null?userInfo.getPassword():"");
 
     }
 
 
 
+    private int getCityPosition(List<CityInfo> cityInfos,String name){
+
+        for (int i=0;i<cityInfos.size();i++){
+
+            if (cityInfos.get(i).getCity_en().matches(name)){
+                return i;
+            }
+
+        }
+
+        return 0;
+
+    }
 
 
 

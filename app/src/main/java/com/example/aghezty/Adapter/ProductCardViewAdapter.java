@@ -107,7 +107,6 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         Log.e(getClass().getName(),e.getMessage());
-                        Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
                         return false;
                     }
 

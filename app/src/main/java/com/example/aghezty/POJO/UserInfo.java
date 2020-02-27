@@ -13,6 +13,9 @@ public class UserInfo {
     private String phoneNumber;
     @SerializedName("city_id")
     private int cityId;
+    private String city;
+    private int governoratePosition;
+    private String governorate;
     @SerializedName("address")
     private String address;
     @SerializedName("password")
@@ -92,5 +95,32 @@ public class UserInfo {
 
     public void setConfirm_password(String confirm_password) {
         this.confirm_password = confirm_password;
+    }
+
+
+    public String getGovernorate() {
+        return governorate;
+    }
+
+    public void setGovernorate(String governorate) {
+        this.governorate = governorate;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+
+    public int getGovernoratePosition() {
+        return governoratePosition;
+    }
+
+    public void setGovernoratePosition(int governoratePosition) {
+        this.governoratePosition = governoratePosition;
     }
 }

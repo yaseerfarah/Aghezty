@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.ViewModel;
 
 import com.example.aghezty.Data.AgheztyApi;
+import com.example.aghezty.Data.CartInfoRoomMethod;
 import com.example.aghezty.Data.SharedPreferencesMethod;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.UserViewModel;
@@ -57,8 +58,8 @@ public class ViewModelModule {
     @Singleton
     @IntoMap
     @ViewModelKey(UserViewModel.class)
-    ViewModel userViewModel(Context context, SharedPreferencesMethod sharedPreferencesMethod,AgheztyApi agheztyApi) {
-        return new UserViewModel(context,sharedPreferencesMethod,agheztyApi);
+    ViewModel userViewModel(Context context, SharedPreferencesMethod sharedPreferencesMethod, CartInfoRoomMethod cartInfoRoomMethod, AgheztyApi agheztyApi) {
+        return new UserViewModel(context,sharedPreferencesMethod,cartInfoRoomMethod,agheztyApi);
     }
 
 
