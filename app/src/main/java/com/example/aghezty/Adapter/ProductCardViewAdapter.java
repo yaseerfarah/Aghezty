@@ -144,7 +144,8 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
 
         if(products.get(holder.getAdapterPosition()).getDiscount()!=null){
-
+            holder.discountLayout.setVisibility(View.VISIBLE);
+            holder.discount.setVisibility(View.VISIBLE);
             holder.ex_price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice())));
             holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(products.get(holder.getAdapterPosition()).getPrice_after_discount())));
             holder.discount.setText(String.valueOf(products.get(holder.getAdapterPosition()).getDiscount())+" EGP");
@@ -157,6 +158,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
 
 
         if(products.get(holder.getAdapterPosition()).getStars()>0){
+            holder.evaluationLayout.setVisibility(View.VISIBLE);
             holder.evaluation.setText(String.valueOf(products.get(holder.getAdapterPosition()).getStars()));
         }else {
             holder.evaluationLayout.setVisibility(View.GONE);

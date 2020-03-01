@@ -37,7 +37,17 @@
         android:id="@+id/profile"
         android:name="com.example.aghezty.View.Profile"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_to_editProfile"
+            app:destination="@id/editProfile" />
+        <action
+            android:id="@+id/action_profile_to_changePassword"
+            app:destination="@id/changePassword" />
+        <action
+            android:id="@+id/action_profile_to_addNewAddress"
+            app:destination="@id/addNewAddress" />
+    </fragment>
     <fragment
         android:id="@+id/cat"
         android:name="com.example.aghezty.View.Categories"
@@ -75,4 +85,19 @@
         app:launchSingleTop="true"
         app:popUpTo="@+id/nav_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.example.aghezty.View.EditProfile"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/changePassword"
+        android:name="com.example.aghezty.View.ChangePassword"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/addNewAddress"
+        android:name="com.example.aghezty.View.AddNewAddress"
+        android:label="fragment_add_new_address"
+        tools:layout="@layout/fragment_add_new_address" />
 </navigation>

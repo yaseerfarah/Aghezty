@@ -7,7 +7,7 @@ import java.util.List;
 public class ErrorResponse {
 
 
-    @SerializedName("error")
+    @SerializedName("data")
     List<String> messages;
 
     public List<String> getMessages() {

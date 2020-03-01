@@ -6,6 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.Profile">
 
+    <com.gturedi.views.StatefulLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/stateful">
+
+
+
+
+
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -56,16 +66,31 @@
 
 
         >
-
-
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:id="@+id/user_image"
-            android:background="@drawable/ic_user"
-            android:scaleType="centerCrop"
+            android:layout_height="match_parent">
 
-            />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                style="@style/CustomInverseProgress"
+                android:id="@+id/progress"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/user_image"
+                android:background="@drawable/ic_user"
+                android:scaleType="centerCrop"
+
+                />
+
+
+        </RelativeLayout>
+
 
     </androidx.cardview.widget.CardView>
 
@@ -433,6 +458,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-
+    </com.gturedi.views.StatefulLayout>
 
 </FrameLayout>

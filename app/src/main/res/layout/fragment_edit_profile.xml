@@ -3,12 +3,285 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.EditProfile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.gturedi.views.StatefulLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/stateful">
+
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+
+
+
+           <com.github.florent37.shapeofview.shapes.DiagonalView
+               android:layout_width="match_parent"
+               android:layout_height="180dp"
+               android:id="@+id/shape"
+               app:shape_diagonal_angle="10"
+               app:shape_diagonal_direction="left"
+               app:shape_diagonal_position="bottom"
+               >
+
+
+               <ImageView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:background="@color/orange"
+                   />
+
+
+           </com.github.florent37.shapeofview.shapes.DiagonalView>
+
+
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:id="@+id/person_card"
+           app:cardCornerRadius="40dp"
+           android:elevation="12dp"
+           android:layout_centerHorizontal="true"
+           android:layout_alignBottom="@+id/shape"
+           >
+
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="80dp"
+               android:id="@+id/user_image"
+               android:background="@drawable/ic_user"
+               android:scaleType="centerCrop"
+
+               />
+
+       </androidx.cardview.widget.CardView>
+
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="left"
+           android:text="Edit Picture"
+           android:layout_marginTop="5dp"
+           android:layout_centerHorizontal="true"
+           android:textColor="@color/dark_blue"
+           android:layout_below="@+id/person_card"
+           android:textSize="15sp"
+           android:id="@+id/upload_im"
+           />
+
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/card_edit_view"
+           app:cardCornerRadius="5dp"
+           android:layout_marginTop="10dp"
+           android:layout_marginBottom="20dp"
+           android:layout_centerHorizontal="true"
+           android:layout_marginLeft="30dp"
+           android:layout_below="@+id/upload_im">
+
+
+
+
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginRight="10dp"
+                   android:layout_marginBottom="20dp"
+                   android:layout_marginTop="10dp"
+
+                   >
+
+
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       android:id="@+id/first_info"
+                       android:layout_marginTop="20dp"
+                       >
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="First Name"
+                           android:textColor="@color/dark_blue"
+                           android:textSize="15sp" />
+
+                       <EditText
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:hint="First name"
+                           android:gravity="center"
+                           android:imeOptions="actionNext"
+                           android:layout_marginTop="10dp"
+                           android:background="@drawable/border_e"
+                           android:id="@+id/first_edit"
+                           android:inputType="textPersonName"
+                           />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       android:id="@+id/last_info"
+                       android:layout_below="@+id/first_info"
+
+                       android:layout_marginTop="20dp"
+                       >
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Last Name"
+                           android:textColor="@color/dark_blue"
+                           android:textSize="15sp" />
+
+                       <EditText
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:hint="Last Name"
+                           android:gravity="center"
+                           android:imeOptions="actionNext"
+                           android:layout_marginTop="10dp"
+                           android:background="@drawable/border_e"
+                           android:id="@+id/last_edit"
+                           android:inputType="textPersonName"
+                           />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       android:id="@+id/email_info"
+                       android:layout_below="@+id/last_info"
+                       android:layout_marginTop="20dp"
+                       >
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="E-mail"
+                           android:textColor="@color/dark_blue"
+                           android:textSize="15sp" />
+
+                       <EditText
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:hint="E-mail"
+                           android:gravity="center"
+                           android:imeOptions="actionNext"
+                           android:layout_marginTop="10dp"
+                           android:background="@drawable/border_e"
+                           android:id="@+id/email_edit"
+                           android:inputType="textEmailAddress"
+                           />
+
+                   </LinearLayout>
+
+
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       android:id="@+id/phone_info"
+                       android:layout_below="@+id/email_info"
+                       android:layout_marginTop="20dp"
+                       >
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Phone Number"
+                           android:textColor="@color/dark_blue"
+                           android:textSize="15sp" />
+
+                       <EditText
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:hint="Phone Number"
+                           android:gravity="center"
+                           android:imeOptions="actionDone"
+                           android:layout_marginTop="10dp"
+                           android:background="@drawable/border_e"
+                           android:id="@+id/phone_edit"
+                           android:inputType="phone"
+                           />
+
+                   </LinearLayout>
+
+
+
+
+
+                   <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="40dp"
+                       android:id="@+id/save"
+                       android:layout_below="@+id/phone_info"
+                       android:background="@drawable/button_background"
+                       android:text="Save"
+                       android:textStyle="bold"
+                       android:layout_centerHorizontal="true"
+                       android:textColor="@android:color/white"
+                       android:textSize="14sp"
+                       android:layout_marginTop="20dp"
+
+
+                       />
+
+
+               </RelativeLayout>
+
+
+           </RelativeLayout>
+
+
+
+
+
+       </androidx.cardview.widget.CardView>
+
+
+
+
+
+   </RelativeLayout>
+
+    </ScrollView>
+
+    </com.gturedi.views.StatefulLayout>
 
 </FrameLayout>

@@ -74,7 +74,7 @@ public class CartInfoRoomMethod {
 
                     @Override
                     public void onError(Throwable e) {
-                        completableListener.onFailure(e);
+                        completableListener.onFailure(e.getMessage());
                     }
                 });
 
@@ -158,7 +158,7 @@ public class CartInfoRoomMethod {
 
                     @Override
                     public void onError(Throwable e) {
-                        completableListener.onFailure(e);
+                        completableListener.onFailure(e.getMessage());
                     }
                 });
 

@@ -229,8 +229,8 @@ public class ProductDetails extends Fragment {
                     addToCart.setText("Already in Cart");
                 }
                 @Override
-                public void onFailure(Throwable e) {
-                    Toasty.error(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+                public void onFailure(String e) {
+                    Toasty.error(getContext(),e, Toast.LENGTH_SHORT).show();
                     addToCart.setEnabled(true);
                 }
             });

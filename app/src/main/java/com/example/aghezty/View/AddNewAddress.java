@@ -1,13 +1,10 @@
 package com.example.aghezty.View;
 
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,11 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CityInfo;
 import com.example.aghezty.POJO.GovernorateInfo;
 import com.example.aghezty.POJO.UserInfo;
@@ -48,22 +45,24 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Register2 extends Fragment {
+public class AddNewAddress extends Fragment {
+
+
 
     @Inject
     ViewModelFactory viewModelFactory;
     private UserViewModel userViewModel;
 
-    private Observer currentUserInfoObserver;
+
     private Observer governorateobserver;
     private Observer citiesobserver;
 
-    private UserInfo userInfo;
 
     private List<GovernorateInfo> governorateInfoList=new ArrayList<>();
     private List<CityInfo> cityInfoList=new ArrayList<>();
 
-    private CityInfo cityId;
+    private CityInfo city_choice;
+    private GovernorateInfo governorate_choice;
 
     private NavController navController;
 
@@ -73,16 +72,12 @@ public class Register2 extends Fragment {
     Spinner governorate;
     @BindView(R.id.address_edit)
     EditText address;
-    @BindView(R.id.password_edit)
-    EditText password;
-    @BindView(R.id.register)
-    Button signUp;
-    @BindView(R.id.sign_in)
-    LinearLayout signIn;
+
+    @BindView(R.id.save)
+    Button save;
 
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
-
 
 
     @BindView(R.id.city_info)
@@ -91,22 +86,17 @@ public class Register2 extends Fragment {
 
 
 
-    public Register2() {
+
+
+
+    public AddNewAddress() {
         // Required empty public constructor
 
-        currentUserInfoObserver=new Observer<UserInfo>() {
-            @Override
-            public void onChanged(UserInfo userInfo) {
-
-
-
-            }
-        };
 
         governorateobserver=new Observer<List<GovernorateInfo>>() {
             @Override
             public void onChanged(List<GovernorateInfo> governorateInfos) {
-               statefulLayout.showContent();
+                statefulLayout.showContent();
                 governorateInfoList.clear();
                 governorateInfoList.addAll(governorateInfos);
                 List<String> items=new ArrayList<>();
@@ -119,9 +109,6 @@ public class Register2 extends Fragment {
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 governorate.setAdapter(arrayAdapter);
-                if (userInfo.getGovernorate()!=null){
-                    governorate.setSelection(userInfo.getGovernoratePosition());
-                }
 
 
             }
@@ -145,13 +132,14 @@ public class Register2 extends Fragment {
 
                 city.setAdapter(arrayAdapter);
 
-                if (userInfo.getCity()!=null)
-                city.setSelection(getCityPosition(cityInfos,userInfo.getCity()));
 
             }
         };
 
+
     }
+
+
 
 
     @Override
@@ -160,7 +148,6 @@ public class Register2 extends Fragment {
         userViewModel.getAllGovernorate();
         userViewModel.getGovernorateListMediatorLiveData().observe(this,governorateobserver);
         userViewModel.getCitiesListMediatorLiveData().observe(this,citiesobserver);
-        userViewModel.getCurrentUserInfoLiveData().observe(this,currentUserInfoObserver);
 
     }
 
@@ -170,15 +157,17 @@ public class Register2 extends Fragment {
         super.onStop();
         userViewModel.getGovernorateListMediatorLiveData().removeObservers(this);
         userViewModel.getCitiesListMediatorLiveData().removeObservers(this);
-        userViewModel.getCurrentUserInfoLiveData().removeObservers(this);
     }
+
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
-
     }
 
 
@@ -186,8 +175,9 @@ public class Register2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register2, container, false);
+        return inflater.inflate(R.layout.fragment_add_new_address, container, false);
     }
+
 
 
     @Override
@@ -197,20 +187,14 @@ public class Register2 extends Fragment {
 
         navController= Navigation.findNavController(view);
 
-        userInfo=userViewModel.getCurrentUserInfo();
-        assignFields();
-        //progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
-
-        statefulLayout.showLoading(" ");
 
 
         governorate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                userInfo.setGovernorate(governorateInfoList.get(position).getGovernorate_en());
-                userInfo.setGovernoratePosition(position);
+                governorate_choice=governorateInfoList.get(position);
                 userViewModel.getCitiesByGovernorateId(governorateInfoList.get(position).getId());
-                cityInfo.setVisibility(View.GONE);
+                cityInfo.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -223,8 +207,7 @@ public class Register2 extends Fragment {
         city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                userInfo.setCity(cityInfoList.get(position).getCity_en());
-                cityId=cityInfoList.get(position);
+                city_choice=cityInfoList.get(position);
             }
 
             @Override
@@ -234,14 +217,11 @@ public class Register2 extends Fragment {
         });
 
 
-        signUp.setOnClickListener(v -> {
-            validationFields();
-        });
+       save.setOnClickListener(v -> {
 
+           validationFields();
 
-        signIn.setOnClickListener(v -> {
-            navController.navigate(R.id.action_register2_to_login);
-        });
+       });
 
     }
 
@@ -249,54 +229,28 @@ public class Register2 extends Fragment {
 
     private void validationFields(){
 
-        if (!address.getText().toString().isEmpty()&&!password.getText().toString().isEmpty()&&cityId!=null){
+        if (!address.getText().toString().isEmpty()&&city_choice!=null){
 
             statefulLayout.showLoading(" ");
-                userInfo.setCityId(cityId.getId());
-                userInfo.setAddress(address.getText().toString());
-                userInfo.setPassword(password.getText().toString());
-                userViewModel.setCurrentUserInfo(userInfo);
-                userViewModel.registerUser(userInfo, new CompletableListener() {
-                    @Override
-                    public void onSuccess() {
-                        Toasty.success(getContext(),"Success Sign Up").show();
-                        getActivity().finish();
-                    }
+            AddressInfo addressInfo=new AddressInfo(city_choice.getId(),address.getText().toString(),city_choice.getCity_en(),city_choice.getCity_ar(),governorate_choice.getGovernorate_en(),governorate_choice.getGovernorate_ar());
 
-                    @Override
-                    public void onFailure(String message) {
-                        statefulLayout.showContent();
-                    }
-                });
+            userViewModel.addNewAddress(addressInfo, new CompletableListener() {
+                @Override
+                public void onSuccess() {
+                    navController.navigateUp();
+                    Toasty.success(getContext(),"Successful Add New Address",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Toasty.error(getContext(),message,Toast.LENGTH_SHORT).show();
+                    statefulLayout.showContent();
+                }
+            });
 
         }else {
             Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-
-    private void assignFields(){
-
-        address.setText(userInfo.getAddress()!=null?userInfo.getAddress():"");
-        password.setText(userInfo.getPassword()!=null?userInfo.getPassword():"");
-
-    }
-
-
-
-    private int getCityPosition(List<CityInfo> cityInfos,String name){
-
-        for (int i=0;i<cityInfos.size();i++){
-
-            if (cityInfos.get(i).getCity_en().matches(name)){
-                return i;
-            }
-
-        }
-
-        return 0;
-
     }
 
 

@@ -9,6 +9,8 @@ public class UserInfo {
     private String name;
     @SerializedName("email")
     private String email;
+    @SerializedName("image")
+    private String imgUrl;
     @SerializedName("phone")
     private String phoneNumber;
     @SerializedName("city_id")
@@ -122,5 +124,14 @@ public class UserInfo {
 
     public void setGovernoratePosition(int governoratePosition) {
         this.governoratePosition = governoratePosition;
+    }
+
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

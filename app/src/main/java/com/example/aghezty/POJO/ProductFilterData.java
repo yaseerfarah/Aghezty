@@ -8,7 +8,7 @@ public class ProductFilterData {
 
     @SerializedName("data")
     private List<ProductInfo> ProductList;
-    @SerializedName("next_url")
+    @SerializedName("next_page_url")
     private String next_url;
 
     private int Page;

@@ -1,6 +1,7 @@
 package com.example.aghezty.ViewModel;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.example.aghezty.Data.SharedPreferencesMethod;
 import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.Interface.InnerProductListener;
 import com.example.aghezty.Interface.RoomCartInfoListener;
+import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.BrandCategoriesResponse;
 import com.example.aghezty.POJO.BrandInfo;
 import com.example.aghezty.POJO.CartInfo;
@@ -33,12 +35,14 @@ import com.example.aghezty.POJO.ParentCategoriesResponse;
 import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.UserInfo;
+import com.example.aghezty.Util.FileUtils;
 import com.example.aghezty.View.Login;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +56,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 
 import static com.example.aghezty.Constants.IS_LOGIN;
@@ -69,14 +76,16 @@ public class UserViewModel extends ViewModel {
     private MediatorLiveData<UserInfo> currentUserInfoMediatorLiveData;
     private MediatorLiveData<List<GovernorateInfo>> governorateListMediatorLiveData;
     private MediatorLiveData<List<CityInfo>> citiesListMediatorLiveData;
-
     private MediatorLiveData<List<CartInfo>> cartListMediatorLiveData;
+    private MediatorLiveData<List<AddressInfo>> addressListMediatorLiveData;
 
 
 
     private List<GovernorateInfo> governorateInfoList;
     private List<CityInfo> cityInfoList;
     private List<CartInfo> cartInfolist;
+    private List<AddressInfo> addressInfoList;
+
 
 
     private UserInfo currentUserInfo;
@@ -95,15 +104,23 @@ public class UserViewModel extends ViewModel {
         this.governorateListMediatorLiveData=new MediatorLiveData<>();
         this.citiesListMediatorLiveData=new MediatorLiveData<>();
         this.cartListMediatorLiveData=new MediatorLiveData<>();
+        this.addressListMediatorLiveData=new MediatorLiveData<>();
+
 
         this.governorateInfoList=new ArrayList<>();
         this.cityInfoList=new ArrayList<>();
         this.cartInfolist=new ArrayList<>();
+        this.addressInfoList=new ArrayList<>();
 
 
         this.isLogin=checkIsLogin();
         if (isLogin){
             currentUserInfo=sharedPreferencesMethod.getUserInfo();
+            if (currentUserInfo.getName()==null&&currentUserInfo.getAddress()==null){
+                getLoginUserInfo();
+            }else {
+                currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+            }
             getAllCart();
         }
 
@@ -124,6 +141,11 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<List<CartInfo>> getCartListMediatorLiveData() {
         return cartListMediatorLiveData;
+    }
+
+
+    public LiveData<List<AddressInfo>> getAddressListMediatorLiveData() {
+        return addressListMediatorLiveData;
     }
 
     public boolean isLogin() {
@@ -164,8 +186,8 @@ public class UserViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Throwable e) {
-                Log.e(TAG,e.getMessage());
+            public void onFailure(String e) {
+                Log.e(TAG,e);
                 completableListener.onFailure(e);
             }
         });
@@ -182,15 +204,15 @@ public class UserViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Throwable e) {
-                Log.e(TAG,e.getMessage());
+            public void onFailure(String e) {
+                Log.e(TAG,e);
             }
         });
 
     }
 
 
-    public void registerUser(UserInfo userInfo){
+    public void registerUser(UserInfo userInfo,CompletableListener completableListener){
 
         disposables.add(agheztyApi.registerNewUser(userInfo)
         .subscribeOn(Schedulers.io())
@@ -199,19 +221,23 @@ public class UserViewModel extends ViewModel {
 
                     if (stringResponse.isSuccessful()){
                        JSONObject jsonObject=new JSONObject(stringResponse.body().string());
-                        userInfo.setToken(jsonObject.getJSONObject("success").getString("token"));
+                        userInfo.setToken(jsonObject.getJSONObject("data").getString("token"));
                         currentUserInfo=userInfo;
                         currentUserInfoMediatorLiveData.postValue(currentUserInfo);
                         setIsLogin(true);
                         saveUserInfo(currentUserInfo);
 
-                    }else if(stringResponse.code()==401) {
+                        completableListener.onSuccess();
+
+                    }else if(stringResponse.code()==422) {
                         Gson gson=new Gson();
                         ErrorResponse errorResponse=gson.fromJson(stringResponse.errorBody().string(),ErrorResponse.class);
                        for (String message:errorResponse.getMessages()){
                            Log.e("Register Response",message);
                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
                        }
+
+                       completableListener.onFailure(errorResponse.getMessages().toString());
 
                     }
 
@@ -221,6 +247,213 @@ public class UserViewModel extends ViewModel {
         );
 
     }
+
+    public void updateProfile(UserInfo userInfo,Uri uri,CompletableListener completableListener){
+        MultipartBody.Part body=null;
+        File file = FileUtils.getFile(context,uri);
+        if (file!=null) {
+                // create RequestBody instance from file
+                RequestBody requestFile =
+                        RequestBody.create(
+                                MediaType.parse(context.getContentResolver().getType(uri)),
+                                file
+                        );
+                // MultipartBody.Part is used to send also the actual file name
+                body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+        }
+
+
+
+        disposables.add(agheztyApi.updateUserPicture("application/json","Bearer "+currentUserInfo.getToken(),covertUserToMap(userInfo),body)
+        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(stringResponse->{
+
+                            if (stringResponse.isSuccessful()){
+                                JSONObject jsonObject=new JSONObject(stringResponse.body().string());
+                                if (!jsonObject.getJSONObject("data").getString("image").matches("null")){
+                                    userInfo.setImgUrl(jsonObject.getJSONObject("data").getString("image"));
+                                }
+
+                                currentUserInfo=userInfo;
+                                saveUserInfo(currentUserInfo);
+                                currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                                completableListener.onSuccess();
+
+                            }else{
+
+                                Gson gson=new Gson();
+                                ErrorResponse errorResponse=gson.fromJson(stringResponse.errorBody().string(),ErrorResponse.class);
+                                for (String message:errorResponse.getMessages()){
+                                    Log.e("Update Response",message);
+                                    Toasty.error(context,message,Toast.LENGTH_SHORT).show();
+                                }
+                                completableListener.onFailure(errorResponse.getMessages().toString());
+
+                            }
+                        },this::onError)
+        );
+
+
+
+    }
+
+
+    public void updateUserPassword(String oldPassword,String newPassword,CompletableListener completableListener){
+
+        Map<String,RequestBody> passwordMap=new HashMap<>();
+
+        passwordMap.put("old_password",toRequestBody(oldPassword));
+        passwordMap.put("password",toRequestBody(newPassword));
+        passwordMap.put("password_confirmation",toRequestBody(newPassword));
+
+        disposables.add(agheztyApi.updatePassword("application/json","Bearer "+currentUserInfo.getToken(),passwordMap)
+        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseBodyResponse -> {
+                    if (responseBodyResponse.isSuccessful()){
+                        JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
+
+                        currentUserInfo.setPassword(newPassword);
+                        saveUserInfo(currentUserInfo);
+                            completableListener.onSuccess();
+
+                    }else {
+                        Gson gson=new Gson();
+                      //  Log.e("Response",responseBodyResponse.errorBody().string());
+                        ErrorResponse errorResponse=gson.fromJson(responseBodyResponse.errorBody().string(),ErrorResponse.class);
+                        for (String message:errorResponse.getMessages()){
+                            Log.e("Update Pass Response",message);
+                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
+                        }
+                        completableListener.onFailure(errorResponse.getMessages().toString());
+                    }
+
+                })
+
+        );
+
+
+    }
+
+
+    public void addNewAddress(AddressInfo addressInfo,CompletableListener completableListener){
+
+        disposables.add(agheztyApi.addNewAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseBodyResponse -> {
+
+                    if (responseBodyResponse.isSuccessful()){
+                        JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
+                        addressInfo.setId(jsonObject.getJSONObject("data").getInt("id"));
+                        addressInfoList.add(addressInfo);
+                        currentUserInfo.setCityId(addressInfo.getCity_id());
+                        currentUserInfo.setCity(addressInfo.getCity_en());
+                        currentUserInfo.setGovernorate(addressInfo.getGovernorate_en());
+                        currentUserInfo.setAddress(addressInfo.getAddress());
+                        saveUserInfo(currentUserInfo);
+                        addressListMediatorLiveData.postValue(addressInfoList);
+                        completableListener.onSuccess();
+
+                    }else {
+                        Gson gson=new Gson();
+                        //  Log.e("Response",responseBodyResponse.errorBody().string());
+                        ErrorResponse errorResponse=gson.fromJson(responseBodyResponse.errorBody().string(),ErrorResponse.class);
+                        for (String message:errorResponse.getMessages()){
+                            Log.e("Update Pass Response",message);
+                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
+                        }
+                        completableListener.onFailure(errorResponse.getMessages().toString());
+                    }
+
+                },this::onError)
+
+        );
+
+    }
+
+
+    public void getLoginUserInfo(){
+
+        if (currentUserInfo.getName()==null&&currentUserInfo.getAddress()==null) {
+            disposables.add(agheztyApi.getUserInfo("application/json", "Bearer " + currentUserInfo.getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(userInfoResponse -> {
+
+                        if (userInfoResponse.isSuccessful()) {
+                            UserInfo userInfo = userInfoResponse.body();
+                            currentUserInfo.setName(userInfo.getName());
+                            currentUserInfo.setEmail(userInfo.getEmail());
+                            currentUserInfo.setImgUrl(userInfo.getImgUrl());
+                            currentUserInfo.setPhoneNumber(userInfo.getPhoneNumber());
+
+                            // saveUserInfo(currentUserInfo);
+                            // currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                            getAllUserAddress();
+                        } else {
+                            Gson gson = new Gson();
+                            //  Log.e("Response",responseBodyResponse.errorBody().string());
+                            ErrorResponse errorResponse = gson.fromJson(userInfoResponse.errorBody().string(), ErrorResponse.class);
+                            for (String message : errorResponse.getMessages()) {
+                                Log.e("Update Pass Response", message);
+                                Toasty.error(context, message, Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+
+                    }, this::onError)
+            );
+        }
+
+    }
+
+
+
+    private void getAllUserAddress(){
+
+        disposables.add(agheztyApi.getUserAddresses("application/json","Bearer "+currentUserInfo.getToken())
+        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(addressResponseResponse -> {
+
+                    if (addressResponseResponse.isSuccessful()){
+                       List<AddressInfo> addressInfos=addressResponseResponse.body().getAddressInfoList();
+
+                       if (!addressInfos.isEmpty()) {
+
+                           currentUserInfo.setCityId(addressInfos.get(0).getCity_id());
+                           currentUserInfo.setCity(addressInfos.get(0).getCity_en());
+                           currentUserInfo.setGovernorate(addressInfos.get(0).getGovernorate_en());
+                           currentUserInfo.setAddress(addressInfos.get(0).getAddress());
+
+                           addressInfoList.addAll(addressInfos);
+                           saveUserInfo(currentUserInfo);
+                           addressListMediatorLiveData.postValue(addressInfoList);
+                       }
+
+                    }else {
+                        Gson gson=new Gson();
+                        //  Log.e("Response",responseBodyResponse.errorBody().string());
+                        ErrorResponse errorResponse=gson.fromJson(addressResponseResponse.errorBody().string(),ErrorResponse.class);
+                        for (String message:errorResponse.getMessages()){
+                            Log.e("Update Pass Response",message);
+                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+
+                },this::onError)
+
+
+        );
+
+    }
+
 
     public void getAllGovernorate(){
 
@@ -308,6 +541,25 @@ public class UserViewModel extends ViewModel {
 
     }
 
+
+    private Map<String,RequestBody> covertUserToMap(UserInfo userInfo){
+
+        Map<String,RequestBody> userMap=new HashMap<>();
+
+        userMap.put("name",toRequestBody(userInfo.getName()));
+        userMap.put("email",toRequestBody(userInfo.getEmail()));
+        userMap.put("phone",toRequestBody(userInfo.getPhoneNumber()));
+        return userMap;
+
+    }
+
+
+
+    // This method  converts String to RequestBody
+    private RequestBody toRequestBody (String value) {
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
+        return body ;
+    }
 
     private void onError(Throwable throwable){
 

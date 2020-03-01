@@ -8,10 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:itemBackground">@color/white</item>
     </style>
 
 
-    <style name="CustomHorizontalProgress" parent="android:Widget.Material.Light.ProgressBar.Small.Inverse">
+    <style name="CustomInverseProgress" parent="android:Widget.Material.Light.ProgressBar.Small.Inverse">
         <item name="colorAccent">@color/orange</item></style>
 
 </resources>

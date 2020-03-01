@@ -1,9 +1,14 @@
 package com.example.aghezty.Dagger2;
 
+import android.widget.EditText;
+
+import com.example.aghezty.View.AddNewAddress;
 import com.example.aghezty.View.Cart;
 import com.example.aghezty.View.Categories;
+import com.example.aghezty.View.ChangePassword;
 import com.example.aghezty.View.CheckOut;
 import com.example.aghezty.View.Confirm;
+import com.example.aghezty.View.EditProfile;
 import com.example.aghezty.View.Filter;
 import com.example.aghezty.View.Home;
 import com.example.aghezty.View.Offers;
@@ -34,6 +39,15 @@ public abstract class MainActivityFragments {
 
     @ContributesAndroidInjector()
     abstract Profile contributeProfileFragment();
+
+    @ContributesAndroidInjector()
+    abstract EditProfile contributeEditProfileFragment();
+
+    @ContributesAndroidInjector()
+    abstract ChangePassword contributeChangePasswordFragment();
+
+    @ContributesAndroidInjector()
+    abstract AddNewAddress contributeAddNewAddressFragment();
 
     @ContributesAndroidInjector()
     abstract Categories contributeCategoriesFragment();

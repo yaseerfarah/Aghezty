@@ -3,6 +3,8 @@ package com.example.aghezty.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,7 +15,9 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -39,6 +43,9 @@ import dagger.android.support.HasSupportFragmentInjector;
 import q.rorbin.badgeview.QBadgeView;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+
+
+    private static final int REQUEST_PERMISSION=200;
 
 
     private final Observer cartObserver;
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                         if (menuItem.getItemId()==R.id.cart||menuItem.getItemId()==R.id.profile){
 
                             if (userViewModel.isLogin()) {
-                                Log.e("TOKEN",userViewModel.getCurrentUserInfo().getToken());
+                                Log.e("Password",userViewModel.getCurrentUserInfo().getPassword());
                                 productViewModel.clearApiCall();
                                 navController.navigate(menuItem.getItemId(), null, options);
                             }
@@ -154,6 +161,18 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         cartBadge=(QBadgeView) new QBadgeView(this)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomNavigationView.findViewById(R.id.cart));
+
+
+
+
+
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED  ) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION);
+        }
 
 
 

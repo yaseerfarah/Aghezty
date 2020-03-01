@@ -294,22 +294,26 @@ public class ProductViewModel extends ViewModel {
 
 
 
+
         if (categoryID!=null){
+            String ids="";
             filterOption.setCategoriesID(categoryID);
             for (FilterInfo filterInfo:categoryID){
-
-                filter.put("category_id[]",filterInfo.getId());
+                ids+=String.valueOf(filterInfo.getId())+",";
             }
+            filter.put("category_id",ids);
         }else {
             filterOption.setCategoriesID(new ArrayList<>());
         }
 
         if (brandID!=null){
+            String ids="";
             filterOption.setBrandID(brandID);
             for (FilterInfo filterInfo:brandID){
+                ids+=String.valueOf(filterInfo.getId())+",";
 
-                filter.put("brand_id[]",filterInfo.getId());
             }
+            filter.put("brand_id",ids);
         }
         else {
 
