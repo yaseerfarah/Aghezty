@@ -43,6 +43,8 @@ public class ProductViewModel extends ViewModel {
     static public final int FROM_6000_TO_10000=10000;
     static public final int MORE_THAN_10000=20000;
     static public final int ALL=0;
+    static public final int Low_To_High_Price=2;
+    static public final int High_To_Low_Price=1;
 
     private MediatorLiveData<HomeData> homeDataMediatorLiveData;
     private MediatorLiveData<ProductFilterData> productFilterDataLiveData;
@@ -73,6 +75,8 @@ public class ProductViewModel extends ViewModel {
         this.innerProductList=new ArrayList<>();
         this.parentCategoriesInfoList=new ArrayList<>();
         this.brandCategoriesInfoList=new ArrayList<>();
+
+
 
     }
 
@@ -287,10 +291,11 @@ public class ProductViewModel extends ViewModel {
 
 
 
-    public void setFilter(List<FilterInfo> categoryID, List<FilterInfo> brandID, int priceRange, boolean offers){
+    public void setFilter(List<FilterInfo> categoryID, List<FilterInfo> brandID, int priceRange,int orderBy, boolean offers){
         clearFilter();
         filterOption.setOffer(offers);
         filterOption.setPriceRange(priceRange);
+        filterOption.setOrderBy(orderBy);
 
 
 
@@ -316,7 +321,6 @@ public class ProductViewModel extends ViewModel {
             filter.put("brand_id",ids);
         }
         else {
-
             filterOption.setBrandID(new ArrayList<>());
         }
 
@@ -354,6 +358,23 @@ public class ProductViewModel extends ViewModel {
 
         }
 
+        if (orderBy!=ALL){
+
+            switch (orderBy){
+
+                case Low_To_High_Price:
+                    filter.put("sorted","price,asc");
+                    break;
+
+                case High_To_Low_Price:
+                    filter.put("sorted","price,desc");
+                    break;
+
+            }
+
+
+        }
+
         if (offers){
             filter.put("offer","offer");
 
@@ -366,7 +387,7 @@ public class ProductViewModel extends ViewModel {
     private void clearFilter(){
         filterOption=new FilterOption();
         filter.clear();
-        productFilterDataLiveData=new MediatorLiveData<>();
+        productFilterDataLiveData.postValue(null);
 
     }
 

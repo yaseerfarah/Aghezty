@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                         if (menuItem.getItemId()==R.id.cart||menuItem.getItemId()==R.id.profile){
 
                             if (userViewModel.isLogin()) {
-                                Log.e("Password",userViewModel.getCurrentUserInfo().getPassword());
+                               // Log.e("Password",userViewModel.getCurrentUserInfo().getPassword());
                                 productViewModel.clearApiCall();
                                 navController.navigate(menuItem.getItemId(), null, options);
                             }
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                         }else {
 
                             productViewModel.clearApiCall();
-                            productViewModel.setFilter(null,null,ProductViewModel.ALL,true);
+                            productViewModel.setFilter(null,null,ProductViewModel.ALL,ProductViewModel.ALL,true);
                             navController.navigate(menuItem.getItemId(), null, options);
                         }
 
@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     protected void onStart() {
         super.onStart();
+        userViewModel.getAllCart();
         productViewModel.getBrandCategories();
         productViewModel.getParentCategories();
         userViewModel.getCartListMediatorLiveData().observe(this,cartObserver);

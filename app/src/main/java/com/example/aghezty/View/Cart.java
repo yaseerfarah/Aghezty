@@ -18,9 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.aghezty.Adapter.CartCardViewAdapter;
+import com.example.aghezty.Interface.CheckCoupon;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
@@ -55,7 +57,12 @@ public class Cart extends Fragment {
 
     private NavController navController;
 
+    private String couponText="";
+    private int integerCouponDiscount;
+    private int integerTotalPrice;
 
+
+    private NumberFormat numberFormat;
 
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
@@ -72,8 +79,17 @@ public class Cart extends Fragment {
     @BindView(R.id.total_price)
     TextView totalPrice;
 
+    @BindView(R.id.warning)
+    TextView warning;
+
     @BindView(R.id.card_checkout)
     Button checkout;
+
+
+    @BindView(R.id.progress)
+    ProgressBar progressBar;
+
+
 
 
     @BindView(R.id.cart_recycleview)
@@ -107,6 +123,7 @@ public class Cart extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        userViewModel.getAllCart();
         userViewModel.getCartListMediatorLiveData().observe(this,cartObserver);
     }
 
@@ -122,6 +139,7 @@ public class Cart extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        integerCouponDiscount=userViewModel.getCouponDiscount();
     }
 
 
@@ -141,13 +159,50 @@ public class Cart extends Fragment {
         ButterKnife.bind(this,view);
         navController= Navigation.findNavController(view);
 
+        numberFormat=NumberFormat.getInstance(Locale.US);
+
         cartCardViewAdapter=new CartCardViewAdapter(getContext(),cartInfoList,userViewModel);
 
         cartRecycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
 
         cartRecycler.setAdapter(cartCardViewAdapter);
 
-        couponDiscount.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(0)));
+        couponDiscount.setText(String.valueOf(numberFormat.format(integerCouponDiscount)));
+
+
+        checkCoupon.setOnClickListener(v -> {
+
+            if (coupon.getText().length()>0&&!coupon.getText().toString().matches(couponText)){
+                progressBar.setVisibility(View.VISIBLE);
+                warning.setVisibility(View.GONE);
+                couponText=coupon.getText().toString();
+                userViewModel.getCouponDiscount(couponText, new CheckCoupon() {
+                    @Override
+                    public void onSuccess(int discount) {
+                        progressBar.setVisibility(View.GONE);
+                        warning.setVisibility(View.GONE);
+                        integerCouponDiscount=discount;
+                        integerTotalPrice-=discount;
+                        if (integerTotalPrice<0){
+                            integerTotalPrice=0;
+                        }
+                        couponDiscount.setText(numberFormat.format(integerCouponDiscount));
+                        totalPrice.setText(numberFormat.format(integerTotalPrice));
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        progressBar.setVisibility(View.GONE);
+                        warning.setText(message);
+                        warning.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+
+
+        });
+
+
 
     }
 
@@ -160,7 +215,14 @@ public class Cart extends Fragment {
             total+=cartInfo.getPro_price()*cartInfo.getQuantity();
         }
 
-        totalPrice.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(total)));
+        integerTotalPrice=total;
+
+        integerTotalPrice-=integerCouponDiscount;
+        if (integerTotalPrice<0){
+            integerTotalPrice=0;
+        }
+
+        totalPrice.setText(String.valueOf(numberFormat.format(integerTotalPrice)));
 
     }
 

@@ -279,7 +279,7 @@ public class Filter extends Fragment {
 
         apply.setOnClickListener(v -> {
 
-            productViewModel.setFilter(categories_select,brandInfoList_select,priceRange_select.get(0).getId(),false);
+            productViewModel.setFilter(categories_select,brandInfoList_select,priceRange_select.get(0).getId(),ProductViewModel.ALL,false);
 
             if (isOffers) {
                // navController.navigate(R.id.action_global_offers);

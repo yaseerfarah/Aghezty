@@ -46,6 +46,10 @@ public class ProductInfo implements Parcelable {
     @SerializedName("rates")
     private List<Rate> rates;
 
+    @SerializedName("gallery")
+    private List<String> gallery;
+
+
     public List<Rate> getRates() {
         return rates;
     }
@@ -160,8 +164,13 @@ public class ProductInfo implements Parcelable {
         return this.stars;
     }
 
+    public List<String> getGallery() {
+        return gallery;
+    }
 
-
+    public void setGallery(List<String> gallery) {
+        this.gallery = gallery;
+    }
 
     private ProductInfo(Parcel in){
 
@@ -183,6 +192,7 @@ public class ProductInfo implements Parcelable {
         stock=in.readInt();
         stars=in.readInt();
         rates=in.createTypedArrayList(Rate.CREATOR);
+        gallery=in.createStringArrayList();
 
     }
 
@@ -244,6 +254,7 @@ public class ProductInfo implements Parcelable {
         dest.writeInt(stock);
         dest.writeInt(stars);
         dest.writeTypedList(rates);
+        dest.writeStringList(gallery);
 
 
     }

@@ -37,6 +37,8 @@ import com.example.aghezty.ViewModel.ProductViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.aghezty.ViewModel.ProductViewModel.ALL;
+
 
 public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardViewAdapter.Cat_holder>  {
 
@@ -106,14 +108,14 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
 
                 List<FilterInfo> categoryID = new ArrayList<>();
                 categoryID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName(), null, FilterInfo.CATEGORY));
-                productViewModel.setFilter(categoryID, null, ProductViewModel.ALL, false);
+                productViewModel.setFilter(categoryID, null, ALL,ALL, false);
                 navController.navigate(R.id.action_global_productList);
 
             }else {
 
                 List<FilterInfo> brandID = new ArrayList<>();
                 brandID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName(), null, FilterInfo.BRAND));
-                productViewModel.setFilter(null, brandID, ProductViewModel.ALL, false);
+                productViewModel.setFilter(null, brandID, ALL,ALL ,false);
                 navController.navigate(R.id.action_global_productList);
             }
         });

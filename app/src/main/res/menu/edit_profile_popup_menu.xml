@@ -16,5 +16,9 @@
         android:id="@+id/new_password"
         android:title="Change Password"
         />
+    <item
+        android:id="@+id/log_out"
+        android:title="LogOut"
+        />
 
 </menu>

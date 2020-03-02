@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -221,21 +222,27 @@ public class ProductDetails extends Fragment {
 
 
         addToCart.setOnClickListener(v -> {
-            addToCart.setEnabled(false);
-            userViewModel.addCartInfo(productInfo, quantity, new CompletableListener() {
-                @Override
-                public void onSuccess() {
-                    Toasty.success(getContext(),"Success Add to Cart", Toast.LENGTH_SHORT).show();
-                    addToCart.setText("Already in Cart");
-                }
-                @Override
-                public void onFailure(String e) {
-                    Toasty.error(getContext(),e, Toast.LENGTH_SHORT).show();
-                    addToCart.setEnabled(true);
-                }
-            });
+            if (userViewModel.isLogin()) {
+                addToCart.setEnabled(false);
+                userViewModel.addCartInfo(productInfo, quantity, new CompletableListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toasty.success(getContext(), "Success Add to Cart", Toast.LENGTH_SHORT).show();
+                        addToCart.setText("Already in Cart");
+                    }
+
+                    @Override
+                    public void onFailure(String e) {
+                        Toasty.error(getContext(), e, Toast.LENGTH_SHORT).show();
+                        addToCart.setEnabled(true);
+                    }
+                });
+            }else {
+                getActivity().startActivity(new Intent(getContext(),LoginActivity.class));
+            }
 
         });
+
 
 
     }
@@ -245,7 +252,7 @@ public class ProductDetails extends Fragment {
 
     private void assignView(ProductInfo productInfo){
 
-        sliderInfoList.add(productInfo.getMain_image());
+        sliderInfoList.addAll(productInfo.getGallery());
         sliderAdapter=new SliderAdapter(getContext(),sliderInfoList,getActivity(),DETAILS);
 
         pro_image.setAdapter(sliderAdapter);
@@ -271,7 +278,7 @@ public class ProductDetails extends Fragment {
         }
 
 
-        if (productInfo.getRates()!=null){
+        if (productInfo.getRates()!=null&&!productInfo.getRates().isEmpty()){
             toggleState(detailsToggle,evaluationToggle,productInfo);
 
         }else {

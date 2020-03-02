@@ -88,7 +88,7 @@ public class Register1 extends Fragment {
 
 
         userInfo=userViewModel.getCurrentUserInfo();
-        if (userInfo!=null){
+        if (userInfo.getName()!=null){
             assignFields();
         }else {
             userInfo=new UserInfo();

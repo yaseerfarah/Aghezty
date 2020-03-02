@@ -126,7 +126,7 @@ public class CartInfoRoomMethod {
 
 
 
-    public void deleteStickerPack(CartInfo cartInfo, CompletableListener completableListener){
+    public void deleteCartInfo(CartInfo cartInfo, CompletableListener completableListener){
 
         Completable.create(new CompletableOnSubscribe() {
             @Override
@@ -154,6 +154,46 @@ public class CartInfoRoomMethod {
                     @Override
                     public void onComplete() {
                        completableListener.onSuccess();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        completableListener.onFailure(e.getMessage());
+                    }
+                });
+
+    }
+
+
+
+    public void deleteAllCartInfos(CompletableListener completableListener){
+
+        Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter emitter) throws Exception {
+                try {
+
+                    cartRoomDatabase.daoCartInfoRoom().deleteAllCartInfo();
+                    if (!emitter.isDisposed()) {
+                        emitter.onComplete();
+                    }
+
+                }catch (Exception e){
+                    if (!emitter.isDisposed()) {
+                        emitter.onError(e);
+                    }
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        completableListener.onSuccess();
                     }
 
                     @Override

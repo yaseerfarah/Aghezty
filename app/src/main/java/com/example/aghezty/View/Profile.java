@@ -62,8 +62,12 @@ public class Profile extends Fragment {
     TextView userEmail;
     @BindView(R.id.an_first)
     TextView userFirstName;
+    @BindView(R.id.first)
+    TextView firstName;
     @BindView(R.id.an_last)
     TextView userLastName;
+    @BindView(R.id.last)
+    TextView lastName;
     @BindView(R.id.an_city)
     TextView userCity;
     @BindView(R.id.an_governorate)
@@ -72,6 +76,7 @@ public class Profile extends Fragment {
     TextView userAddress;
     @BindView(R.id.an_phone)
     TextView userPhoneNumber;
+
 
 
     @BindView(R.id.user_image)
@@ -93,9 +98,11 @@ public class Profile extends Fragment {
         currentUserInfoObserver=new Observer<UserInfo>() {
             @Override
             public void onChanged(UserInfo currentUserInfo) {
-                userInfo=currentUserInfo;
-                assignView();
-                statefulLayout.showContent();
+                if (currentUserInfo!=null) {
+                    userInfo = currentUserInfo;
+                    assignView();
+                    statefulLayout.showContent();
+                }
             }
         };
 
@@ -107,6 +114,7 @@ public class Profile extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        userViewModel.getLoginUserInfo();
         userViewModel.getCurrentUserInfoLiveData().observe(this,currentUserInfoObserver);
 
     }
@@ -185,10 +193,12 @@ public class Profile extends Fragment {
         userName.setText(userInfo.getName());
         String[]name=userInfo.getName().split(" ");
         userFirstName.setText(name[0]);
-        if (name[1] != null) {
+        if (name.length>1&&name[1] != null) {
             userLastName.setText(name[1]);
         } else {
-            userLastName.setText(" ");
+            firstName.setText("Name");
+            lastName.setVisibility(View.GONE);
+            userLastName.setVisibility(View.GONE);
         }
 
         userEmail.setText(userInfo.getEmail());
@@ -227,6 +237,12 @@ public class Profile extends Fragment {
                     case R.id.new_password:
                         navController.navigate(R.id.action_profile_to_changePassword);
                         break;
+
+                    case R.id.log_out:
+                        userViewModel.logOut();
+                        navController.navigateUp();
+                        break;
+
                 }
 
                 return true;

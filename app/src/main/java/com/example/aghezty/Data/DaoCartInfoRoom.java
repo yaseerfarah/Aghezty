@@ -24,4 +24,7 @@ public interface DaoCartInfoRoom {
     @Delete
     void deleteCartInfo(CartInfo cartInfo);
 
+    @Query("DELETE FROM CartInfo")
+    void deleteAllCartInfo();
+
 }

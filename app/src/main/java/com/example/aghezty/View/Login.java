@@ -17,17 +17,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.StatefulLayout;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +54,8 @@ public class Login extends Fragment {
     Button signIn;
     @BindView(R.id.sign_up)
     LinearLayout signUp;
-
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
 
 
     @Override
@@ -85,7 +90,46 @@ public class Login extends Fragment {
             navController.navigate(R.id.action_login_to_register1);
         });
 
+        signIn.setOnClickListener(v -> {
+            validationFields();
+        });
+
 
 
     }
+
+
+    private void validationFields(){
+
+        if (!email.getText().toString().isEmpty()&&!password.getText().toString().isEmpty()){
+
+             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
+
+                email.setError("Email Format Not Correct");
+            }else {
+                 statefulLayout.showLoading(" ");
+                 userViewModel.userLogin(email.getText().toString(), password.getText().toString(), new CompletableListener() {
+                     @Override
+                     public void onSuccess() {
+                         Toasty.success(getContext(),"Successful Login",Toast.LENGTH_SHORT).show();
+                         getActivity().finish();
+                     }
+
+                     @Override
+                     public void onFailure(String message) {
+                         statefulLayout.showContent();
+                     }
+                 });
+
+            }
+
+
+        }else {
+            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
 }

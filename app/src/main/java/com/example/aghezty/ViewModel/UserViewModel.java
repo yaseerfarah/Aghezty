@@ -13,6 +13,7 @@ import com.example.aghezty.Data.AgheztyApi;
 import com.example.aghezty.Data.CartInfoRoomMethod;
 import com.example.aghezty.Data.CartRoomDatabase;
 import com.example.aghezty.Data.SharedPreferencesMethod;
+import com.example.aghezty.Interface.CheckCoupon;
 import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.Interface.InnerProductListener;
 import com.example.aghezty.Interface.RoomCartInfoListener;
@@ -62,6 +63,7 @@ import okhttp3.RequestBody;
 import retrofit2.Response;
 
 import static com.example.aghezty.Constants.IS_LOGIN;
+import static com.example.aghezty.Constants.USER_COUPON_DISCOUNT;
 import static com.example.aghezty.Constants.USER_INFO;
 
 public class UserViewModel extends ViewModel {
@@ -86,6 +88,7 @@ public class UserViewModel extends ViewModel {
     private List<CartInfo> cartInfolist;
     private List<AddressInfo> addressInfoList;
 
+    private int couponDiscount;
 
 
     private UserInfo currentUserInfo;
@@ -116,12 +119,11 @@ public class UserViewModel extends ViewModel {
         this.isLogin=checkIsLogin();
         if (isLogin){
             currentUserInfo=sharedPreferencesMethod.getUserInfo();
-            if (currentUserInfo.getName()==null&&currentUserInfo.getAddress()==null){
-                getLoginUserInfo();
-            }else {
-                currentUserInfoMediatorLiveData.postValue(currentUserInfo);
-            }
-            getAllCart();
+
+            couponDiscount=getSavedCouponDiscount();
+
+        }else {
+            currentUserInfo=new UserInfo();
         }
 
     }
@@ -146,6 +148,10 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<List<AddressInfo>> getAddressListMediatorLiveData() {
         return addressListMediatorLiveData;
+    }
+
+    public int getCouponDiscount() {
+        return couponDiscount;
     }
 
     public boolean isLogin() {
@@ -197,7 +203,7 @@ public class UserViewModel extends ViewModel {
 
     public void deleteCartInfo(CartInfo cartInfo){
 
-        cartInfoRoomMethod.deleteStickerPack(cartInfo, new CompletableListener() {
+        cartInfoRoomMethod.deleteCartInfo(cartInfo, new CompletableListener() {
             @Override
             public void onSuccess() {
                 deleteCartFromList(cartInfo);
@@ -247,6 +253,68 @@ public class UserViewModel extends ViewModel {
         );
 
     }
+
+
+
+    public void userLogin(String email,String password,CompletableListener completableListener){
+
+        disposables.add(agheztyApi.userLogin(toRequestBody(email),toRequestBody(password))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(stringResponse->{
+
+                    if (stringResponse.isSuccessful()){
+                        JSONObject jsonObject=new JSONObject(stringResponse.body().string());
+                        currentUserInfo.setToken(jsonObject.getJSONObject("data").getString("token"));
+                        setIsLogin(true);
+                        saveUserInfo(currentUserInfo);
+
+                        completableListener.onSuccess();
+
+                    }else if(stringResponse.code()==422) {
+                        Gson gson=new Gson();
+                        ErrorResponse errorResponse=gson.fromJson(stringResponse.errorBody().string(),ErrorResponse.class);
+                        for (String message:errorResponse.getMessages()){
+                            Log.e("Register Response",message);
+                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
+                        }
+
+                        completableListener.onFailure(errorResponse.getMessages().toString());
+
+                    }
+
+
+
+                },this::onError)
+        );
+
+    }
+
+
+
+
+    public void logOut(){
+        setIsLogin(false);
+        currentUserInfo=new UserInfo();
+        saveUserInfo(currentUserInfo);
+        currentUserInfoMediatorLiveData.postValue(null);
+        couponDiscount=0;
+        saveCouponDiscount(couponDiscount);
+
+        cartInfoRoomMethod.deleteAllCartInfos(new CompletableListener() {
+            @Override
+            public void onSuccess() {
+                cartInfolist.clear();
+                cartListMediatorLiveData.postValue(cartInfolist);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.e(getClass().getName(),message);
+            }
+        });
+    }
+
 
     public void updateProfile(UserInfo userInfo,Uri uri,CompletableListener completableListener){
         MultipartBody.Part body=null;
@@ -377,14 +445,16 @@ public class UserViewModel extends ViewModel {
 
     public void getLoginUserInfo(){
 
-        if (currentUserInfo.getName()==null&&currentUserInfo.getAddress()==null) {
+        if (currentUserInfo.getName()==null&&currentUserInfo.getAddress()==null){
             disposables.add(agheztyApi.getUserInfo("application/json", "Bearer " + currentUserInfo.getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(userInfoResponse -> {
 
                         if (userInfoResponse.isSuccessful()) {
-                            UserInfo userInfo = userInfoResponse.body();
+                            JSONObject jsonObject=new JSONObject(userInfoResponse.body().string());
+                            Gson gson=new Gson();
+                            UserInfo userInfo = gson.fromJson(jsonObject.getString("data"),UserInfo.class);
                             currentUserInfo.setName(userInfo.getName());
                             currentUserInfo.setEmail(userInfo.getEmail());
                             currentUserInfo.setImgUrl(userInfo.getImgUrl());
@@ -407,7 +477,10 @@ public class UserViewModel extends ViewModel {
 
                     }, this::onError)
             );
+        }else {
+            currentUserInfoMediatorLiveData.postValue(currentUserInfo);
         }
+
 
     }
 
@@ -433,6 +506,9 @@ public class UserViewModel extends ViewModel {
                            addressInfoList.addAll(addressInfos);
                            saveUserInfo(currentUserInfo);
                            addressListMediatorLiveData.postValue(addressInfoList);
+                           currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                       }else {
+                           currentUserInfoMediatorLiveData.postValue(currentUserInfo);
                        }
 
                     }else {
@@ -453,6 +529,37 @@ public class UserViewModel extends ViewModel {
         );
 
     }
+
+
+
+    public void getCouponDiscount(String coupon, CheckCoupon checkCoupon){
+        disposables.add(agheztyApi.getCouponDiscount("application/json","Bearer "+currentUserInfo.getToken(),toRequestBody(coupon))
+        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(requestBodyResponse -> {
+
+                    if (requestBodyResponse.isSuccessful()){
+
+                        JSONObject jsonObject=new JSONObject(requestBodyResponse.body().string());
+                        couponDiscount+=jsonObject.getInt("data");
+                        saveCouponDiscount(couponDiscount);
+                        checkCoupon.onSuccess(couponDiscount);
+
+
+
+                    }else {
+                        Gson gson=new Gson();
+                          //Log.e("Response",requestBodyResponse.errorBody().string());
+                        ErrorResponse errorResponse=gson.fromJson(requestBodyResponse.errorBody().string(),ErrorResponse.class);
+                        checkCoupon.onFailure(errorResponse.getMessages().get(0));
+                    }
+
+                },this::onError)
+        );
+    }
+
+
+
 
 
     public void getAllGovernorate(){
@@ -495,22 +602,23 @@ public class UserViewModel extends ViewModel {
 
     }
 
-    private void getAllCart(){
+    public void getAllCart(){
 
-        cartInfoRoomMethod.getAllCarts(new RoomCartInfoListener() {
-            @Override
-            public void onSuccess(List<CartInfo> cartInfos) {
-                cartInfolist.clear();
-                cartInfolist.addAll(cartInfos);
-                cartListMediatorLiveData.postValue(cartInfolist);
-            }
+        if (cartListMediatorLiveData.getValue()==null) {
+            cartInfoRoomMethod.getAllCarts(new RoomCartInfoListener() {
+                @Override
+                public void onSuccess(List<CartInfo> cartInfos) {
+                    cartInfolist.clear();
+                    cartInfolist.addAll(cartInfos);
+                    cartListMediatorLiveData.postValue(cartInfolist);
+                }
 
-            @Override
-            public void onFailure(Throwable e) {
-                Log.e(TAG,e.getMessage());
-            }
-        });
-
+                @Override
+                public void onFailure(Throwable e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            });
+        }
     }
 
 
@@ -559,6 +667,15 @@ public class UserViewModel extends ViewModel {
     private RequestBody toRequestBody (String value) {
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
         return body ;
+    }
+
+
+    private void saveCouponDiscount(int couponDiscount){
+        sharedPreferencesMethod.setInteger(USER_COUPON_DISCOUNT,couponDiscount);
+    }
+
+    private int getSavedCouponDiscount(){
+        return sharedPreferencesMethod.getInteger(USER_COUPON_DISCOUNT);
     }
 
     private void onError(Throwable throwable){

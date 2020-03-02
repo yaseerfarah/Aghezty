@@ -9,13 +9,15 @@ public class FilterOption {
     private List<FilterInfo> categoriesID;
     private List<FilterInfo> brandID;
     private int priceRange;
+    private int orderBy;
     private boolean offer;
 
 
-    public FilterOption(List<FilterInfo> categoriesID, List<FilterInfo> brandID, int priceRange, boolean offer) {
+    public FilterOption(List<FilterInfo> categoriesID, List<FilterInfo> brandID, int priceRange, int orderBy, boolean offer) {
         this.categoriesID = categoriesID;
         this.brandID = brandID;
         this.priceRange = priceRange;
+        this.orderBy = orderBy;
         this.offer = offer;
     }
 
@@ -53,5 +55,14 @@ public class FilterOption {
 
     public void setOffer(boolean offer) {
         this.offer = offer;
+    }
+
+
+    public int getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(int orderBy) {
+        this.orderBy = orderBy;
     }
 }

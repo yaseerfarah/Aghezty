@@ -38,6 +38,17 @@ public class SharedPreferencesMethod {
     }
 
 
+    public void setInteger(String name, int number){
+
+        sharedPreferences.edit().putInt(name,number).apply();
+
+    }
+
+    public int getInteger(String name){
+
+        return sharedPreferences.getInt(name,0);
+    }
+
 
     public void setString(String name, String value){
 

@@ -64,8 +64,11 @@ public interface AgheztyApi {
     Single<Response<CitiesResponse>> getCitiesByGovernorateId(@Query("governorate_id") int id);
 
 
+
+
+
     @GET("client")
-    Single<Response<UserInfo>> getUserInfo( @Header("Accept") String accept,
+    Single<Response<ResponseBody>> getUserInfo( @Header("Accept") String accept,
                                                   @Header("Authorization") String authorization);
 
 
@@ -76,6 +79,13 @@ public interface AgheztyApi {
 
     @POST("register")
     Single<Response<ResponseBody>> registerNewUser(@Body UserInfo userInfo);
+
+    @Multipart
+    @POST("login")
+    Single<Response<ResponseBody>> userLogin(
+            @Part("email") RequestBody email
+            ,@Part("password") RequestBody password
+    );
 
 
     @POST("edit_profile")
@@ -111,6 +121,13 @@ public interface AgheztyApi {
             @Header("Authorization") String authorization,
             @Body AddressInfo addressInfo);
 
+
+    @Multipart
+    @POST("check_coupon")
+    Single<Response<ResponseBody>> getCouponDiscount(
+            @Header("Accept") String accept,
+            @Header("Authorization") String authorization,
+            @Part("coupon") RequestBody coupon);
 
 
 }

@@ -139,7 +139,7 @@ public class EditProfile extends Fragment {
 
         save.setOnClickListener(v -> {
 
-            statefulLayout.showLoading(" ");
+
             validationFields();
 
         });
@@ -174,7 +174,7 @@ public class EditProfile extends Fragment {
     private void validationFields(){
 
         if (!firstName.getText().toString().isEmpty()&&!lastName.getText().toString().isEmpty()&&!email.getText().toString().isEmpty()&&!phoneNumber.getText().toString().isEmpty()){
-
+            statefulLayout.showLoading(" ");
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
                 email.setError("Email Format Not Correct");
@@ -222,7 +222,7 @@ public class EditProfile extends Fragment {
         String[]name=userInfo.getName().split("\\s+");
 
         firstName.setText(name[0]);
-        if (name[1]!=null){
+        if (name.length>1&&name[1]!=null){
             lastName.setText(name[1]);
         }
         email.setText(userInfo.getEmail());

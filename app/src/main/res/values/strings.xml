@@ -32,4 +32,14 @@
 
     </string-array>
 
+
+    <string-array name="order_by">
+
+        <item>All</item>
+        <item>High To Low Price</item>
+        <item>Low To High Price</item>
+
+
+    </string-array>
+
 </resources>

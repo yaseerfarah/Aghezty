@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
 import com.example.aghezty.Adapter.ProductCardViewAdapter;
 import com.example.aghezty.POJO.FilterInfo;
+import com.example.aghezty.POJO.FilterOption;
 import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.R;
@@ -54,6 +55,9 @@ import dagger.android.support.AndroidSupportInjection;
 
 import static com.example.aghezty.Adapter.FilterOrderCardViewAdapter.ORDER;
 import static com.example.aghezty.Adapter.ProductCardViewAdapter.LIST;
+import static com.example.aghezty.ViewModel.ProductViewModel.ALL;
+import static com.example.aghezty.ViewModel.ProductViewModel.High_To_Low_Price;
+import static com.example.aghezty.ViewModel.ProductViewModel.Low_To_High_Price;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,6 +98,7 @@ public class Offers extends Fragment {
 
                 if (productFilterData1!=null) {
                     productFilterData = productFilterData1;
+
                     // productInfoList.clear();
                     //productInfoList.addAll(productFilterData1.getProductList());
                     //productCardViewAdapter.notifyDataSetChanged();
@@ -112,9 +117,6 @@ public class Offers extends Fragment {
                         statefulLayout.showEmpty("No Match");
                     }
 
-                }else {
-
-                    statefulLayout.showEmpty("No Data");
                 }
 
             }
@@ -290,6 +292,7 @@ public class Offers extends Fragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_filter);
 
+        FilterOption filterOption=productViewModel.getFilterOption();
         TextView title=dialog.findViewById(R.id.title);
         Button done=dialog.findViewById(R.id.done);
         RecyclerView recyclerView=dialog.findViewById(R.id.filter_recycler);
@@ -298,11 +301,13 @@ public class Offers extends Fragment {
         List<FilterInfo> items=new ArrayList<>();
         List<FilterInfo> selected=new ArrayList<>();
 
-        items.add(new FilterInfo(0,"All",null,FilterInfo.CATEGORY));
-        items.add(new FilterInfo(1,"High To Low Price",null,FilterInfo.CATEGORY));
-        items.add(new FilterInfo(2,"Low To High Price",null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(ALL,"All",null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(High_To_Low_Price,"High To Low Price",null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(Low_To_High_Price,"Low To High Price",null,FilterInfo.CATEGORY));
 
-        selected.add(items.get(0));
+
+            selected.add(items.get(filterOption.getOrderBy()));
+
 
         FilterOrderCardViewAdapter filterOrderCardViewAdapter=new FilterOrderCardViewAdapter(getContext(),items,selected,ORDER);
 
@@ -310,8 +315,9 @@ public class Offers extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
 
         done.setOnClickListener(v -> {
-
-
+            productViewModel.setFilter(filterOption.getCategoriesID(),filterOption.getBrandID(),filterOption.getPriceRange(),filterOrderCardViewAdapter.getItemListSelected().get(0).getId(),filterOption.isOffer());
+           productViewModel.getProductFilter();
+           statefulLayout.showLoading(" ");
             dialog.dismiss();
 
         });

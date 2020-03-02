@@ -10,5 +10,6 @@ public class Constants {
     public static final String DB_CART_NAME = "db_cart_info";
 
 
+    public static final String USER_COUPON_DISCOUNT="CouponDiscount";
 
 }
