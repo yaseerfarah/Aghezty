@@ -9,8 +9,8 @@
         android:title="Edit Profile"
         />
     <item
-        android:id="@+id/new_address"
-        android:title="Add New Address"
+        android:id="@+id/my_addresses"
+        android:title="My Addresses"
         />
     <item
         android:id="@+id/new_password"

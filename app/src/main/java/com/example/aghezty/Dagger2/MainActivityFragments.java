@@ -11,6 +11,7 @@ import com.example.aghezty.View.Confirm;
 import com.example.aghezty.View.EditProfile;
 import com.example.aghezty.View.Filter;
 import com.example.aghezty.View.Home;
+import com.example.aghezty.View.MyAddresses;
 import com.example.aghezty.View.Offers;
 import com.example.aghezty.View.Order;
 import com.example.aghezty.View.Payment;
@@ -48,6 +49,9 @@ public abstract class MainActivityFragments {
 
     @ContributesAndroidInjector()
     abstract AddNewAddress contributeAddNewAddressFragment();
+
+    @ContributesAndroidInjector()
+    abstract MyAddresses contributeMyAddressesFragment();
 
     @ContributesAndroidInjector()
     abstract Categories contributeCategoriesFragment();

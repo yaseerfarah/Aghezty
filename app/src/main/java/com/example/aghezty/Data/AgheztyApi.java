@@ -77,6 +77,22 @@ public interface AgheztyApi {
                                                        @Header("Authorization") String authorization);
 
 
+    @GET("delete_address/{id}")
+    Single<Response<ResponseBody>> deleteAddress(
+            @Header("Accept") String accept,
+            @Header("Authorization") String authorization
+    ,@Path("id") int id);
+
+    @Multipart
+    @POST("updated_address/{id}")
+    Single<Response<ResponseBody>> updateAddress(
+            @Header("Accept") String accept,
+            @Header("Authorization") String authorization
+            ,@Path("id") int id
+            ,@Part("city_id") RequestBody city_id
+            ,@Part("address") RequestBody address);
+
+
     @POST("register")
     Single<Response<ResponseBody>> registerNewUser(@Body UserInfo userInfo);
 
@@ -120,6 +136,9 @@ public interface AgheztyApi {
             @Header("Accept") String accept,
             @Header("Authorization") String authorization,
             @Body AddressInfo addressInfo);
+
+
+
 
 
     @Multipart

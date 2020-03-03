@@ -15,4 +15,8 @@
     <style name="CustomInverseProgress" parent="android:Widget.Material.Light.ProgressBar.Small.Inverse">
         <item name="colorAccent">@color/orange</item></style>
 
+    <style name="CustomSmallButton" parent="android:Widget.Button.Small">
+        <item name="colorAccent">@color/orange</item>
+    </style>
+
 </resources>

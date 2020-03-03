@@ -1,8 +1,11 @@
 package com.example.aghezty.POJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class AddressInfo {
+public class AddressInfo implements Parcelable {
 
     @SerializedName("id")
     private int id;
@@ -87,5 +90,62 @@ public class AddressInfo {
 
     public void setGovernorate_ar(String governorate_ar) {
         this.governorate_ar = governorate_ar;
+    }
+
+
+    public boolean compare(AddressInfo addressInfo){
+
+        if (addressInfo.getAddress().matches(getAddress())&&addressInfo.getCity_ar().matches(getCity_ar())&&addressInfo.getCity_en().matches(getCity_en())&&addressInfo.getGovernorate_ar().matches(getGovernorate_ar())&&addressInfo.getGovernorate_en().matches(getGovernorate_en()))
+        {
+            return true;
+        }
+        return false;
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private AddressInfo(Parcel in) {
+
+        id=in.readInt();
+        city_id=in.readInt();
+        city_ar=in.readString();
+        city_en=in.readString();
+        governorate_ar=in.readString();
+        governorate_en=in.readString();
+        address=in.readString();
+
+
+    }
+
+    public static final Creator<AddressInfo> CREATOR = new Creator<AddressInfo>() {
+
+        @Override
+        public AddressInfo createFromParcel(Parcel source) {
+            return new AddressInfo(source) ;
+        }
+
+        @Override
+        public AddressInfo[] newArray(int size) {
+            return new AddressInfo[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(id);
+        dest.writeInt(city_id);
+        dest.writeString(city_ar);
+        dest.writeString(city_en);
+        dest.writeString(governorate_ar);
+        dest.writeString(governorate_en);
+        dest.writeString(address);
+
+
     }
 }

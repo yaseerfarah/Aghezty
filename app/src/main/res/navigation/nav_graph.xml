@@ -32,7 +32,11 @@
         android:id="@+id/cart"
         android:name="com.example.aghezty.View.Cart"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cart_to_checkOut"
+            app:destination="@id/checkOut" />
+    </fragment>
     <fragment
         android:id="@+id/profile"
         android:name="com.example.aghezty.View.Profile"
@@ -45,8 +49,8 @@
             android:id="@+id/action_profile_to_changePassword"
             app:destination="@id/changePassword" />
         <action
-            android:id="@+id/action_profile_to_addNewAddress"
-            app:destination="@id/addNewAddress" />
+            android:id="@+id/action_profile_to_myAddresses"
+            app:destination="@id/myAddresses" />
     </fragment>
     <fragment
         android:id="@+id/cat"
@@ -100,4 +104,18 @@
         android:name="com.example.aghezty.View.AddNewAddress"
         android:label="fragment_add_new_address"
         tools:layout="@layout/fragment_add_new_address" />
+    <fragment
+        android:id="@+id/myAddresses"
+        android:name="com.example.aghezty.View.MyAddresses"
+        android:label="fragment_my_addresses"
+        tools:layout="@layout/fragment_my_addresses" >
+        <action
+            android:id="@+id/action_myAddresses_to_addNewAddress"
+            app:destination="@id/addNewAddress" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOut"
+        android:name="com.example.aghezty.View.CheckOut"
+        android:label="fragment_check_out"
+        tools:layout="@layout/fragment_check_out" />
 </navigation>

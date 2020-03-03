@@ -110,10 +110,7 @@ public class Register1 extends Fragment {
 
         if (!firstName.getText().toString().isEmpty()&&!lastName.getText().toString().isEmpty()&&!email.getText().toString().isEmpty()&&!phoneNumber.getText().toString().isEmpty()){
 
-            if(phoneNumber.getText().length()!=11){
-                phoneNumber.setError("Phone Number Should be 11 Number");
-            }
-            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
 
                 email.setError("Email Format Not Correct");
             }else {

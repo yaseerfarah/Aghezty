@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 
 import java.util.List;
@@ -15,17 +16,19 @@ import java.util.List;
  * Created by DELL on 9/13/2019.
  */
 
-public class CartDiffUtil extends DiffUtil.Callback {
+public class AddressDiffUtil extends DiffUtil.Callback {
 
-    public static final String DIFF_PRICE="Price";
-    public static final String DIFF_QUANTITY="Quantity";
+    public static final String DIFF_ADDRESS="Address";
+    public static final String DIFF_CITY="City";
+    public static final String DIFF_GOVERNORATE="Governorate";
 
-    private List<CartInfo> oldList;
-    private List<CartInfo> newList;
+
+    private List<AddressInfo> oldList;
+    private List<AddressInfo> newList;
 
     Context context;
 
-    public CartDiffUtil(Context context, List<CartInfo> oldList, List<CartInfo> newList) {
+    public AddressDiffUtil(Context context, List<AddressInfo> oldList, List<AddressInfo> newList) {
         this.oldList = oldList;
         this.newList = newList;
         this.context=context;
@@ -45,7 +48,7 @@ public class CartDiffUtil extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldList.get(oldItemPosition).getProduct_id()==newList.get(newItemPosition).getProduct_id();
+        return oldList.get(oldItemPosition).getId()==newList.get(newItemPosition).getId();
     }
 
     @Override
@@ -59,15 +62,18 @@ public class CartDiffUtil extends DiffUtil.Callback {
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
 
         Toast.makeText(context,"hi",Toast.LENGTH_SHORT).show();
-        CartInfo newModel = newList.get(newItemPosition);
-        CartInfo oldModel = oldList.get(oldItemPosition);
+        AddressInfo newModel = newList.get(newItemPosition);
+        AddressInfo oldModel = oldList.get(oldItemPosition);
 
         Bundle diff = new Bundle();
 
-        if (newModel.getPro_price()!=oldModel.getPro_price()) {
-            diff.putInt(DIFF_PRICE, newModel.getPro_price());
-        }else if (newModel.getQuantity()!=oldModel.getQuantity()){
-            diff.putInt(DIFF_QUANTITY,newModel.getQuantity());
+        if (newModel.getAddress()!=oldModel.getAddress()) {
+            diff.putString(DIFF_ADDRESS, newModel.getAddress());
+        }else if (newModel.getCity_en().matches(oldModel.getCity_en())){
+            diff.putString(DIFF_CITY,newModel.getCity_en());
+
+        }else if (newModel.getGovernorate_en().matches(oldModel.getGovernorate_en())){
+            diff.putString(DIFF_GOVERNORATE,newModel.getGovernorate_en());
 
         }
 

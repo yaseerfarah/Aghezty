@@ -123,7 +123,28 @@ public class CartInfoRoomMethod {
 
     }
 
+    public void updateCartInfo(CartInfo cartInfo){
 
+        Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter emitter) throws Exception {
+                try {
+
+                    cartRoomDatabase.daoCartInfoRoom().updateCartInfo(cartInfo);
+                    if (!emitter.isDisposed()) {
+                        emitter.onComplete();
+                    }
+
+                }catch (Exception e){
+                    if (!emitter.isDisposed()) {
+                        emitter.onError(e);
+                    }
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .subscribe();
+
+    }
 
 
     public void deleteCartInfo(CartInfo cartInfo, CompletableListener completableListener){

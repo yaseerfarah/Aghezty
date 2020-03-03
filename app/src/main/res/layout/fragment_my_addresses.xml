@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.MyAddresses"
+    android:background="@color/white"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/home_bar"
+        android:background="@android:color/white"
+
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_toolbar"
+            >
+
+
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_logo"
+                android:layout_gravity="center"
+                android:id="@+id/app_logo"
+                />
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.gturedi.views.StatefulLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/stateful"
+        android:layout_below="@+id/home_bar"
+        android:layout_above="@+id/add_new"
+        >
+
+
+
+
+
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addresses_recycler"
+
+        />
+
+
+
+
+
+
+
+
+    </com.gturedi.views.StatefulLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:id="@+id/add_new"
+        android:background="@drawable/button_background"
+        android:text="Add New Address"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="17sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+</RelativeLayout>
+
+</FrameLayout>

@@ -85,12 +85,37 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
             }
         });
 
-
         Glide.with(context).load(cartsInfoList.get(holder.getAdapterPosition()).getPro_imageUrl()).into(holder.imageView);
 
         holder.title.setText(cartsInfoList.get(holder.getAdapterPosition()).getPro_name());
         holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(cartsInfoList.get(holder.getAdapterPosition()).getPro_price())));
         holder.quantity.setText(String.valueOf(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()));
+
+
+        holder.increase.setOnClickListener(v -> {
+
+            CartInfo cartInfo=cartsInfoList.get(holder.getAdapterPosition());
+            cartInfo.setQuantity(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()+1);
+            userViewModel.updateCartInfo(cartInfo,holder.getAdapterPosition());
+
+
+            holder.quantity.setText(String.valueOf(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()));
+
+        });
+
+        holder.decrease.setOnClickListener(v -> {
+
+            if (cartsInfoList.get(holder.getAdapterPosition()).getQuantity()>1){
+
+                CartInfo cartInfo=cartsInfoList.get(holder.getAdapterPosition());
+                cartInfo.setQuantity(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()-1);
+                userViewModel.updateCartInfo(cartInfo,holder.getAdapterPosition());
+
+                holder.quantity.setText(String.valueOf(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()));
+            }
+
+        });
+
     }
 
     @Override
@@ -119,14 +144,16 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
 
         ImageView imageView;
         TextView title,quantity,price;
-        ImageButton close;
+        ImageButton close,increase,decrease;
 
         public Pro_holder(View itemView) {
             super(itemView);
             close=(ImageButton) itemView.findViewById(R.id.card_close);
            imageView =(ImageView) itemView.findViewById(R.id.card_image);
+           increase=(ImageButton) itemView.findViewById(R.id.increase);
+           decrease=(ImageButton) itemView.findViewById(R.id.decrease);
            title=(TextView) itemView.findViewById(R.id.card_title);
-            quantity=(TextView) itemView.findViewById(R.id.card_anquantity);
+            quantity=(TextView) itemView.findViewById(R.id.q_text);
             price=(TextView) itemView.findViewById(R.id.card_price);
 
         }

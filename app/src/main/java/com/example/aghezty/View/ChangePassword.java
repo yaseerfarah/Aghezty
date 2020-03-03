@@ -146,7 +146,6 @@ public class ChangePassword extends Fragment {
 
                     @Override
                     public void onFailure(String e) {
-                        Toasty.error(getContext(),e,Toast.LENGTH_SHORT).show();
                         statefulLayout.showContent();
                     }
                 });

@@ -1,7 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/card_view"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/title_layout"
+                android:orientation="horizontal"
+
+                android:weightSum="2"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/address_num_layout"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address Number :"
+                    android:id="@+id/card_address_num"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_toRightOf="@+id/card_address_num"
+                    android:id="@+id/card_an_address_num"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+                </RelativeLayout>
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_close_black_24dp"
+
+                    android:id="@+id/card_close"
+                    />
+
+
+            </LinearLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+
+                android:id="@+id/address_layout"
+                android:layout_below="@+id/governorate_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address :"
+                    android:id="@+id/card_address"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_toRightOf="@+id/card_address"
+                    android:id="@+id/card_an_address"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_layout"
+                android:layout_marginTop="5dp"
+                android:id="@+id/city_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City :"
+                    android:id="@+id/card_city"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_toRightOf="@+id/card_city"
+                    android:id="@+id/card_an_city"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/city_layout"
+                android:layout_marginTop="5dp"
+                android:id="@+id/governorate_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Governorate :"
+                    android:id="@+id/card_governorate"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_toRightOf="@+id/card_governorate"
+                    android:id="@+id/card_an_governorate"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+
+            </RelativeLayout>
+
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 
 
 

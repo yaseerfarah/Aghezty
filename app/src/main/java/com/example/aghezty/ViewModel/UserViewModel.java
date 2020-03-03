@@ -150,6 +150,9 @@ public class UserViewModel extends ViewModel {
         return addressListMediatorLiveData;
     }
 
+
+
+
     public int getCouponDiscount() {
         return couponDiscount;
     }
@@ -406,46 +409,9 @@ public class UserViewModel extends ViewModel {
     }
 
 
-    public void addNewAddress(AddressInfo addressInfo,CompletableListener completableListener){
-
-        disposables.add(agheztyApi.addNewAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(responseBodyResponse -> {
-
-                    if (responseBodyResponse.isSuccessful()){
-                        JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
-                        addressInfo.setId(jsonObject.getJSONObject("data").getInt("id"));
-                        addressInfoList.add(addressInfo);
-                        currentUserInfo.setCityId(addressInfo.getCity_id());
-                        currentUserInfo.setCity(addressInfo.getCity_en());
-                        currentUserInfo.setGovernorate(addressInfo.getGovernorate_en());
-                        currentUserInfo.setAddress(addressInfo.getAddress());
-                        saveUserInfo(currentUserInfo);
-                        addressListMediatorLiveData.postValue(addressInfoList);
-                        completableListener.onSuccess();
-
-                    }else {
-                        Gson gson=new Gson();
-                        //  Log.e("Response",responseBodyResponse.errorBody().string());
-                        ErrorResponse errorResponse=gson.fromJson(responseBodyResponse.errorBody().string(),ErrorResponse.class);
-                        for (String message:errorResponse.getMessages()){
-                            Log.e("Update Pass Response",message);
-                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
-                        }
-                        completableListener.onFailure(errorResponse.getMessages().toString());
-                    }
-
-                },this::onError)
-
-        );
-
-    }
-
-
     public void getLoginUserInfo(){
 
-        if (currentUserInfo.getName()==null&&currentUserInfo.getAddress()==null){
+        if (currentUserInfo.getName()==null){
             disposables.add(agheztyApi.getUserInfo("application/json", "Bearer " + currentUserInfo.getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -460,9 +426,9 @@ public class UserViewModel extends ViewModel {
                             currentUserInfo.setImgUrl(userInfo.getImgUrl());
                             currentUserInfo.setPhoneNumber(userInfo.getPhoneNumber());
 
-                            // saveUserInfo(currentUserInfo);
-                            // currentUserInfoMediatorLiveData.postValue(currentUserInfo);
-                            getAllUserAddress();
+                             saveUserInfo(currentUserInfo);
+                             currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                            //getAllUserAddress();
                         } else {
                             Gson gson = new Gson();
                             //  Log.e("Response",responseBodyResponse.errorBody().string());
@@ -486,31 +452,135 @@ public class UserViewModel extends ViewModel {
 
 
 
-    private void getAllUserAddress(){
+    public void addNewAddress(AddressInfo addressInfo,CompletableListener completableListener){
 
-        disposables.add(agheztyApi.getUserAddresses("application/json","Bearer "+currentUserInfo.getToken())
+        disposables.add(agheztyApi.addNewAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseBodyResponse -> {
+
+                    if (responseBodyResponse.isSuccessful()){
+                        JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
+                        addressInfo.setId(jsonObject.getJSONObject("data").getInt("id"));
+                        addressInfoList.add(addressInfo);
+                       /* currentUserInfo.setCityId(addressInfo.getCity_id());
+                        currentUserInfo.setCity(addressInfo.getCity_en());
+                        currentUserInfo.setGovernorate(addressInfo.getGovernorate_en());
+                        currentUserInfo.setAddress(addressInfo.getAddress());
+                        saveUserInfo(currentUserInfo);*/
+                        addressListMediatorLiveData.postValue(addressInfoList);
+                        completableListener.onSuccess();
+
+                    }else {
+                        Gson gson=new Gson();
+                        //  Log.e("Response",responseBodyResponse.errorBody().string());
+                        ErrorResponse errorResponse=gson.fromJson(responseBodyResponse.errorBody().string(),ErrorResponse.class);
+                        for (String message:errorResponse.getMessages()){
+                            Log.e("Update Pass Response",message);
+                            Toasty.error(context,message,Toast.LENGTH_SHORT).show();
+                        }
+                        completableListener.onFailure(errorResponse.getMessages().toString());
+                    }
+
+                },this::onError)
+
+        );
+
+    }
+
+
+
+
+
+    public void getAllUserAddress(){
+
+        if (addressListMediatorLiveData.getValue()==null) {
+            disposables.add(agheztyApi.getUserAddresses("application/json", "Bearer " + currentUserInfo.getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(addressResponseResponse -> {
+
+                        if (addressResponseResponse.isSuccessful()) {
+                            List<AddressInfo> addressInfos = addressResponseResponse.body().getAddressInfoList();
+
+                            if (!addressInfos.isEmpty()) {
+
+                               /* currentUserInfo.setCityId(addressInfos.get(0).getCity_id());
+                                currentUserInfo.setCity(addressInfos.get(0).getCity_en());
+                                currentUserInfo.setGovernorate(addressInfos.get(0).getGovernorate_en());
+                                currentUserInfo.setAddress(addressInfos.get(0).getAddress());*/
+
+                                addressInfoList.addAll(addressInfos);
+                               // saveUserInfo(currentUserInfo);
+                                addressListMediatorLiveData.postValue(addressInfoList);
+                               // currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                            } else {
+                                addressListMediatorLiveData.postValue(addressInfoList);
+                               // currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                            }
+
+                        } else {
+                            Gson gson = new Gson();
+                            //  Log.e("Response",responseBodyResponse.errorBody().string());
+                            ErrorResponse errorResponse = gson.fromJson(addressResponseResponse.errorBody().string(), ErrorResponse.class);
+                            for (String message : errorResponse.getMessages()) {
+                                Log.e("Update Pass Response", message);
+                                Toasty.error(context, message, Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+
+                    }, this::onError)
+
+            );
+        }
+
+    }
+
+
+    public void updateAddress(AddressInfo addressInfo,CompletableListener completableListener){
+
+
+        disposables.add(agheztyApi.updateAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo.getId(),toRequestBody(String.valueOf(addressInfo.getCity_id())),toRequestBody(addressInfo.getAddress()))
+
+        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseBodyResponse -> {
+
+                    if (responseBodyResponse.isSuccessful()){
+
+                        updateAddressFromList(addressInfo);
+                        completableListener.onSuccess();
+
+                    }else {
+                        Gson gson = new Gson();
+                        //  Log.e("Response",responseBodyResponse.errorBody().string());
+                        ErrorResponse errorResponse = gson.fromJson(responseBodyResponse.errorBody().string(), ErrorResponse.class);
+                        for (String message : errorResponse.getMessages()) {
+                            Log.e("Update Pass Response", message);
+                            Toasty.error(context, message, Toast.LENGTH_SHORT).show();
+                        }
+
+                        completableListener.onFailure(errorResponse.getMessages().toString());
+                    }
+
+                },this::onError)
+        );
+
+    }
+
+
+    public void deleteAddress(AddressInfo addressInfo,int position,CompletableListener completableListener){
+
+        disposables.add(agheztyApi.deleteAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo.getId())
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(addressResponseResponse -> {
-
                     if (addressResponseResponse.isSuccessful()){
-                       List<AddressInfo> addressInfos=addressResponseResponse.body().getAddressInfoList();
-
-                       if (!addressInfos.isEmpty()) {
-
-                           currentUserInfo.setCityId(addressInfos.get(0).getCity_id());
-                           currentUserInfo.setCity(addressInfos.get(0).getCity_en());
-                           currentUserInfo.setGovernorate(addressInfos.get(0).getGovernorate_en());
-                           currentUserInfo.setAddress(addressInfos.get(0).getAddress());
-
-                           addressInfoList.addAll(addressInfos);
-                           saveUserInfo(currentUserInfo);
-                           addressListMediatorLiveData.postValue(addressInfoList);
-                           currentUserInfoMediatorLiveData.postValue(currentUserInfo);
-                       }else {
-                           currentUserInfoMediatorLiveData.postValue(currentUserInfo);
-                       }
-
+                        completableListener.onSuccess();
+                        addressInfoList.remove(position);
+                        addressListMediatorLiveData.postValue(addressInfoList);
                     }else {
                         Gson gson=new Gson();
                         //  Log.e("Response",responseBodyResponse.errorBody().string());
@@ -519,17 +589,14 @@ public class UserViewModel extends ViewModel {
                             Log.e("Update Pass Response",message);
                             Toasty.error(context,message,Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
 
                 },this::onError)
 
-
         );
 
     }
-
 
 
     public void getCouponDiscount(String coupon, CheckCoupon checkCoupon){
@@ -622,6 +689,19 @@ public class UserViewModel extends ViewModel {
     }
 
 
+
+    public void updateCartInfo(CartInfo cartInfo,int position){
+
+        cartInfoRoomMethod.updateCartInfo(cartInfo);
+
+        cartInfolist.remove(position);
+        cartInfolist.add(position,cartInfo);
+        cartListMediatorLiveData.postValue(cartInfolist);
+
+    }
+
+
+
     private boolean checkIsLogin(){
 
         return sharedPreferencesMethod.getBoolean(IS_LOGIN);
@@ -643,6 +723,21 @@ public class UserViewModel extends ViewModel {
             if (cartInfo.getProduct_id()==cartInfolist.get(i).getProduct_id()){
                 cartInfolist.remove(i);
                 cartListMediatorLiveData.postValue(cartInfolist);
+            }
+
+        }
+
+    }
+
+
+    private void updateAddressFromList(AddressInfo addressInfo){
+
+        for (int i=0;i<addressInfoList.size();i++){
+
+            if (addressInfo.getId()==addressInfoList.get(i).getId()){
+                addressInfoList.remove(i);
+                addressInfoList.add(i,addressInfo);
+                addressListMediatorLiveData.postValue(addressInfoList);
             }
 
         }

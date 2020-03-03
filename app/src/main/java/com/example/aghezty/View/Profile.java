@@ -68,12 +68,8 @@ public class Profile extends Fragment {
     TextView userLastName;
     @BindView(R.id.last)
     TextView lastName;
-    @BindView(R.id.an_city)
-    TextView userCity;
-    @BindView(R.id.an_governorate)
-    TextView userGovernorate;
-    @BindView(R.id.an_address)
-    TextView userAddress;
+    @BindView(R.id.an_email)
+    TextView user_Email;
     @BindView(R.id.an_phone)
     TextView userPhoneNumber;
 
@@ -202,9 +198,7 @@ public class Profile extends Fragment {
         }
 
         userEmail.setText(userInfo.getEmail());
-        userGovernorate.setText(userInfo.getGovernorate());
-        userCity.setText(userInfo.getCity());
-        userAddress.setText(userInfo.getAddress());
+        user_Email.setText(userInfo.getEmail());
         userPhoneNumber.setText(userInfo.getPhoneNumber());
 
     }
@@ -230,8 +224,8 @@ public class Profile extends Fragment {
                         navController.navigate(R.id.action_profile_to_editProfile);
                         break;
 
-                    case R.id.new_address:
-                        navController.navigate(R.id.action_profile_to_addNewAddress);
+                    case R.id.my_addresses:
+                        navController.navigate(R.id.action_profile_to_myAddresses);
                         break;
 
                     case R.id.new_password:

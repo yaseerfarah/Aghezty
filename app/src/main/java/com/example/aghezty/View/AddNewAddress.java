@@ -48,6 +48,7 @@ import es.dmoral.toasty.Toasty;
 public class AddNewAddress extends Fragment {
 
 
+    public static String UPDATE_ADDRESS="AddressData";
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -57,6 +58,7 @@ public class AddNewAddress extends Fragment {
     private Observer governorateobserver;
     private Observer citiesobserver;
 
+    private AddressInfo addressInfo;
 
     private List<GovernorateInfo> governorateInfoList=new ArrayList<>();
     private List<CityInfo> cityInfoList=new ArrayList<>();
@@ -110,6 +112,11 @@ public class AddNewAddress extends Fragment {
 
                 governorate.setAdapter(arrayAdapter);
 
+                if (addressInfo!=null){
+                    governorate.setSelection(governoratePosition(addressInfo));
+                    address.setText(addressInfo.getAddress());
+                }
+
 
             }
         };
@@ -132,6 +139,9 @@ public class AddNewAddress extends Fragment {
 
                 city.setAdapter(arrayAdapter);
 
+                if (city_choice==null&&addressInfo!=null){
+                    city.setSelection(getCityPosition(cityInfos,addressInfo.getCity_en()));
+                }
 
             }
         };
@@ -168,6 +178,7 @@ public class AddNewAddress extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        addressInfo=getArguments().getParcelable(UPDATE_ADDRESS);
     }
 
 
@@ -187,7 +198,7 @@ public class AddNewAddress extends Fragment {
 
         navController= Navigation.findNavController(view);
 
-
+        statefulLayout.showLoading(" ");
 
         governorate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -232,21 +243,15 @@ public class AddNewAddress extends Fragment {
         if (!address.getText().toString().isEmpty()&&city_choice!=null){
 
             statefulLayout.showLoading(" ");
-            AddressInfo addressInfo=new AddressInfo(city_choice.getId(),address.getText().toString(),city_choice.getCity_en(),city_choice.getCity_ar(),governorate_choice.getGovernorate_en(),governorate_choice.getGovernorate_ar());
 
-            userViewModel.addNewAddress(addressInfo, new CompletableListener() {
-                @Override
-                public void onSuccess() {
-                    navController.navigateUp();
-                    Toasty.success(getContext(),"Successful Add New Address",Toast.LENGTH_SHORT).show();
-                }
+            if (addressInfo!=null){
 
-                @Override
-                public void onFailure(String message) {
-                    Toasty.error(getContext(),message,Toast.LENGTH_SHORT).show();
-                    statefulLayout.showContent();
-                }
-            });
+                updateAddress();
+
+            }else {
+                addNewAddress();
+            }
+
 
         }else {
             Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
@@ -256,6 +261,79 @@ public class AddNewAddress extends Fragment {
 
 
 
+    private void addNewAddress(){
+        AddressInfo addressData=new AddressInfo(city_choice.getId(),address.getText().toString(),city_choice.getCity_en(),city_choice.getCity_ar(),governorate_choice.getGovernorate_en(),governorate_choice.getGovernorate_ar());
+
+        userViewModel.addNewAddress(addressData, new CompletableListener() {
+            @Override
+            public void onSuccess() {
+                navController.navigateUp();
+                Toasty.success(getContext(),"Successful Add New Address",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String message) {
+               // Toasty.error(getContext(),message,Toast.LENGTH_SHORT).show();
+                statefulLayout.showContent();
+            }
+        });
+    }
+
+
+    private void updateAddress(){
+
+
+        addressInfo.setCity_id(city_choice.getId());
+        addressInfo.setAddress(address.getText().toString());
+        addressInfo.setCity_ar(city_choice.getCity_ar());
+        addressInfo.setCity_en(city_choice.getCity_en());
+        addressInfo.setGovernorate_ar(governorate_choice.getGovernorate_ar());
+        addressInfo.setGovernorate_en(governorate_choice.getGovernorate_en());
+
+
+        userViewModel.updateAddress(addressInfo, new CompletableListener() {
+            @Override
+            public void onSuccess() {
+                navController.navigateUp();
+                Toasty.success(getContext(),"Successful Update Address",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String message) {
+               // Toasty.error(getContext(),message,Toast.LENGTH_SHORT).show();
+                statefulLayout.showContent();
+            }
+        });
+    }
+
+
+
+
+    private int governoratePosition(AddressInfo addressInfo){
+
+        for (int i=0;i<governorateInfoList.size();i++){
+
+            if (governorateInfoList.get(i).getGovernorate_en().matches(addressInfo.getGovernorate_en())){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    private int getCityPosition(List<CityInfo> cityInfos,String name){
+
+        for (int i=0;i<cityInfos.size();i++){
+
+            if (cityInfos.get(i).getCity_en().matches(name)){
+                return i;
+            }
+
+        }
+
+        return 0;
+
+    }
 
 
 }

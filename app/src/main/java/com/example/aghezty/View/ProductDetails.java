@@ -45,6 +45,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -147,6 +149,10 @@ public class ProductDetails extends Fragment {
     private SliderAdapter sliderAdapter;
 
     private InnerProductListener innerProductListener;
+    private int page=0;
+    private Timer timer;
+    private boolean isStart=false;
+
 
     public ProductDetails() {
         // Required empty public constructor
@@ -167,6 +173,9 @@ public class ProductDetails extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 productInfo=innerProduct;
                 assignView(productInfo);
+                if (innerProduct.getGallery().size()>1){
+                    viewpager_timer(5);
+                }
             }
 
             @Override
@@ -183,6 +192,7 @@ public class ProductDetails extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        cancel_timer();
         innerProductListener=null;
     }
 
@@ -256,6 +266,23 @@ public class ProductDetails extends Fragment {
         sliderAdapter=new SliderAdapter(getContext(),sliderInfoList,getActivity(),DETAILS);
 
         pro_image.setAdapter(sliderAdapter);
+
+        pro_image.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                page=position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         pro_title.setText(productInfo.getTitle_en());
 
@@ -423,6 +450,70 @@ public class ProductDetails extends Fragment {
 
 
     }
+
+
+    /// timer for viewpager///////////
+
+    private void viewpager_timer(int second){
+
+        // page=viewPager.getCurrentItem();
+        // Toast.makeText(getActivity(),"timer",Toast.LENGTH_LONG).show();
+        if (!isStart) {
+            isStart=true;
+            timer = new Timer();
+            timer.schedule(new Timer_task(), 2 * 1000, second * 1000);
+        }
+
+
+
+    }
+
+
+    ////////// cancel Timer//////////////////
+
+    public void cancel_timer(){
+        if (timer!=null) {
+            timer.cancel();
+            isStart = false;
+        }
+
+    }
+
+
+    //////////////////////////////// inner Class for Timer Task//////////////////////////////////////////////
+
+
+    class Timer_task extends TimerTask {
+
+
+
+
+
+        @Override
+        public void run() {
+
+            if(getActivity()!=null){
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if(page>sliderAdapter.getCount()){
+                            page=0;
+                        }
+                        else {
+                            page++;
+                        }
+                        pro_image.setCurrentItem(page);
+                    }
+                });
+            }
+
+
+
+        }
+    }
+
 
 
 

@@ -204,6 +204,13 @@ public class Cart extends Fragment {
 
 
 
+        checkout.setOnClickListener(v -> {
+
+            navController.navigate(R.id.action_cart_to_checkOut);
+
+        });
+
+
     }
 
 

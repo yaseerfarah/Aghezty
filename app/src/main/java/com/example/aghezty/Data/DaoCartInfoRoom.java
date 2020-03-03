@@ -21,6 +21,10 @@ public interface DaoCartInfoRoom {
     @Query("SELECT * FROM CartInfo")
     List<CartInfo> fetchAllCart();
 
+
+    @Update
+    void updateCartInfo(CartInfo cartInfo);
+
     @Delete
     void deleteCartInfo(CartInfo cartInfo);
 
