@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -96,6 +97,8 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
 
             CartInfo cartInfo=cartsInfoList.get(holder.getAdapterPosition());
             cartInfo.setQuantity(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()+1);
+            cartInfo.setPro_totalPrice(cartInfo.getPro_price()*cartInfo.getQuantity());
+            Toast.makeText(context,String.valueOf(cartInfo.getPro_totalPrice()),Toast.LENGTH_SHORT).show();
             userViewModel.updateCartInfo(cartInfo,holder.getAdapterPosition());
 
 
@@ -109,6 +112,8 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
 
                 CartInfo cartInfo=cartsInfoList.get(holder.getAdapterPosition());
                 cartInfo.setQuantity(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()-1);
+                cartInfo.setPro_totalPrice(cartInfo.getPro_price()*cartInfo.getQuantity());
+                Toast.makeText(context,String.valueOf(cartInfo.getPro_totalPrice()),Toast.LENGTH_SHORT).show();
                 userViewModel.updateCartInfo(cartInfo,holder.getAdapterPosition());
 
                 holder.quantity.setText(String.valueOf(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()));

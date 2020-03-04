@@ -11,6 +11,8 @@ public class AddressInfo implements Parcelable {
     private int id;
     @SerializedName("city_id")
     private int city_id;
+    @SerializedName("shipping_amount")
+    private int shippingAmount;
     @SerializedName("address")
     private String address;
     @SerializedName("city_en")
@@ -93,6 +95,14 @@ public class AddressInfo implements Parcelable {
     }
 
 
+    public int getShippingAmount() {
+        return shippingAmount;
+    }
+
+    public void setShippingAmount(int shippingAmount) {
+        this.shippingAmount = shippingAmount;
+    }
+
     public boolean compare(AddressInfo addressInfo){
 
         if (addressInfo.getAddress().matches(getAddress())&&addressInfo.getCity_ar().matches(getCity_ar())&&addressInfo.getCity_en().matches(getCity_en())&&addressInfo.getGovernorate_ar().matches(getGovernorate_ar())&&addressInfo.getGovernorate_en().matches(getGovernorate_en()))
@@ -113,6 +123,7 @@ public class AddressInfo implements Parcelable {
         governorate_ar=in.readString();
         governorate_en=in.readString();
         address=in.readString();
+        shippingAmount=in.readInt();
 
 
     }
@@ -145,6 +156,7 @@ public class AddressInfo implements Parcelable {
         dest.writeString(governorate_ar);
         dest.writeString(governorate_en);
         dest.writeString(address);
+        dest.writeInt(shippingAmount);
 
 
     }

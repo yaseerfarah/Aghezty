@@ -55,8 +55,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="First Name"
-                    android:id="@+id/first"
+                    android:text="Name"
+                    android:id="@+id/name"
                     android:layout_below="@+id/line"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Yaseer"
-                    android:id="@+id/an_first"
+                    android:id="@+id/an_name"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:textSize="15sp"
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="E-mail"
                     android:id="@+id/email"
-                    android:layout_below="@+id/first"
+                    android:layout_below="@+id/name"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:layout_marginLeft="15sp"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="yasserfarah22@gmail.com"
                     android:id="@+id/an_email"
-                    android:layout_below="@+id/first"
+                    android:layout_below="@+id/name"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_alignParentRight="true"
@@ -329,6 +329,7 @@
                     android:id="@+id/credit_info"
                     android:layout_below="@+id/payment_method_t"
                     android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     >
 
                     <TextView
@@ -481,38 +482,14 @@
 
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Coupon"
-                        android:id="@+id/coupon_name"
-                        android:layout_below="@+id/sub_total"
-                        android:textColor="@color/grey"
-                        android:textSize="15sp"
-                        android:layout_marginLeft="15sp"
-                        android:layout_marginTop="20dp"
-                        />
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="AGHEZTY10"
-                        android:id="@+id/an_coupon_name"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:layout_below="@+id/sub_total"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="20dp"
-                        />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Coupon Discount"
                     android:id="@+id/coupon_discount"
-                    android:layout_below="@+id/coupon_name"
+                    android:layout_below="@+id/sub_total"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:layout_marginLeft="15dp"
@@ -525,7 +502,7 @@
                     android:layout_height="wrap_content"
                     android:text="999.99 .EGP"
                     android:id="@+id/an_coupon_discount"
-                    android:layout_below="@+id/coupon_name"
+                    android:layout_below="@+id/sub_total"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_alignParentRight="true"

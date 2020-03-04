@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".View.Shipping">
 
+    <com.gturedi.views.StatefulLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/stateful">
+
+
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -133,101 +141,249 @@
             />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/shipping_info"
-            android:layout_alignParentRight="true"
+            android:id="@+id/my_addresses"
+            android:layout_below="@+id/address_info"
             android:layout_marginTop="20dp"
-            android:id="@+id/city_info"
+            android:clickable="true"
             >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:text="Select From My Addresses"
+                android:textSize="18sp"
                 android:textColor="@color/dark_blue"
-                android:text="City"
-                android:textSize="15sp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:hint="City"
-                android:imeOptions="actionNext"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/border_e"
-                android:id="@+id/city_edit"
                 />
-        </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_more"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+
+                android:clickable="false"
+                />
 
 
 
-        <LinearLayout
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/city_info"
-            android:layout_alignParentRight="true"
+            android:id="@+id/add_new_address"
+            android:layout_below="@+id/my_addresses"
             android:layout_marginTop="20dp"
-            android:id="@+id/governorate_info"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
             >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:text="Add New Address"
+                android:textSize="18sp"
                 android:textColor="@color/dark_blue"
-                android:text="Governorate"
-                android:textSize="15sp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:hint="Governorate"
-                android:imeOptions="actionNext"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/border_e"
-                android:id="@+id/governorate_edit"
                 />
-        </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_more"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:clickable="false"
+                />
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/governorate_info"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
             android:id="@+id/address_info"
+            android:layout_below="@+id/shipping_info"
+            android:layout_marginTop="20dp"
+
             >
 
-            <TextView
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="Address"
-                android:textSize="15sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:hint="Address"
-                android:imeOptions="actionGo"
-                android:gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/border_e"
-                android:id="@+id/address_edit"
-                />
-        </LinearLayout>
+
+                android:id="@+id/address_layout"
+                android:layout_below="@+id/governorate_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address :"
+
+                    android:id="@+id/card_address"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_toRightOf="@+id/card_address"
+                    android:id="@+id/an_address"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:gravity="right"
+
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/amount_layout"
+                android:layout_below="@+id/address_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shipping Amount:"
+                    android:id="@id/shipping_amount"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="123,29 EGP"
+                    android:id="@+id/an_shipping_amount"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:layout_toRightOf="@+id/shipping_amount"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/city_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City :"
+                    android:id="@+id/card_city"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_toRightOf="@+id/card_city"
+                    android:id="@+id/an_city"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/city_layout"
+                android:layout_marginTop="5dp"
+                android:id="@+id/governorate_layout"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Governorate :"
+                    android:id="@+id/card_governorate"
+                    android:textColor="@color/grey"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_toRightOf="@+id/card_governorate"
+                    android:id="@+id/an_governorate"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
 
 
     </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
-
+    </com.gturedi.views.StatefulLayout>
 </FrameLayout>

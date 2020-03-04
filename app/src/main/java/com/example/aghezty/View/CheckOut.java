@@ -16,11 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.example.aghezty.Adapter.CheckOutViewPagerAdapter;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
+import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 
@@ -43,13 +45,17 @@ public class CheckOut extends Fragment {
 
     private NavController navController;
 
+    private Shipping shipping;
+    private Payment payment;
+    private Confirm confirm;
+
     private CheckOutViewPagerAdapter checkOutViewPagerAdapter;
 
     @BindView(R.id.stepper_indicator)
     StepperIndicator stepperIndicator;
 
     @BindView(R.id.check_out_viewpager)
-    ViewPager checkOutFragment;
+    CheckOutViewPager checkOutFragment;
 
     @BindView(R.id.next)
     Button next;
@@ -61,7 +67,26 @@ public class CheckOut extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkOutViewPagerAdapter=new CheckOutViewPagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,checkOutFragment);
 
+        shipping=(Shipping) checkOutViewPagerAdapter.getItem(0);
+        payment =(Payment) checkOutViewPagerAdapter.getItem(1);
+        confirm =(Confirm) checkOutViewPagerAdapter.getItem(2);
+
+        checkOutFragment.setAdapter(checkOutViewPagerAdapter);
+
+        stepperIndicator.setViewPager(checkOutFragment);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        checkOutFragment.setAdapter(null);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,11 +111,7 @@ public class CheckOut extends Fragment {
         ButterKnife.bind(this,view);
         navController= Navigation.findNavController(view);
 
-        checkOutViewPagerAdapter=new CheckOutViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        checkOutFragment.setAdapter(checkOutViewPagerAdapter);
-
-        stepperIndicator.setViewPager(checkOutFragment);
 
         checkOutFragment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -100,6 +121,13 @@ public class CheckOut extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+
+                if (position == 0) {
+                    back.setVisibility(View.GONE);
+                }else {
+                    back.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override
@@ -107,6 +135,41 @@ public class CheckOut extends Fragment {
 
             }
         });
+
+
+        next.setOnClickListener(v -> {
+            switch (checkOutFragment.getCurrentItem()){
+
+                case 0:
+                    shipping.validationFields();
+                    break;
+
+                case 1:
+                    checkOutFragment.setCurrentItem(2);
+                    break;
+
+                case 2:
+                    break;
+
+
+            }
+        });
+
+        back.setOnClickListener(v -> {
+            switch (checkOutFragment.getCurrentItem()){
+
+                case 1:
+                    checkOutFragment.setCurrentItem(0);
+                    break;
+
+                case 2:
+                    checkOutFragment.setCurrentItem(1);
+                    break;
+
+
+            }
+        });
+
 
 
     }

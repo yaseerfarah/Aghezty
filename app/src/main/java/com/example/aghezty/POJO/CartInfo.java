@@ -15,13 +15,17 @@ public class CartInfo {
     private int quantity;
     @SerializedName("price")
     private int pro_price;
+    @SerializedName("total_price")
+    private int pro_totalPrice;
+
     private String pro_name,pro_imageUrl;
 
 
-    public CartInfo(int product_id, int quantity, int pro_price, String pro_name, String pro_imageUrl) {
+    public CartInfo(int product_id, int quantity, int pro_price, int pro_totalPrice, String pro_name, String pro_imageUrl) {
         this.product_id = product_id;
         this.quantity = quantity;
         this.pro_price = pro_price;
+        this.pro_totalPrice = pro_totalPrice;
         this.pro_name = pro_name;
         this.pro_imageUrl = pro_imageUrl;
     }
@@ -64,6 +68,15 @@ public class CartInfo {
 
     public void setPro_imageUrl(String pro_imageUrl) {
         this.pro_imageUrl = pro_imageUrl;
+    }
+
+
+    public int getPro_totalPrice() {
+        return pro_totalPrice;
+    }
+
+    public void setPro_totalPrice(int pro_totalPrice) {
+        this.pro_totalPrice = pro_totalPrice;
     }
 
     public boolean compare(CartInfo cartInfo){

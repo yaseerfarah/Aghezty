@@ -22,6 +22,7 @@ import com.example.aghezty.POJO.BrandCategoriesResponse;
 import com.example.aghezty.POJO.BrandInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CategoryInfo;
+import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.CitiesResponse;
 import com.example.aghezty.POJO.CityInfo;
 import com.example.aghezty.POJO.ErrorResponse;
@@ -37,6 +38,7 @@ import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.Util.FileUtils;
+import com.example.aghezty.View.CheckOut;
 import com.example.aghezty.View.Login;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -89,6 +91,8 @@ public class UserViewModel extends ViewModel {
     private List<AddressInfo> addressInfoList;
 
     private int couponDiscount;
+
+    private CheckOutInfo checkOutInfo=new CheckOutInfo();
 
 
     private UserInfo currentUserInfo;
@@ -151,7 +155,21 @@ public class UserViewModel extends ViewModel {
     }
 
 
+    public List<CartInfo> getCartInfolist() {
+        return cartInfolist;
+    }
 
+    public List<AddressInfo> getAddressInfoList() {
+        return addressInfoList;
+    }
+
+    public CheckOutInfo getCheckOutInfo() {
+        return checkOutInfo;
+    }
+
+    public void setCheckOutInfo(CheckOutInfo checkOutInfo) {
+        this.checkOutInfo = checkOutInfo;
+    }
 
     public int getCouponDiscount() {
         return couponDiscount;
@@ -184,7 +202,7 @@ public class UserViewModel extends ViewModel {
     }
 
     public void addCartInfo(ProductInfo productInfo,int quantity,CompletableListener completableListener){
-        CartInfo cartInfo=new CartInfo(productInfo.getId(),quantity,productInfo.getDiscount()!=null?productInfo.getPrice_after_discount():productInfo.getPrice(),productInfo.getTitle_en(),productInfo.getMain_image());
+        CartInfo cartInfo=new CartInfo(productInfo.getId(),quantity,productInfo.getDiscount()!=null?productInfo.getPrice_after_discount():productInfo.getPrice(),productInfo.getDiscount()!=null?productInfo.getPrice_after_discount()*quantity:productInfo.getPrice()*quantity,productInfo.getTitle_en(),productInfo.getMain_image());
 
         cartInfoRoomMethod.insertSticker(cartInfo, new CompletableListener() {
             @Override
@@ -462,6 +480,7 @@ public class UserViewModel extends ViewModel {
                     if (responseBodyResponse.isSuccessful()){
                         JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
                         addressInfo.setId(jsonObject.getJSONObject("data").getInt("id"));
+                        //addressInfo.setShippingAmount(jsonObject.getJSONObject("data").getInt("shipping_amount"));
                         addressInfoList.add(addressInfo);
                        /* currentUserInfo.setCityId(addressInfo.getCity_id());
                         currentUserInfo.setCity(addressInfo.getCity_en());
@@ -549,7 +568,9 @@ public class UserViewModel extends ViewModel {
                 .subscribe(responseBodyResponse -> {
 
                     if (responseBodyResponse.isSuccessful()){
-
+                        JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
+                        addressInfo.setCity_id(jsonObject.getJSONObject("data").getInt("city_id"));
+                       // addressInfo.setShippingAmount(jsonObject.getJSONObject("data").getInt("shipping_amount"));
                         updateAddressFromList(addressInfo);
                         completableListener.onSuccess();
 

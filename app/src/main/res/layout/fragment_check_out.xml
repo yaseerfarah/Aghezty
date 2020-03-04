@@ -70,24 +70,20 @@
 
 
 
-      <androidx.cardview.widget.CardView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_below="@+id/stepper_indicator"
-          android:layout_marginTop="5dp"
-          android:layout_marginBottom="5dp"
-          android:layout_above="@+id/buttons"
-          >
 
 
-          <androidx.viewpager.widget.ViewPager
+          <com.example.aghezty.Util.CheckOutViewPager
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:id="@+id/check_out_viewpager"
+              android:layout_below="@+id/stepper_indicator"
+              android:layout_marginTop="5dp"
+
+              android:layout_above="@+id/buttons"
               />
 
 
-      </androidx.cardview.widget.CardView>
+
 
       <LinearLayout
           android:layout_width="match_parent"
@@ -129,6 +125,7 @@
               android:textSize="15sp"
               android:layout_marginBottom="5dp"
               android:id="@+id/back"
+              android:visibility="gone"
               />
 
       </LinearLayout>
