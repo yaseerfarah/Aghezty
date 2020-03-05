@@ -122,13 +122,10 @@
             android:id="@+id/action_checkOut_to_addNewAddress"
             app:destination="@id/addNewAddress" />
     </fragment>
+    <action android:id="@+id/action_global_addNewAddress" app:destination="@id/addNewAddress" />
     <fragment
-        android:id="@+id/shipping"
-        android:name="com.example.aghezty.View.Shipping"
-        android:label="fragment_shipping"
-        tools:layout="@layout/fragment_shipping" >
-        <action
-            android:id="@+id/action_shipping_to_addNewAddress"
-            app:destination="@id/addNewAddress" />
-    </fragment>
+        android:id="@+id/confirm2"
+        android:name="com.example.aghezty.View.Confirm"
+        android:label="fragment_confirm"
+        tools:layout="@layout/fragment_confirm" />
 </navigation>

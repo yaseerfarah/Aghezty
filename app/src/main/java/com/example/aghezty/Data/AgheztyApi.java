@@ -3,6 +3,7 @@ package com.example.aghezty.Data;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.AddressResponse;
 import com.example.aghezty.POJO.BrandCategoriesResponse;
+import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.CitiesResponse;
 import com.example.aghezty.POJO.GovernorateResponse;
 import com.example.aghezty.POJO.HomeResponse;
@@ -150,6 +151,11 @@ public interface AgheztyApi {
 
 
 
+    @POST("check_out")
+    Single<Response<ResponseBody>> checkOut( @Header("Accept") String accept,
+                                                    @Header("Authorization") String authorization,
+                                                    @Header("Content-Type") String contentType,
+                                                    @Body CheckOutInfo checkOutInfo);
 
 
 

@@ -65,7 +65,6 @@ public class Shipping extends Fragment {
     ViewModelFactory viewModelFactory;
     private UserViewModel userViewModel;
 
-    private UserInfo userInfo;
     private Observer addressesObserver;
     private List<AddressInfo> addressInfoList=new ArrayList<>();
 
@@ -77,12 +76,6 @@ public class Shipping extends Fragment {
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
 
 
-    @BindView(R.id.name_edit)
-    EditText name;
-    @BindView(R.id.email_edit)
-    EditText email;
-    @BindView(R.id.phone_edit)
-    EditText phoneNumber;
 
     @BindView(R.id.an_city)
     TextView city;
@@ -92,6 +85,11 @@ public class Shipping extends Fragment {
     TextView address;
     @BindView(R.id.an_shipping_amount)
     TextView shippingAmount;
+
+    @BindView(R.id.next)
+    Button next;
+    @BindView(R.id.back)
+    Button back;
 
 
     @BindView(R.id.my_addresses)
@@ -107,7 +105,7 @@ public class Shipping extends Fragment {
     RelativeLayout address_layout;
 
 
-    public Shipping(WeakReference<CheckOutViewPager> viewPagerWeakReference) {
+    public Shipping( WeakReference<CheckOutViewPager> viewPagerWeakReference) {
         // Required empty public constructor
 
         this.viewPagerWeakReference=viewPagerWeakReference;
@@ -116,14 +114,10 @@ public class Shipping extends Fragment {
             @Override
             public void onChanged(List<AddressInfo> addressInfos) {
 
-                if (!addressInfos.isEmpty()){
-
-                    statefulLayout.showContent();
-                    addressInfoList.clear();
-                    addressInfoList.addAll(addressInfos);
-                    assignView();
-
-                }
+                statefulLayout.showContent();
+                addressInfoList.clear();
+                addressInfoList.addAll(addressInfos);
+                assignView();
 
             }
 
@@ -142,9 +136,9 @@ public class Shipping extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        userViewModel.getAddressListMediatorLiveData().removeObservers(this);
-    }
+        userViewModel.getAddressListMediatorLiveData().removeObserver(addressesObserver);
 
+    }
 
 
 
@@ -153,7 +147,7 @@ public class Shipping extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
-        userInfo=userViewModel.getCurrentUserInfo();
+
     }
 
 
@@ -174,7 +168,7 @@ public class Shipping extends Fragment {
         addNewAddress.setOnClickListener(v -> {
             Bundle bundle=new Bundle();
             bundle.putParcelable(UPDATE_ADDRESS,null);
-            navController.navigate(R.id.action_checkOut_to_addNewAddress,bundle);
+            navController.navigate(R.id.action_global_addNewAddress,bundle);
 
         });
 
@@ -184,6 +178,20 @@ public class Shipping extends Fragment {
             myAddressDialog();
 
         });
+        next.setOnClickListener(v -> {
+
+            if (addressInfo.getId()>0) {
+
+                if (viewPagerWeakReference.get() != null) {
+                    viewPagerWeakReference.get().setCurrentItem(2);
+                }
+            }
+        });
+        back.setOnClickListener(v -> {
+            if (viewPagerWeakReference.get()!=null){
+                viewPagerWeakReference.get().setCurrentItem(0);
+            }
+        });
 
 
     }
@@ -192,9 +200,7 @@ public class Shipping extends Fragment {
     private void assignView(){
 
 
-        name.setText(userInfo.getName());
-        email.setText(userInfo.getEmail());
-        phoneNumber.setText(userInfo.getPhoneNumber());
+
 
         if (addressInfoList.isEmpty()){
             myAddresses.setVisibility(View.GONE);
@@ -206,6 +212,9 @@ public class Shipping extends Fragment {
             city.setText(addressInfoList.get(addressInfoList.size()-1).getCity_en());
             governorate.setText(addressInfoList.get(addressInfoList.size()-1).getGovernorate_en());
             address.setText(addressInfoList.get(addressInfoList.size()-1).getAddress());
+            CheckOutInfo checkOutInfo=userViewModel.getCheckOutInfo();
+            checkOutInfo.setAddressId(addressInfo.getId());
+            userViewModel.setCheckOutInfo(checkOutInfo);
            // shippingAmount.setText(NumberFormat.getInstance(Locale.US).format(addressInfoList.get(addressInfoList.size()-1).getShippingAmount()));
 
             shippingAmount.setText("50.99 EGP");
@@ -242,6 +251,9 @@ public class Shipping extends Fragment {
             city.setText(addressInfo.getCity_en());
             governorate.setText(addressInfo.getGovernorate_en());
             address.setText(addressInfo.getAddress());
+            CheckOutInfo checkOutInfo=userViewModel.getCheckOutInfo();
+            checkOutInfo.setAddressId(addressInfo.getId());
+            userViewModel.setCheckOutInfo(checkOutInfo);
             //shippingAmount.setText(addressInfo.getShippingAmount());
             dialog.dismiss();
 
@@ -255,63 +267,6 @@ public class Shipping extends Fragment {
 
 
 
-
-    public void validationFields(){
-
-        if (!name.getText().toString().isEmpty()&&!email.getText().toString().isEmpty()&&!phoneNumber.getText().toString().isEmpty()&&addressInfo!=null){
-
-
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
-
-                email.setError("Email Format Not Correct");
-            }else {
-
-                statefulLayout.showLoading(" ");
-
-                if (!name.getText().toString().matches(userInfo.getName())&&!email.getText().toString().matches(userInfo.getEmail())&&!phoneNumber.getText().toString().matches(userInfo.getPhoneNumber())){
-
-                    userInfo.setName(name.getText().toString());
-                    userInfo.setEmail(email.getText().toString());
-                    userInfo.setPhoneNumber(phoneNumber.getText().toString());
-
-                    userViewModel.updateProfile(userInfo, null, new CompletableListener() {
-                        @Override
-                        public void onSuccess() {
-                            CheckOutInfo checkOutInfo=userViewModel.getCheckOutInfo();
-                            checkOutInfo.setAddressId(addressInfo.getId());
-                            userViewModel.setCheckOutInfo(checkOutInfo);
-                            statefulLayout.showContent();
-                            if (viewPagerWeakReference.get()!=null){
-
-                                viewPagerWeakReference.get().setCurrentItem(1);
-                            }
-
-                        }
-                        @Override
-                        public void onFailure(String message) {
-
-                        }
-                    });
-
-                }else {
-                    statefulLayout.showContent();
-                    CheckOutInfo checkOutInfo=userViewModel.getCheckOutInfo();
-                    checkOutInfo.setAddressId(addressInfo.getId());
-                    userViewModel.setCheckOutInfo(checkOutInfo);
-
-                    if (viewPagerWeakReference.get()!=null){
-
-                        viewPagerWeakReference.get().setCurrentItem(1);
-                    }
-
-                }
-
-            }
-
-        }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
 

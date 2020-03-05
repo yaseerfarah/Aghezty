@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +46,7 @@ public class CheckOut extends Fragment {
 
     private NavController navController;
 
+    private CustomerInformation customerInformation;
     private Shipping shipping;
     private Payment payment;
     private Confirm confirm;
@@ -57,10 +59,6 @@ public class CheckOut extends Fragment {
     @BindView(R.id.check_out_viewpager)
     CheckOutViewPager checkOutFragment;
 
-    @BindView(R.id.next)
-    Button next;
-    @BindView(R.id.back)
-    Button back;
 
 
     public CheckOut() {
@@ -72,9 +70,10 @@ public class CheckOut extends Fragment {
         super.onStart();
         checkOutViewPagerAdapter=new CheckOutViewPagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,checkOutFragment);
 
-        shipping=(Shipping) checkOutViewPagerAdapter.getItem(0);
-        payment =(Payment) checkOutViewPagerAdapter.getItem(1);
-        confirm =(Confirm) checkOutViewPagerAdapter.getItem(2);
+        customerInformation=(CustomerInformation) checkOutViewPagerAdapter.getItem(0);
+        shipping=(Shipping) checkOutViewPagerAdapter.getItem(1);
+        payment =(Payment) checkOutViewPagerAdapter.getItem(2);
+        confirm =(Confirm) checkOutViewPagerAdapter.getItem(3);
 
         checkOutFragment.setAdapter(checkOutViewPagerAdapter);
 
@@ -86,6 +85,8 @@ public class CheckOut extends Fragment {
     public void onStop() {
         super.onStop();
         checkOutFragment.setAdapter(null);
+
+
     }
 
     @Override
@@ -113,62 +114,9 @@ public class CheckOut extends Fragment {
 
 
 
-        checkOutFragment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                if (position == 0) {
-                    back.setVisibility(View.GONE);
-                }else {
-                    back.setVisibility(View.VISIBLE);
-                }
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
 
-        next.setOnClickListener(v -> {
-            switch (checkOutFragment.getCurrentItem()){
 
-                case 0:
-                    shipping.validationFields();
-                    break;
-
-                case 1:
-                    checkOutFragment.setCurrentItem(2);
-                    break;
-
-                case 2:
-                    break;
-
-
-            }
-        });
-
-        back.setOnClickListener(v -> {
-            switch (checkOutFragment.getCurrentItem()){
-
-                case 1:
-                    checkOutFragment.setCurrentItem(0);
-                    break;
-
-                case 2:
-                    checkOutFragment.setCurrentItem(1);
-                    break;
-
-
-            }
-        });
 
 
 

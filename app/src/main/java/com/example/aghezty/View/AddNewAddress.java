@@ -98,6 +98,7 @@ public class AddNewAddress extends Fragment {
         governorateobserver=new Observer<List<GovernorateInfo>>() {
             @Override
             public void onChanged(List<GovernorateInfo> governorateInfos) {
+
                 statefulLayout.showContent();
                 governorateInfoList.clear();
                 governorateInfoList.addAll(governorateInfos);
@@ -167,6 +168,7 @@ public class AddNewAddress extends Fragment {
         super.onStop();
         userViewModel.getGovernorateListMediatorLiveData().removeObservers(this);
         userViewModel.getCitiesListMediatorLiveData().removeObservers(this);
+
     }
 
 
@@ -179,6 +181,9 @@ public class AddNewAddress extends Fragment {
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         addressInfo=getArguments().getParcelable(UPDATE_ADDRESS);
+
+
+
     }
 
 

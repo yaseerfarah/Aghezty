@@ -8,21 +8,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
+import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.StatefulLayout;
 
+import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +40,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +61,7 @@ public class Confirm extends Fragment {
     private List<AddressInfo> addressInfoList=new ArrayList<>();
     private List<CartInfo> cartInfoList =new ArrayList<>();
 
+    private WeakReference<CheckOutViewPager> viewPagerWeakReference;
 
     private AddressInfo addressInfo;
 
@@ -73,6 +82,10 @@ public class Confirm extends Fragment {
     @BindView(R.id.an_payment_method)
     TextView paymentMethod;
 
+    @BindView(R.id.submit)
+    Button submit;
+    @BindView(R.id.back)
+    Button back;
 
 
     @BindView(R.id.an_sub_total)
@@ -84,13 +97,19 @@ public class Confirm extends Fragment {
     @BindView(R.id.an_shipping_amount)
     TextView shippingAmount;
 
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
+
+    NavController navController;
 
 
 
 
 
-    public Confirm() {
+    public Confirm(WeakReference<CheckOutViewPager> viewPagerWeakReference) {
         // Required empty public constructor
+
+        this.viewPagerWeakReference=viewPagerWeakReference;
 
     }
 
@@ -129,15 +148,42 @@ public class Confirm extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
+        navController= Navigation.findNavController(view);
         numberFormat=NumberFormat.getInstance(Locale.US);
 
+        submit.setOnClickListener(v -> {
+            statefulLayout.showLoading(" ");
+            userViewModel.checkOut(new CompletableListener() {
+                @Override
+                public void onSuccess() {
+                    Toasty.success(view.getContext(),"Successful Order Checkout",Toast.LENGTH_SHORT).show();
+                    statefulLayout.showContent();
+                    navController.navigateUp();
+
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    statefulLayout.showContent();
+                }
+            });
+
+        });
+
+
+        back.setOnClickListener(v -> {
+            if (viewPagerWeakReference.get()!=null){
+                viewPagerWeakReference.get().setCurrentItem(2);
+            }
+
+        });
 
     }
 
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         assignView();
     }
 
@@ -192,7 +238,7 @@ public class Confirm extends Fragment {
 
         for (CartInfo cartInfo:cartInfoList){
 
-            subTotal+=cartInfo.getPro_price();
+            subTotal+=cartInfo.getPro_totalPrice();
 
         }
         return subTotal;

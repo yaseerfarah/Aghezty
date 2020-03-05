@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -18,8 +19,11 @@ import android.widget.Toast;
 import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
+import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+
+import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -39,10 +43,15 @@ public class Payment extends Fragment {
 
     private CheckOutInfo checkOutInfo;
 
+    private WeakReference<CheckOutViewPager> viewPagerWeakReference;
 
     @BindView(R.id.radio_group)
     RadioGroup paymentMethod;
 
+    @BindView(R.id.next)
+    Button next;
+    @BindView(R.id.back)
+    Button back;
 
     @BindView(R.id.cash_layout)
     RadioButton cash;
@@ -51,8 +60,11 @@ public class Payment extends Fragment {
     @BindView(R.id.paypal_layout)
     RadioButton paypal;
 
-    public Payment() {
+    public Payment(WeakReference<CheckOutViewPager> viewPagerWeakReference) {
         // Required empty public constructor
+
+        this.viewPagerWeakReference=viewPagerWeakReference;
+
     }
 
 
@@ -134,6 +146,21 @@ public class Payment extends Fragment {
                 break;
 
         }
+
+
+
+        next.setOnClickListener(v -> {
+
+            if (viewPagerWeakReference.get() != null) {
+                viewPagerWeakReference.get().setCurrentItem(3);
+            }
+
+        });
+        back.setOnClickListener(v -> {
+            if (viewPagerWeakReference.get()!=null){
+                viewPagerWeakReference.get().setCurrentItem(1);
+            }
+        });
 
 
 

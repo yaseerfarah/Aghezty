@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.View.Confirm;
+import com.example.aghezty.View.CustomerInformation;
 import com.example.aghezty.View.Payment;
 import com.example.aghezty.View.Shipping;
 
@@ -25,12 +26,16 @@ public class CheckOutViewPagerAdapter extends FragmentStatePagerAdapter {
 
 
 
-    public CheckOutViewPagerAdapter(@NonNull FragmentManager fm, int behavior,ViewPager viewPager) {
+
+
+    public CheckOutViewPagerAdapter(@NonNull FragmentManager fm, int behavior,CheckOutViewPager checkOutViewPager) {
         super(fm, behavior);
-        this.viewPagerWeakReference=new WeakReference(viewPager);
+
+        this.viewPagerWeakReference=new WeakReference<>(checkOutViewPager);
+        checkOutFragment.add(new CustomerInformation(viewPagerWeakReference));
         checkOutFragment.add(new Shipping(viewPagerWeakReference));
-        checkOutFragment.add(new Payment());
-        checkOutFragment.add(new Confirm());
+        checkOutFragment.add(new Payment(viewPagerWeakReference));
+        checkOutFragment.add(new Confirm(viewPagerWeakReference));
     }
 
     @NonNull
@@ -43,4 +48,7 @@ public class CheckOutViewPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return checkOutFragment.size();
     }
+
+
+
 }

@@ -8,6 +8,7 @@ import com.example.aghezty.View.Categories;
 import com.example.aghezty.View.ChangePassword;
 import com.example.aghezty.View.CheckOut;
 import com.example.aghezty.View.Confirm;
+import com.example.aghezty.View.CustomerInformation;
 import com.example.aghezty.View.EditProfile;
 import com.example.aghezty.View.Filter;
 import com.example.aghezty.View.Home;
@@ -64,6 +65,10 @@ public abstract class MainActivityFragments {
 
     @ContributesAndroidInjector()
     abstract Confirm contributeConfirmFragment();
+
+
+    @ContributesAndroidInjector()
+    abstract CustomerInformation contributeCustomerInformationFragment();
 
 
     @ContributesAndroidInjector()

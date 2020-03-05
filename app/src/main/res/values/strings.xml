@@ -6,7 +6,7 @@
 
 
     <array name="check_out_step">
-
+        <item>Customer</item>
         <item>Shipping</item>
         <item>Payment</item>
         <item>Confirm</item>
