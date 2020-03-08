@@ -2,6 +2,7 @@ package com.example.aghezty.View;
 
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,7 +31,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.CityInfo;
 import com.example.aghezty.POJO.GovernorateInfo;
 import com.example.aghezty.POJO.UserInfo;
@@ -54,7 +57,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EditProfile extends Fragment {
+public class EditProfile extends Fragment implements InternetStatus {
 
     private static final int REQUEST_GALLERY=200;
 
@@ -69,6 +72,10 @@ public class EditProfile extends Fragment {
 
 
     private Uri userImageUri=null;
+
+    private boolean isOnline=false;
+
+    private NetworkReceiver networkReceiver;
 
 
     @BindView(R.id.first_edit)
@@ -85,7 +92,6 @@ public class EditProfile extends Fragment {
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
 
-
     @BindView(R.id.user_image)
     ImageView imageView;
 
@@ -96,6 +102,22 @@ public class EditProfile extends Fragment {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
+    }
+
 
 
     @Override
@@ -103,6 +125,7 @@ public class EditProfile extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -138,10 +161,11 @@ public class EditProfile extends Fragment {
 
 
         save.setOnClickListener(v -> {
-
-
-            validationFields();
-
+            if (isOnline) {
+                validationFields();
+            }else {
+                Toasty.warning(getContext(),"Check your Connection Please").show();
+            }
         });
 
 
@@ -232,8 +256,13 @@ public class EditProfile extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        isOnline=true;
+    }
 
-
-
-
+    @Override
+    public void notConnect() {
+        isOnline=false;
+    }
 }

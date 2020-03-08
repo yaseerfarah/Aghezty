@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     private static final int REQUEST_PERMISSION=200;
 
 
+
     private final Observer cartObserver;
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;

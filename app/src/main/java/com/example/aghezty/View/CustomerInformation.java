@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
@@ -38,7 +41,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CustomerInformation extends Fragment {
+public class CustomerInformation extends Fragment implements InternetStatus {
 
 
     @Inject
@@ -49,6 +52,11 @@ public class CustomerInformation extends Fragment {
     private UserInfo userInfo;
 
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
+
+    private boolean isOnline=false;
+
+    private NetworkReceiver networkReceiver;
+
 
 
     @BindView(R.id.name_edit)
@@ -74,12 +82,31 @@ public class CustomerInformation extends Fragment {
     }
 
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         userInfo=userViewModel.getCurrentUserInfo();
+        networkReceiver=new NetworkReceiver(this);
     }
 
 
@@ -99,9 +126,11 @@ public class CustomerInformation extends Fragment {
         assignView();
 
         next.setOnClickListener(v -> {
-
-            validationFields();
-
+            if (isOnline) {
+                validationFields();
+            }else {
+                Toasty.warning(getContext(),"Check your Connection Please").show();
+            }
         });
 
     }
@@ -159,5 +188,13 @@ public class CustomerInformation extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        isOnline=true;
+    }
 
+    @Override
+    public void notConnect() {
+        isOnline=false;
+    }
 }

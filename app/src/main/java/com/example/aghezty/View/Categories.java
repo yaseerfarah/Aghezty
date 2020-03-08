@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ import android.view.ViewGroup;
 
 import com.example.aghezty.Adapter.CategoryCardViewAdapter;
 import com.example.aghezty.Adapter.ParentCategoryCardViewAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.Interface.OnParentCategoryClick;
 import com.example.aghezty.POJO.BrandInfo;
 import com.example.aghezty.POJO.CategoryInfo;
@@ -30,6 +33,7 @@ import com.example.aghezty.R;
 import com.example.aghezty.Util.GridSpacingItemDecoration;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
@@ -47,7 +51,7 @@ import static com.example.aghezty.Adapter.CategoryCardViewAdapter.CATEGORIES;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Categories extends Fragment implements OnParentCategoryClick {
+public class Categories extends Fragment implements OnParentCategoryClick , InternetStatus {
 
 
     @Inject
@@ -69,6 +73,10 @@ public class Categories extends Fragment implements OnParentCategoryClick {
 
     private ParentCategoryCardViewAdapter parentCategoryCardViewAdapter;
     private CategoryCardViewAdapter categoryCardViewAdapter;
+
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+
 
     @BindView(R.id.parent_categories_recycler)
     RecyclerView parentCategoryRecycler;
@@ -128,8 +136,12 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     @Override
     public void onStart() {
         super.onStart();
-        productViewModel.getBrandCategories();
-        productViewModel.getParentCategories();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
         productViewModel.getBrandCategoriesLiveData().observe(this,brandCategoriesObserver);
     }
@@ -137,6 +149,7 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         productViewModel.getParentCategoriesLiveData().removeObservers(this);
         productViewModel.getBrandCategoriesLiveData().removeObservers(this);
 
@@ -149,7 +162,7 @@ public class Categories extends Fragment implements OnParentCategoryClick {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
-
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -170,7 +183,7 @@ public class Categories extends Fragment implements OnParentCategoryClick {
 
         ButterKnife.bind(this,view);
 
-        statefulLayout.showLoading(" ");
+
         navController= Navigation.findNavController(view);
         parentCategoryCardViewAdapter=new ParentCategoryCardViewAdapter(getContext(),parentCategoriesList,navController,this);
         categoryCardViewAdapter=new CategoryCardViewAdapter(getContext(),categoriesList,navController,productViewModel,CATEGORIES);
@@ -249,7 +262,17 @@ public class Categories extends Fragment implements OnParentCategoryClick {
     }
 
 
+    @Override
+    public void Connect() {
 
+        productViewModel.getBrandCategories();
+        productViewModel.getParentCategories();
+        progress();
 
+    }
 
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+    }
 }

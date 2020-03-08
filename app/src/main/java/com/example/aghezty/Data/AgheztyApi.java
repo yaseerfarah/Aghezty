@@ -69,27 +69,20 @@ public interface AgheztyApi {
 
 
     @GET("client")
-    Single<Response<ResponseBody>> getUserInfo( @Header("Accept") String accept,
-                                                  @Header("Authorization") String authorization);
+    Single<Response<ResponseBody>> getUserInfo();
 
 
     @GET("addresses")
-    Single<Response<AddressResponse>> getUserAddresses(@Header("Accept") String accept,
-                                                       @Header("Authorization") String authorization);
+    Single<Response<AddressResponse>> getUserAddresses();
 
 
     @GET("delete_address/{id}")
-    Single<Response<ResponseBody>> deleteAddress(
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization
-    ,@Path("id") int id);
+    Single<Response<ResponseBody>> deleteAddress( @Path("id") int id);
 
     @Multipart
     @POST("updated_address/{id}")
     Single<Response<ResponseBody>> updateAddress(
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization
-            ,@Path("id") int id
+            @Path("id") int id
             ,@Part("city_id") RequestBody city_id
             ,@Part("address") RequestBody address);
 
@@ -106,37 +99,21 @@ public interface AgheztyApi {
 
 
     @POST("edit_profile")
-    Single<Response<ResponseBody>> updateUserInfo(
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization,
-            @Body UserInfo userInfo);
+    Single<Response<ResponseBody>> updateUserInfo( @Body UserInfo userInfo);
 
     @Multipart
     @POST("edit_profile")
-    Single<Response<ResponseBody>> updateUserPicture(
-
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization,
-            @PartMap Map<String, RequestBody> requestBodyMap
-            ,@Part MultipartBody.Part userImage
-
-    );
+    Single<Response<ResponseBody>> updateUserPicture(@PartMap Map<String, RequestBody> requestBodyMap ,@Part MultipartBody.Part userImage );
 
 
 
     @Multipart
     @POST("updated_password")
-    Single<Response<ResponseBody>> updatePassword(
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization,
-            @PartMap Map<String,RequestBody> passwordMap);
+    Single<Response<ResponseBody>> updatePassword( @PartMap Map<String,RequestBody> passwordMap);
 
 
     @POST("add_address")
-    Single<Response<ResponseBody>> addNewAddress(
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization,
-            @Body AddressInfo addressInfo);
+    Single<Response<ResponseBody>> addNewAddress( @Body AddressInfo addressInfo);
 
 
 
@@ -144,18 +121,12 @@ public interface AgheztyApi {
 
     @Multipart
     @POST("check_coupon")
-    Single<Response<ResponseBody>> getCouponDiscount(
-            @Header("Accept") String accept,
-            @Header("Authorization") String authorization,
-            @Part("coupon") RequestBody coupon);
+    Single<Response<ResponseBody>> getCouponDiscount(@Part("coupon") RequestBody coupon);
 
 
 
     @POST("check_out")
-    Single<Response<ResponseBody>> checkOut( @Header("Accept") String accept,
-                                                    @Header("Authorization") String authorization,
-                                                    @Header("Content-Type") String contentType,
-                                                    @Body CheckOutInfo checkOutInfo);
+    Single<Response<ResponseBody>> checkOut(@Body CheckOutInfo checkOutInfo);
 
 
 

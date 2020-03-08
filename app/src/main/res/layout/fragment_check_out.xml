@@ -47,40 +47,59 @@
 
       </com.google.android.material.appbar.AppBarLayout>
 
-
-
-      <com.badoualy.stepperindicator.StepperIndicator
+      <com.gturedi.views.StatefulLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/stepper_indicator"
-          app:stpi_animDuration="200"
-          app:stpi_circleColor="@color/orange"
-          app:stpi_circleRadius="10dp"
-          app:stpi_indicatorColor="@color/orange"
-          app:stpi_lineDoneColor="@color/orange"
-          app:stpi_labels="@array/check_out_step"
-          app:stpi_circleStrokeWidth="2dp"
-          app:stpi_indicatorRadius="2dp"
-          app:stpi_showDoneIcon="true"
-          android:layout_below="@+id/home_bar"
-          android:layout_marginTop="10dp"
-          />
+          android:layout_height="match_parent"
+          android:id="@+id/stateful"
+          android:layout_below="@+id/home_bar">
 
-
-
-
-
-
-
-          <com.example.aghezty.Util.CheckOutViewPager
+          <RelativeLayout
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/check_out_viewpager"
-              android:layout_below="@+id/stepper_indicator"
-              android:layout_marginTop="5dp"
+              android:layout_height="match_parent">
 
 
-              />
+
+              <com.badoualy.stepperindicator.StepperIndicator
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/stepper_indicator"
+                  app:stpi_animDuration="200"
+                  app:stpi_circleColor="@color/orange"
+                  app:stpi_circleRadius="10dp"
+                  app:stpi_indicatorColor="@color/orange"
+                  app:stpi_lineDoneColor="@color/orange"
+                  app:stpi_labels="@array/check_out_step"
+                  app:stpi_circleStrokeWidth="2dp"
+                  app:stpi_indicatorRadius="2dp"
+                  app:stpi_showDoneIcon="true"
+
+                  android:layout_marginTop="10dp"
+                  />
+
+
+
+
+
+
+
+              <com.example.aghezty.Util.CheckOutViewPager
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:id="@+id/check_out_viewpager"
+                  android:layout_below="@+id/stepper_indicator"
+                  android:layout_marginTop="5dp"
+
+
+                  />
+
+
+
+          </RelativeLayout>
+
+
+      </com.gturedi.views.StatefulLayout>
+
+
 
 
 

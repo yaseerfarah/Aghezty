@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CityInfo;
 import com.example.aghezty.POJO.GovernorateInfo;
@@ -30,6 +33,7 @@ import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
@@ -45,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddNewAddress extends Fragment {
+public class AddNewAddress extends Fragment implements InternetStatus {
 
 
     public static String UPDATE_ADDRESS="AddressData";
@@ -67,6 +71,11 @@ public class AddNewAddress extends Fragment {
     private GovernorateInfo governorate_choice;
 
     private NavController navController;
+
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+    private NetworkReceiver networkReceiver;
+
+
 
     @BindView(R.id.city_edit)
     Spinner city;
@@ -156,7 +165,11 @@ public class AddNewAddress extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        userViewModel.getAllGovernorate();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
         userViewModel.getGovernorateListMediatorLiveData().observe(this,governorateobserver);
         userViewModel.getCitiesListMediatorLiveData().observe(this,citiesobserver);
 
@@ -166,6 +179,7 @@ public class AddNewAddress extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         userViewModel.getGovernorateListMediatorLiveData().removeObservers(this);
         userViewModel.getCitiesListMediatorLiveData().removeObservers(this);
 
@@ -181,6 +195,7 @@ public class AddNewAddress extends Fragment {
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         addressInfo=getArguments().getParcelable(UPDATE_ADDRESS);
+        networkReceiver=new NetworkReceiver(this);
 
 
 
@@ -203,7 +218,7 @@ public class AddNewAddress extends Fragment {
 
         navController= Navigation.findNavController(view);
 
-        statefulLayout.showLoading(" ");
+
 
         governorate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -341,4 +356,18 @@ public class AddNewAddress extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        if (governorateInfoList.isEmpty()) {
+            statefulLayout.showLoading(" ");
+            userViewModel.getAllGovernorate();
+        }else {
+            statefulLayout.showContent();
+        }
+    }
+
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+    }
 }

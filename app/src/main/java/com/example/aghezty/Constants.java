@@ -12,4 +12,7 @@ public class Constants {
 
     public static final String USER_COUPON_DISCOUNT="CouponDiscount";
 
+
+    public static String USER_TOKEN="";
+
 }

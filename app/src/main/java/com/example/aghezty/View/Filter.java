@@ -2,6 +2,7 @@ package com.example.aghezty.View;
 
 
 import android.app.Dialog;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -31,12 +32,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.BrandInfo;
 import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.lang.reflect.Array;
@@ -56,7 +60,7 @@ import static com.example.aghezty.Adapter.FilterOrderCardViewAdapter.ORDER;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Filter extends Fragment {
+public class Filter extends Fragment implements InternetStatus {
 
 
     static public final String IS_OFFERS="isOffers";
@@ -117,6 +121,10 @@ public class Filter extends Fragment {
     StatefulLayout statefulLayout;
 
     boolean isOffers;
+
+
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
 
 
 
@@ -184,8 +192,11 @@ public class Filter extends Fragment {
         super.onStart();
         clear();
 
-        productViewModel.getParentCategories();
-        productViewModel.getBrandCategories();
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
         productViewModel.getParentCategoriesLiveData().observe(this,parentCategoriesObserver);
         productViewModel.getBrandCategoriesLiveData().observe(this,brandCategoriesObserver);
 
@@ -194,6 +205,7 @@ public class Filter extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         productViewModel.getParentCategoriesLiveData().removeObservers(this);
         productViewModel.getBrandCategoriesLiveData().removeObservers(this);
     }
@@ -207,6 +219,7 @@ public class Filter extends Fragment {
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
         priceRange= Arrays.asList(getResources().getStringArray(R.array.price_range_filter));
         isOffers=getArguments().getBoolean(IS_OFFERS);
+        networkReceiver=new NetworkReceiver(this);
     }
 
 
@@ -226,7 +239,7 @@ public class Filter extends Fragment {
 
        // progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
-        statefulLayout.showLoading(" ");
+
 
         navController= Navigation.findNavController(view);
 
@@ -374,4 +387,19 @@ public class Filter extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        statefulLayout.showLoading(" ");
+        productViewModel.getParentCategories();
+        productViewModel.getBrandCategories();
+        progress();
+
+
+    }
+
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+
+    }
 }

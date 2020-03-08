@@ -126,7 +126,7 @@ public class ProductViewModel extends ViewModel {
 
     public void getProductFilter(){
 
-      if (isFilter) {
+     // if (isFilter) {
 
           disposables.add(agheztyApi.getSpecificProduct(filter, 1)
                   .subscribeOn(Schedulers.io())
@@ -161,7 +161,7 @@ public class ProductViewModel extends ViewModel {
 
           );
 
-      }
+    //  }
 
     }
 
@@ -418,7 +418,7 @@ public class ProductViewModel extends ViewModel {
     private void onError(Throwable throwable){
 
         Log.e(getClass().getName(),throwable.getMessage());
-        Toast.makeText(context,throwable.getMessage(),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context,throwable.getMessage(),Toast.LENGTH_SHORT).show();
 
     }
 

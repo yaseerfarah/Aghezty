@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,11 +22,14 @@ import android.widget.Toast;
 
 import com.example.aghezty.Adapter.AddressCardViewAdapter;
 import com.example.aghezty.Adapter.CartCardViewAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
@@ -42,7 +46,7 @@ import static com.example.aghezty.View.AddNewAddress.UPDATE_ADDRESS;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyAddresses extends Fragment {
+public class MyAddresses extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -54,6 +58,9 @@ public class MyAddresses extends Fragment {
     private List<AddressInfo> addressInfoList=new ArrayList<>();
 
     private NavController navController;
+
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+    private NetworkReceiver networkReceiver;
 
 
     @BindView(R.id.addresses_recycler)
@@ -74,14 +81,12 @@ public class MyAddresses extends Fragment {
             @Override
             public void onChanged(List<AddressInfo> addressInfos) {
 
-
-                if (!addressInfos.isEmpty()){
-
                     addressCardViewAdapter.updateAddressList(addressInfos);
-                    statefulLayout.showContent();
                     addressInfoList.clear();
                     addressInfoList.addAll(addressInfos);
 
+                if (!addressInfos.isEmpty()){
+                    statefulLayout.showContent();
                 }else {
                     statefulLayout.showEmpty("You have no Addresses");
                 }
@@ -97,13 +102,19 @@ public class MyAddresses extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        userViewModel.getAllUserAddress();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
         userViewModel.getAddressListMediatorLiveData().observe(this,addressesObserver);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         userViewModel.getAddressListMediatorLiveData().removeObservers(this);
     }
 
@@ -113,6 +124,7 @@ public class MyAddresses extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
     }
 
     @Override
@@ -129,7 +141,7 @@ public class MyAddresses extends Fragment {
         ButterKnife.bind(this,view);
         navController= Navigation.findNavController(view);
 
-        statefulLayout.showLoading(" ");
+
 
         addressCardViewAdapter=new AddressCardViewAdapter(getContext(),addressInfoList,navController,userViewModel);
         addresses_recycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
@@ -149,6 +161,18 @@ public class MyAddresses extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        if (addressInfoList.isEmpty()) {
+            statefulLayout.showLoading(" ");
+            userViewModel.getAllUserAddress();
+        }else {
+            statefulLayout.showContent();
+        }
+    }
 
-
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
@@ -36,7 +39,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Login extends Fragment {
+public class Login extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -45,6 +48,11 @@ public class Login extends Fragment {
     private UserInfo userInfo;
 
     private NavController navController;
+
+    private boolean isOnline=false;
+
+    private NetworkReceiver networkReceiver;
+
 
     @BindView(R.id.email_edit)
     EditText email;
@@ -58,18 +66,38 @@ public class Login extends Fragment {
     StatefulLayout statefulLayout;
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AndroidSupportInjection.inject(this);
-        userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
-
-    }
 
     public Login() {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
+    }
+
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AndroidSupportInjection.inject(this);
+        userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,11 +115,19 @@ public class Login extends Fragment {
 
 
         signUp.setOnClickListener(v -> {
-            navController.navigate(R.id.action_login_to_register1);
+            if (isOnline) {
+                navController.navigate(R.id.action_login_to_register1);
+            }else {
+                Toasty.warning(getContext(),"Check your Connection Please").show();
+            }
         });
 
         signIn.setOnClickListener(v -> {
-            validationFields();
+            if (isOnline) {
+                validationFields();
+            }else {
+                Toasty.warning(getContext(),"Check your Connection Please").show();
+            }
         });
 
 
@@ -132,4 +168,13 @@ public class Login extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        isOnline=true;
+    }
+
+    @Override
+    public void notConnect() {
+        isOnline=false;
+    }
 }

@@ -49,19 +49,20 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/prog"
-            android:layout_centerInParent="true"
-            android:indeterminateTint="@color/orange"
+       <com.gturedi.views.StatefulLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/stateful"
+           android:layout_below="@+id/home_bar"
+           >
 
-            />
+
+
 
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/home_bar"
+
 
     >
 
@@ -70,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/root"
-        android:visibility="gone"
+
         >
 
 
@@ -231,7 +232,7 @@
 
 </androidx.core.widget.NestedScrollView>
 
-
+       </com.gturedi.views.StatefulLayout>
 
 
 

@@ -2,6 +2,7 @@ package com.example.aghezty.View;
 
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import android.widget.TextView;
 import com.example.aghezty.Adapter.CategoryCardViewAdapter;
 import com.example.aghezty.Adapter.HorizontalRecyclerCardViewAdapter;
 import com.example.aghezty.Adapter.SliderAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.POJO.HomeData;
@@ -43,6 +46,8 @@ import com.example.aghezty.R;
 import com.example.aghezty.Util.GridSpacingItemDecoration;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
+import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,28 +56,38 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
+import es.dmoral.toasty.Toasty;
 
 import static com.example.aghezty.Adapter.SliderAdapter.HOME;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment {
+public class Home extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
     private ProductViewModel productViewModel;
     private Observer homeObserver;
-    private ViewPager viewPager;
-    private RecyclerView bestcategories,horizontalRecycler;
-    private ProgressBar progressBar;
-    private RelativeLayout root;
+
+    @BindView(R.id.view_pager)
+     ViewPager viewPager;
+    @BindView(R.id.best_categories)
+     RecyclerView bestcategories;
+    @BindView(R.id.horizontal_recycler)
+     RecyclerView horizontalRecycler;
+    @BindView(R.id.stateful)
+     StatefulLayout statefulLayout;
 
     private List<HomeRecylerData> homeRecylerDataList=new ArrayList<>();
     private List<FilterInfo> categoryInfoList=new ArrayList<>();
     private List<String> sliderInfoList=new ArrayList<>();
+
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
 
     private NavController navController;
     private SliderAdapter sliderAdapter;
@@ -83,6 +98,7 @@ public class Home extends Fragment {
     private int page=0;
     private Timer timer;
     private boolean isStart=false;
+    private NetworkReceiver networkReceiver;
 
 
     public Home() {
@@ -111,8 +127,7 @@ public class Home extends Fragment {
                 horizontalRecyclerCardViewAdapter.notifyDataSetChanged();
                 categoryCardViewAdapter.notifyDataSetChanged();
 
-                progressBar.setVisibility(View.GONE);
-                root.setVisibility(View.VISIBLE);
+               statefulLayout.showContent();
 
                 add_Dots(getContext(),0);
 
@@ -127,8 +142,13 @@ public class Home extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
         horizontalRecycler.setAdapter(horizontalRecyclerCardViewAdapter);
-        productViewModel.getHomeData();
+
         productViewModel.getHomeDataLiveData().observe(this,homeObserver);
 
     }
@@ -136,6 +156,7 @@ public class Home extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         horizontalRecycler.setAdapter(null);
         cancel_timer();
         productViewModel.getHomeDataLiveData().removeObservers(this);
@@ -146,6 +167,7 @@ public class Home extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         productViewModel=ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -160,16 +182,11 @@ public class Home extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        viewPager=view.findViewById(R.id.view_pager);
-        horizontalRecycler=view.findViewById(R.id.horizontal_recycler);
-        bestcategories=view.findViewById(R.id.best_categories);
+        ButterKnife.bind(this,view);
         linearLayout=view.findViewById(R.id.linear);
-        progressBar=view.findViewById(R.id.prog);
-        root=view.findViewById(R.id.root);
+
         navController= Navigation.findNavController(view);
 
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
 
 
@@ -288,6 +305,26 @@ public class Home extends Fragment {
             timer.cancel();
             isStart = false;
         }
+
+    }
+
+    @Override
+    public void Connect() {
+
+        if (sliderInfoList.isEmpty()){
+            productViewModel.getHomeData();
+            statefulLayout.showLoading(" ");
+        }else {
+            statefulLayout.showContent();
+        }
+
+
+    }
+
+    @Override
+    public void notConnect() {
+
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
 
     }
 

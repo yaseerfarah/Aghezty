@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,11 +21,15 @@ import android.widget.Toast;
 
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.example.aghezty.Adapter.CheckOutViewPagerAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
+import com.gturedi.views.StatefulLayout;
 
 import javax.inject.Inject;
 
@@ -36,7 +41,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CheckOut extends Fragment {
+public class CheckOut extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -59,6 +64,12 @@ public class CheckOut extends Fragment {
     @BindView(R.id.check_out_viewpager)
     CheckOutViewPager checkOutFragment;
 
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
+
+
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
 
 
     public CheckOut() {
@@ -68,6 +79,12 @@ public class CheckOut extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
         checkOutViewPagerAdapter=new CheckOutViewPagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,checkOutFragment);
 
         customerInformation=(CustomerInformation) checkOutViewPagerAdapter.getItem(0);
@@ -84,6 +101,7 @@ public class CheckOut extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         checkOutFragment.setAdapter(null);
 
 
@@ -95,6 +113,7 @@ public class CheckOut extends Fragment {
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         userInfo=userViewModel.getCurrentUserInfo();
+        networkReceiver=new NetworkReceiver(this);
     }
 
 
@@ -113,12 +132,15 @@ public class CheckOut extends Fragment {
         navController= Navigation.findNavController(view);
 
 
+    }
 
+    @Override
+    public void Connect() {
+        statefulLayout.showContent();
+    }
 
-
-
-
-
-
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
     }
 }

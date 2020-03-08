@@ -2,6 +2,7 @@ package com.example.aghezty.View;
 
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -31,8 +32,10 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.aghezty.Adapter.SliderAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.Interface.InnerProductListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.Rate;
 import com.example.aghezty.POJO.SliderInfo;
@@ -40,6 +43,8 @@ import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
+import com.gturedi.views.StatefulLayout;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -60,7 +65,7 @@ import static com.example.aghezty.Adapter.SliderAdapter.DETAILS;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductDetails extends Fragment {
+public class ProductDetails extends Fragment implements InternetStatus {
 
 
     static public String PRODUCT_INFO="ProductInfo";
@@ -72,8 +77,8 @@ public class ProductDetails extends Fragment {
 
     private NavController navController;
 
-    @BindView(R.id.prog)
-     ProgressBar progressBar;
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
 
     @BindView(R.id.v_view_pager)
     ViewPager pro_image;
@@ -153,24 +158,17 @@ public class ProductDetails extends Fragment {
     private Timer timer;
     private boolean isStart=false;
 
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+
 
     public ProductDetails() {
         // Required empty public constructor
-
-
-
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
         innerProductListener= new InnerProductListener() {
             @Override
             public void onSuccess(ProductInfo innerProduct) {
                 root.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
+                statefulLayout.showContent();
                 productInfo=innerProduct;
                 assignView(productInfo);
                 if (innerProduct.getGallery().size()>1){
@@ -184,16 +182,30 @@ public class ProductDetails extends Fragment {
             }
         };
 
-        if (sliderInfoList.isEmpty())
-        productViewModel.getInnerProductByID(productInfo,innerProductListener);
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
+
 
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         cancel_timer();
-        innerProductListener=null;
+
     }
 
 
@@ -207,6 +219,7 @@ public class ProductDetails extends Fragment {
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
 
         productInfo=getArguments().getParcelable(PRODUCT_INFO);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -223,7 +236,6 @@ public class ProductDetails extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this,view);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
         if (userViewModel.checkInCart(productInfo)){
             addToCart.setEnabled(false);
@@ -477,6 +489,21 @@ public class ProductDetails extends Fragment {
             isStart = false;
         }
 
+    }
+
+    @Override
+    public void Connect() {
+        if (sliderInfoList.isEmpty()) {
+            productViewModel.getInnerProductByID(productInfo, innerProductListener);
+            statefulLayout.showLoading(" ");
+        }else {
+            statefulLayout.showContent();
+        }
+    }
+
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
     }
 
 

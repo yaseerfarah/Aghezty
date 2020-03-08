@@ -67,6 +67,7 @@ import retrofit2.Response;
 import static com.example.aghezty.Constants.IS_LOGIN;
 import static com.example.aghezty.Constants.USER_COUPON_DISCOUNT;
 import static com.example.aghezty.Constants.USER_INFO;
+import static com.example.aghezty.Constants.USER_TOKEN;
 
 public class UserViewModel extends ViewModel {
 
@@ -123,7 +124,7 @@ public class UserViewModel extends ViewModel {
         this.isLogin=checkIsLogin();
         if (isLogin){
             currentUserInfo=sharedPreferencesMethod.getUserInfo();
-
+            USER_TOKEN=currentUserInfo.getToken();
             couponDiscount=getSavedCouponDiscount();
 
         }else {
@@ -256,6 +257,7 @@ public class UserViewModel extends ViewModel {
                         userInfo.setToken(jsonObject.getJSONObject("data").getString("token"));
                         currentUserInfo=userInfo;
                         currentUserInfoMediatorLiveData.postValue(currentUserInfo);
+                        USER_TOKEN=currentUserInfo.getToken();
                         setIsLogin(true);
                         saveUserInfo(currentUserInfo);
 
@@ -291,7 +293,9 @@ public class UserViewModel extends ViewModel {
 
                     if (stringResponse.isSuccessful()){
                         JSONObject jsonObject=new JSONObject(stringResponse.body().string());
+                        currentUserInfo=new UserInfo();
                         currentUserInfo.setToken(jsonObject.getJSONObject("data").getString("token"));
+                        USER_TOKEN=currentUserInfo.getToken();
                         setIsLogin(true);
                         saveUserInfo(currentUserInfo);
 
@@ -361,7 +365,7 @@ public class UserViewModel extends ViewModel {
             }
 
 
-            disposables.add(agheztyApi.updateUserPicture("application/json", "Bearer " + currentUserInfo.getToken(), covertUserToMap(userInfo), body)
+            disposables.add(agheztyApi.updateUserPicture(covertUserToMap(userInfo), body)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(stringResponse -> {
@@ -405,7 +409,7 @@ public class UserViewModel extends ViewModel {
         passwordMap.put("password",toRequestBody(newPassword));
         passwordMap.put("password_confirmation",toRequestBody(newPassword));
 
-        disposables.add(agheztyApi.updatePassword("application/json","Bearer "+currentUserInfo.getToken(),passwordMap)
+        disposables.add(agheztyApi.updatePassword(passwordMap)
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBodyResponse -> {
@@ -438,7 +442,7 @@ public class UserViewModel extends ViewModel {
     public void getLoginUserInfo(){
 
         if (currentUserInfo.getName()==null){
-            disposables.add(agheztyApi.getUserInfo("application/json", "Bearer " + currentUserInfo.getToken())
+            disposables.add(agheztyApi.getUserInfo()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(userInfoResponse -> {
@@ -480,7 +484,7 @@ public class UserViewModel extends ViewModel {
 
     public void addNewAddress(AddressInfo addressInfo,CompletableListener completableListener){
 
-        disposables.add(agheztyApi.addNewAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo)
+        disposables.add(agheztyApi.addNewAddress(addressInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBodyResponse -> {
@@ -522,7 +526,7 @@ public class UserViewModel extends ViewModel {
     public void getAllUserAddress(){
 
         if (addressListMediatorLiveData.getValue()==null) {
-            disposables.add(agheztyApi.getUserAddresses("application/json", "Bearer " + currentUserInfo.getToken())
+            disposables.add(agheztyApi.getUserAddresses()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(addressResponseResponse -> {
@@ -561,6 +565,8 @@ public class UserViewModel extends ViewModel {
                     }, this::onError)
 
             );
+        }else {
+            addressListMediatorLiveData.postValue(addressInfoList);
         }
 
     }
@@ -569,7 +575,7 @@ public class UserViewModel extends ViewModel {
     public void updateAddress(AddressInfo addressInfo,CompletableListener completableListener){
 
 
-        disposables.add(agheztyApi.updateAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo.getId(),toRequestBody(String.valueOf(addressInfo.getCity_id())),toRequestBody(addressInfo.getAddress()))
+        disposables.add(agheztyApi.updateAddress(addressInfo.getId(),toRequestBody(String.valueOf(addressInfo.getCity_id())),toRequestBody(addressInfo.getAddress()))
 
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -602,7 +608,7 @@ public class UserViewModel extends ViewModel {
 
     public void deleteAddress(AddressInfo addressInfo,int position,CompletableListener completableListener){
 
-        disposables.add(agheztyApi.deleteAddress("application/json","Bearer "+currentUserInfo.getToken(),addressInfo.getId())
+        disposables.add(agheztyApi.deleteAddress(addressInfo.getId())
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(addressResponseResponse -> {
@@ -635,7 +641,7 @@ public class UserViewModel extends ViewModel {
     public  void checkOut(CompletableListener completableListener){
 
         checkOutInfo.setCartInfoList(cartInfolist);
-        disposables.add(agheztyApi.checkOut("application/json","Bearer "+currentUserInfo.getToken(),"application/json",checkOutInfo)
+        disposables.add(agheztyApi.checkOut(checkOutInfo)
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBodyResponse -> {
@@ -655,6 +661,7 @@ public class UserViewModel extends ViewModel {
                                 Log.e(getClass().getName(),message);
                             }
                         });
+
                         completableListener.onSuccess();
                     }else {
 
@@ -679,7 +686,7 @@ public class UserViewModel extends ViewModel {
 
 
     public void getCouponDiscount(String coupon, CheckCoupon checkCoupon){
-        disposables.add(agheztyApi.getCouponDiscount("application/json","Bearer "+currentUserInfo.getToken(),toRequestBody(coupon))
+        disposables.add(agheztyApi.getCouponDiscount(toRequestBody(coupon))
         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(requestBodyResponse -> {
@@ -764,6 +771,8 @@ public class UserViewModel extends ViewModel {
                     Log.e(TAG, e.getMessage());
                 }
             });
+        }else {
+            cartListMediatorLiveData.postValue(cartInfolist);
         }
     }
 
@@ -855,7 +864,7 @@ public class UserViewModel extends ViewModel {
     private void onError(Throwable throwable){
 
         Log.e(getClass().getName(),throwable.getMessage());
-        Toast.makeText(context,throwable.getMessage(),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context,throwable.getMessage(),Toast.LENGTH_SHORT).show();
 
     }
 

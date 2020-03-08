@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,11 +21,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import javax.inject.Inject;
@@ -37,7 +41,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChangePassword extends Fragment {
+public class ChangePassword extends Fragment implements InternetStatus {
 
 
     @Inject
@@ -63,6 +67,9 @@ public class ChangePassword extends Fragment {
     StatefulLayout statefulLayout;
 
     private boolean isConfirm=false;
+    private boolean isOnline=false;
+
+    private NetworkReceiver networkReceiver;
 
 
     public ChangePassword() {
@@ -70,11 +77,32 @@ public class ChangePassword extends Fragment {
     }
 
 
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
+    }
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -96,7 +124,11 @@ public class ChangePassword extends Fragment {
         userInfo=userViewModel.getCurrentUserInfo();
 
         save.setOnClickListener(v -> {
-            validationFields();
+            if (isOnline) {
+                validationFields();
+            }else {
+                Toasty.warning(getContext(),"Check your Connection Please").show();
+            }
         });
 
         confirm_password.addTextChangedListener(new TextWatcher() {
@@ -160,7 +192,13 @@ public class ChangePassword extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        isOnline=true;
+    }
 
-
-
+    @Override
+    public void notConnect() {
+        isOnline=false;
+    }
 }

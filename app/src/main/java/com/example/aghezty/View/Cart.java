@@ -1,6 +1,8 @@
 package com.example.aghezty.View;
 
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,12 +24,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.aghezty.Adapter.CartCardViewAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CheckCoupon;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.text.NumberFormat;
@@ -44,12 +49,19 @@ import dagger.android.support.AndroidSupportInjection;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Cart extends Fragment {
+public class Cart extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
     private UserViewModel userViewModel;
     private Observer cartObserver;
+
+
+    private  final int CONTENT=0;
+    private  final int EMPTY=1;
+    private  final int NETWORK=2;
+
+    private int currentSate;
 
     private CartCardViewAdapter cartCardViewAdapter;
 
@@ -95,6 +107,8 @@ public class Cart extends Fragment {
     @BindView(R.id.cart_recycleview)
     RecyclerView cartRecycler;
 
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+    private NetworkReceiver networkReceiver;
 
 
     public Cart() {
@@ -103,13 +117,18 @@ public class Cart extends Fragment {
         cartObserver=new Observer<List<CartInfo>>() {
             @Override
             public void onChanged(List<CartInfo> cartInfos) {
-                if (!cartInfos.isEmpty()) {
+
                     cartCardViewAdapter.updateCartList(cartInfos);
-                    statefulLayout.showContent();
-                    calculateTotalPrice(cartInfos);
                     cartInfoList.clear();
                     cartInfoList.addAll(cartInfos);
-                }else {
+                    calculateTotalPrice(cartInfos);
+
+                if (!cartInfos.isEmpty()&&currentSate!=CONTENT) {
+                    currentSate=CONTENT;
+                    statefulLayout.showContent();
+
+                }else if (cartInfos.isEmpty()&&currentSate!=EMPTY){
+                    currentSate=EMPTY;
                     statefulLayout.showEmpty("The Cart is Empty");
                 }
 
@@ -123,7 +142,10 @@ public class Cart extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        userViewModel.getAllCart();
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
         userViewModel.getCartListMediatorLiveData().observe(this,cartObserver);
     }
 
@@ -131,6 +153,7 @@ public class Cart extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         userViewModel.getCartListMediatorLiveData().removeObservers(this);
     }
 
@@ -140,6 +163,7 @@ public class Cart extends Fragment {
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         integerCouponDiscount=userViewModel.getCouponDiscount();
+        networkReceiver=new NetworkReceiver(this);
     }
 
 
@@ -234,4 +258,24 @@ public class Cart extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        if (cartInfoList.isEmpty()){
+            userViewModel.getAllCart();
+        }else if (currentSate!=CONTENT){
+            currentSate=CONTENT;
+            statefulLayout.showContent();
+        }
+
+
+
+    }
+
+    @Override
+    public void notConnect() {
+        if (currentSate!=NETWORK) {
+            currentSate=NETWORK;
+            statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        }
+    }
 }

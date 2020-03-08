@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -29,10 +30,13 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import javax.inject.Inject;
@@ -45,7 +49,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Profile extends Fragment {
+public class Profile extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -55,6 +59,9 @@ public class Profile extends Fragment {
 
     private NavController navController;
     private Observer currentUserInfoObserver;
+
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
 
     @BindView(R.id.person_name)
     TextView userName;
@@ -110,7 +117,13 @@ public class Profile extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        userViewModel.getLoginUserInfo();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
+
         userViewModel.getCurrentUserInfoLiveData().observe(this,currentUserInfoObserver);
 
     }
@@ -119,6 +132,7 @@ public class Profile extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         userViewModel.getCurrentUserInfoLiveData().removeObservers(this);
     }
 
@@ -130,6 +144,7 @@ public class Profile extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
        // userInfo=userViewModel.getCurrentUserInfo();
     }
 
@@ -149,7 +164,7 @@ public class Profile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
         navController= Navigation.findNavController(view);
-        statefulLayout.showLoading("");
+
 
         editProfile.setOnClickListener(v -> {
             popUp_Menu();
@@ -248,5 +263,18 @@ public class Profile extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        if (userInfo==null) {
+            statefulLayout.showLoading("");
+            userViewModel.getLoginUserInfo();
+        }else {
+            statefulLayout.showContent();
+        }
+    }
 
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+    }
 }

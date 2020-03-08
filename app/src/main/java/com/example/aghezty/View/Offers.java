@@ -3,6 +3,8 @@ package com.example.aghezty.View;
 
 import android.app.Dialog;
 import android.app.assist.AssistStructure;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -36,6 +38,8 @@ import android.widget.Toast;
 
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
 import com.example.aghezty.Adapter.ProductCardViewAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.FilterInfo;
 import com.example.aghezty.POJO.FilterOption;
 import com.example.aghezty.POJO.ProductFilterData;
@@ -44,6 +48,7 @@ import com.example.aghezty.R;
 import com.example.aghezty.Util.GridSpacingItemDecoration;
 import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
@@ -51,6 +56,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.example.aghezty.Adapter.FilterOrderCardViewAdapter.ORDER;
@@ -62,7 +69,7 @@ import static com.example.aghezty.ViewModel.ProductViewModel.Low_To_High_Price;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Offers extends Fragment {
+public class Offers extends Fragment implements InternetStatus {
 
 
     @Inject
@@ -74,18 +81,31 @@ public class Offers extends Fragment {
     private final String TAG=getClass().getName();
 
     private boolean isLoading=false;
-    private RecyclerView listRecycler;
-    private RelativeLayout orderBy,filterBy;
-    private StatefulLayout statefulLayout;
-    private RelativeLayout root;
+    @BindView(R.id.list_recyclerview)
+     RecyclerView listRecycler;
+    @BindView(R.id.order_by)
+     RelativeLayout orderBy;
+    @BindView(R.id.filter_by)
+    RelativeLayout filterBy;
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
+    @BindView(R.id.root)
+    RelativeLayout root;
+    @BindView(R.id.prog)
+    ProgressBar progressBar;
+
     private ProductFilterData productFilterData;
 
     private ProductCardViewAdapter productCardViewAdapter;
 
     private List<ProductInfo> productInfoList=new ArrayList<>();
-    private ProgressBar progressBar;
+
     private boolean isScrolling;
     private GridLayoutManager productLayout;
+    private boolean isOnline=false;
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+
 
 
     public Offers() {
@@ -129,24 +149,21 @@ public class Offers extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        productViewModel.getProductFilter();
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
         productViewModel.getProductFilterLiveData().observe(this,listObserver);
 
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Toast.makeText(getContext(),String.valueOf(productCardViewAdapter.getItemCount()),Toast.LENGTH_SHORT).show();
-
-
-    }
 
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         productViewModel.getProductFilterLiveData().removeObservers(this);
 
 
@@ -159,6 +176,7 @@ public class Offers extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -177,13 +195,8 @@ public class Offers extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        orderBy=view.findViewById(R.id.order_by);
-        filterBy=view.findViewById(R.id.filter_by);
-        statefulLayout=view.findViewById(R.id.stateful);
-        progressBar=view.findViewById(R.id.prog);
-        listRecycler=view.findViewById(R.id.list_recyclerview);
-        root=view.findViewById(R.id.root);
-        statefulLayout.showLoading(" ");
+        ButterKnife.bind(this,view);
+
         navController= Navigation.findNavController(view);
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
@@ -315,9 +328,11 @@ public class Offers extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
 
         done.setOnClickListener(v -> {
-            productViewModel.setFilter(filterOption.getCategoriesID(),filterOption.getBrandID(),filterOption.getPriceRange(),filterOrderCardViewAdapter.getItemListSelected().get(0).getId(),filterOption.isOffer());
-           productViewModel.getProductFilter();
-           statefulLayout.showLoading(" ");
+            if (isOnline) {
+                productViewModel.setFilter(filterOption.getCategoriesID(), filterOption.getBrandID(), filterOption.getPriceRange(), filterOrderCardViewAdapter.getItemListSelected().get(0).getId(), filterOption.isOffer());
+                productViewModel.getProductFilter();
+                statefulLayout.showLoading(" ");
+            }
             dialog.dismiss();
 
         });
@@ -330,6 +345,22 @@ public class Offers extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        isOnline=true;
+        productViewModel.getProductFilter();
+        statefulLayout.showLoading(" ");
 
 
+    }
+
+    @Override
+    public void notConnect() {
+        isOnline=false;
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        progressBar.setVisibility(View.GONE);
+        isLoading = false;
+
+
+    }
 }

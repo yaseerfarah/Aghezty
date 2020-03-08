@@ -1,6 +1,7 @@
 package com.example.aghezty.View;
 
 
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -26,13 +27,16 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.CityInfo;
 import com.example.aghezty.POJO.GovernorateInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
@@ -48,7 +52,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Register2 extends Fragment {
+public class Register2 extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -66,6 +70,11 @@ public class Register2 extends Fragment {
     private CityInfo cityId;
 
     private NavController navController;
+
+    private NetworkReceiver networkReceiver;
+    private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
+
+
 
     @BindView(R.id.city_edit)
     Spinner city;
@@ -94,14 +103,7 @@ public class Register2 extends Fragment {
     public Register2() {
         // Required empty public constructor
 
-        currentUserInfoObserver=new Observer<UserInfo>() {
-            @Override
-            public void onChanged(UserInfo userInfo) {
 
-
-
-            }
-        };
 
         governorateobserver=new Observer<List<GovernorateInfo>>() {
             @Override
@@ -157,10 +159,14 @@ public class Register2 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        userViewModel.getAllGovernorate();
+
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
         userViewModel.getGovernorateListMediatorLiveData().observe(this,governorateobserver);
         userViewModel.getCitiesListMediatorLiveData().observe(this,citiesobserver);
-        userViewModel.getCurrentUserInfoLiveData().observe(this,currentUserInfoObserver);
+
 
     }
 
@@ -168,9 +174,11 @@ public class Register2 extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
+
         userViewModel.getGovernorateListMediatorLiveData().removeObservers(this);
         userViewModel.getCitiesListMediatorLiveData().removeObservers(this);
-        userViewModel.getCurrentUserInfoLiveData().removeObservers(this);
+
     }
 
     @Override
@@ -178,6 +186,7 @@ public class Register2 extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -201,7 +210,7 @@ public class Register2 extends Fragment {
         assignFields();
         //progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
-        statefulLayout.showLoading(" ");
+
 
 
         governorate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -300,8 +309,18 @@ public class Register2 extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        if (governorateInfoList.isEmpty()) {
+            statefulLayout.showLoading(" ");
+            userViewModel.getAllGovernorate();
+        }else{
+            statefulLayout.showContent();
+        }
+    }
 
-
-
-
+    @Override
+    public void notConnect() {
+        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+    }
 }

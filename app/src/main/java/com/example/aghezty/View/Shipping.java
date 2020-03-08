@@ -2,6 +2,7 @@ package com.example.aghezty.View;
 
 
 import android.app.Dialog;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -30,7 +31,9 @@ import android.widget.Toast;
 import com.example.aghezty.Adapter.CheckOutAddressCardViewAdapter;
 import com.example.aghezty.Adapter.CheckOutViewPagerAdapter;
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
+import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.FilterInfo;
@@ -59,7 +62,7 @@ import static com.example.aghezty.View.AddNewAddress.UPDATE_ADDRESS;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Shipping extends Fragment {
+public class Shipping extends Fragment implements InternetStatus {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -75,6 +78,10 @@ public class Shipping extends Fragment {
 
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
 
+
+
+
+    private NetworkReceiver networkReceiver;
 
 
     @BindView(R.id.an_city)
@@ -129,13 +136,18 @@ public class Shipping extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        userViewModel.getAllUserAddress();
+        IntentFilter netFilter=new IntentFilter();
+        netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        getActivity().registerReceiver(networkReceiver,netFilter);
+
+
         userViewModel.getAddressListMediatorLiveData().observe(this,addressesObserver);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(networkReceiver);
         userViewModel.getAddressListMediatorLiveData().removeObserver(addressesObserver);
 
     }
@@ -147,6 +159,7 @@ public class Shipping extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
+        networkReceiver=new NetworkReceiver(this);
 
     }
 
@@ -180,7 +193,10 @@ public class Shipping extends Fragment {
         });
         next.setOnClickListener(v -> {
 
-            if (addressInfo.getId()>0) {
+            if (addressInfo==null){
+                Toasty.warning(getContext(),"Select your Address Please",Toast.LENGTH_SHORT).show();
+            }
+            else if (addressInfo.getId()>0) {
 
                 if (viewPagerWeakReference.get() != null) {
                     viewPagerWeakReference.get().setCurrentItem(2);
@@ -266,13 +282,18 @@ public class Shipping extends Fragment {
     }
 
 
+    @Override
+    public void Connect() {
+        if (addressInfoList.isEmpty()){
+            userViewModel.getAllUserAddress();
+            statefulLayout.showLoading();
+        }else {
+            statefulLayout.showContent();
+        }
+    }
 
+    @Override
+    public void notConnect() {
 
-
-
-
-
-
-
-
+    }
 }
