@@ -156,7 +156,7 @@ public class Confirm extends Fragment {
             userViewModel.checkOut(new CompletableListener() {
                 @Override
                 public void onSuccess() {
-                    Toasty.success(view.getContext(),"Successful Order Checkout",Toast.LENGTH_SHORT).show();
+                    Toasty.success(view.getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
                     statefulLayout.showContent();
                     navController.navigateUp();
 
@@ -202,16 +202,16 @@ public class Confirm extends Fragment {
 
         paymentMethod.setText(checkOutInfo.getPaymentMethod());
 
-        subTotal.setText(numberFormat.format(countSubTotal())+" EGP");
+        subTotal.setText(numberFormat.format(countSubTotal())+" "+getResources().getString(R.string.egp));
 
-        couponDiscount.setText(numberFormat.format(userViewModel.getCouponDiscount()) +" EGP");
+        couponDiscount.setText(numberFormat.format(userViewModel.getCouponDiscount()) +" "+getResources().getString(R.string.egp));
 
        // shippingAmount.setText(numberFormat.format(addressInfo.getShippingAmount())+" EGP");
 
         shippingAmount.setText("50.99 EGP");
 
         int total=countSubTotal()-userViewModel.getCouponDiscount()-addressInfo.getShippingAmount();
-        totalPrice.setText(numberFormat.format(total)+" EGP");
+        totalPrice.setText(numberFormat.format(total)+" "+getResources().getString(R.string.egp));
 
 
 

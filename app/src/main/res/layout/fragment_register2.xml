@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:id="@+id/stateful"
             >
 
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign Up"
+                        android:text="@string/sign_up"
                         android:layout_alignParentTop="true"
                         android:gravity="center"
                         android:textColor="@color/dark_blue"
@@ -115,10 +115,10 @@
                         >
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:text="City"
+                            android:layout_gravity="start"
+                            android:text="@string/city"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp" />
                         <RelativeLayout
@@ -131,7 +131,7 @@
                             <Spinner
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
-                                android:hint="City"
+                                android:hint="@string/city"
                                 android:gravity="center"
                                 android:imeOptions="actionNext"
                                 android:id="@+id/city_edit"
@@ -153,10 +153,10 @@
                         >
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:text="Governorate"
+                            android:layout_gravity="start"
+                            android:text="@string/governorate"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp" />
 
@@ -193,17 +193,17 @@
                         >
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:text="Address"
+                            android:layout_gravity="start"
+                            android:text="@string/address"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:hint="Address"
+                            android:hint="@string/address"
                             android:gravity="center"
                             android:imeOptions="actionNext"
                             android:layout_marginTop="10dp"
@@ -226,17 +226,17 @@
                         >
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:text="Password"
+                            android:layout_gravity="start"
+                            android:text="@string/password"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:hint="Password"
+                            android:hint="@string/password"
                             android:gravity="center"
                             android:imeOptions="actionDone"
                             android:layout_marginTop="10dp"
@@ -259,7 +259,7 @@
                         android:id="@+id/register"
                         android:layout_below="@+id/password_info"
                         android:background="@drawable/button_background"
-                        android:text="Sign Up"
+                        android:text="@string/sign_up"
                         android:textStyle="bold"
                         android:layout_centerHorizontal="true"
                         android:textColor="@android:color/white"
@@ -283,7 +283,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="Already have an Account ?"
+                            android:text="@string/already_have_an_account"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
 
@@ -294,8 +294,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="Sign In"
-                            android:layout_marginLeft="10dp"
+                            android:text="@string/sign_in"
+                            android:layout_marginStart="10dp"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp"
 

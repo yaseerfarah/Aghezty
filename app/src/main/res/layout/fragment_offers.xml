@@ -68,9 +68,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/order_by"
-                        android:layout_toLeftOf="@+id/center"
+                        android:layout_toStartOf="@+id/center"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:clickable="true"
                         >
 
@@ -80,8 +80,8 @@
                             android:layout_centerVertical="true"
                             android:background="@drawable/ic_order"
                             android:id="@+id/order_icon"
-                            android:layout_toRightOf="@+id/order_text"
-                            android:layout_marginLeft="20dp"
+                            android:layout_toEndOf="@+id/order_text"
+                            android:layout_marginStart="20dp"
                             android:clickable="false"
                             />
 
@@ -91,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
                             android:id="@+id/order_text"
-                            android:text="Order By"
+                            android:text="@string/order_by"
                             android:textColor="@android:color/black"
                             android:clickable="false"
                             />
@@ -103,9 +103,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/filter_by"
-                        android:layout_toRightOf="@+id/center"
+                        android:layout_toEndOf="@+id/center"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:clickable="true"
                         >
 
@@ -115,8 +115,8 @@
                             android:layout_centerVertical="true"
                             android:background="@drawable/ic_filter"
                             android:id="@+id/filter_icon"
-                            android:layout_toRightOf="@+id/filter_text"
-                            android:layout_marginLeft="20dp"
+                            android:layout_toEndOf="@+id/filter_text"
+                            android:layout_marginStart="20dp"
                             android:clickable="false"
                             />
 
@@ -126,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
                             android:id="@+id/filter_text"
-                            android:text="Filter By"
+                            android:text="@string/filter_by"
                             android:textColor="@android:color/black"
                             android:clickable="false"
                             />

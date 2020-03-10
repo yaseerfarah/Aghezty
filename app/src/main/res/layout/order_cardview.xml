@@ -49,7 +49,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity :"
+                android:text="@string/quantity"
                 android:id="@+id/order_quantity"
                 android:textColor="@color/grey"
                 android:textSize="12sp"
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order ID :"
+                android:text="@string/order_id"
                 android:id="@+id/order_id"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
@@ -118,7 +118,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Method :"
+                android:text="@string/payment_method_field"
                 android:id="@+id/order_method"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
@@ -145,7 +145,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Status :"
+                android:text="@string/order_status"
                 android:id="@+id/order_status"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
@@ -172,7 +172,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Time :"
+                android:text="@string/order_time"
                 android:id="@+id/order_time"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
@@ -211,7 +211,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coupon Discount :"
+                android:text="@string/coupon_discount"
                 android:id="@+id/coupon_discount"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
@@ -250,7 +250,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shipping Amount :"
+                android:text="@string/shipping_amount"
                 android:id="@+id/shipping_amount"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
@@ -290,7 +290,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Price :"
+                android:text="@string/total_price"
                 android:id="@+id/order_totalprice"
                 android:textColor="@color/grey"
                 android:textSize="15sp"

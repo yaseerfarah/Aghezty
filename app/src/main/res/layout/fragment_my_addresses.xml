@@ -85,7 +85,7 @@
 
         android:id="@+id/add_new"
         android:background="@drawable/button_background"
-        android:text="Add New Address"
+        android:text="@string/add_new_address"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@android:color/white"

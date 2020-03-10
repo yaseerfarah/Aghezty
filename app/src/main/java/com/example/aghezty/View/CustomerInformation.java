@@ -129,7 +129,7 @@ public class CustomerInformation extends Fragment implements InternetStatus {
             if (isOnline) {
                 validationFields();
             }else {
-                Toasty.warning(getContext(),"Check your Connection Please").show();
+                Toasty.warning(getContext(),getResources().getString(R.string.check_connection_warning)).show();
             }
         });
 
@@ -154,7 +154,7 @@ public class CustomerInformation extends Fragment implements InternetStatus {
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
 
-                email.setError("Email Format Not Correct");
+                email.setError(getResources().getString(R.string.email_not_correct_warning));
 
             }else if (!name.getText().toString().matches(userInfo.getName())||!email.getText().toString().matches(userInfo.getEmail())||!phoneNumber.getText().toString().matches(userInfo.getPhoneNumber())) {
                 statefulLayout.showLoading(" ");
@@ -183,7 +183,7 @@ public class CustomerInformation extends Fragment implements InternetStatus {
             }
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -268,7 +268,7 @@ public class Register2 extends Fragment implements InternetStatus {
                 userViewModel.registerUser(userInfo, new CompletableListener() {
                     @Override
                     public void onSuccess() {
-                        Toasty.success(getContext(),"Success Sign Up").show();
+                        Toasty.success(getContext(),getResources().getString(R.string.success_signup)).show();
                         getActivity().finish();
                     }
 
@@ -279,7 +279,7 @@ public class Register2 extends Fragment implements InternetStatus {
                 });
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -321,6 +321,6 @@ public class Register2 extends Fragment implements InternetStatus {
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 }

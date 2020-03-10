@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aghezty.Adapter.CartCardViewAdapter;
@@ -57,9 +58,9 @@ public class Cart extends Fragment implements InternetStatus {
     private Observer cartObserver;
 
 
-    private  final int CONTENT=0;
-    private  final int EMPTY=1;
-    private  final int NETWORK=2;
+    private  final int CONTENT=1;
+    private  final int EMPTY=2;
+    private  final int NETWORK=3;
 
     private int currentSate;
 
@@ -101,6 +102,9 @@ public class Cart extends Fragment implements InternetStatus {
     @BindView(R.id.progress)
     ProgressBar progressBar;
 
+    @BindView(R.id.root)
+    RelativeLayout root;
+
 
 
 
@@ -125,11 +129,14 @@ public class Cart extends Fragment implements InternetStatus {
 
                 if (!cartInfos.isEmpty()&&currentSate!=CONTENT) {
                     currentSate=CONTENT;
+
                     statefulLayout.showContent();
+
 
                 }else if (cartInfos.isEmpty()&&currentSate!=EMPTY){
                     currentSate=EMPTY;
-                    statefulLayout.showEmpty("The Cart is Empty");
+                    root.setVisibility(View.VISIBLE);
+                    statefulLayout.showEmpty(getResources().getString(R.string.cart_empty));
                 }
 
             }
@@ -264,6 +271,7 @@ public class Cart extends Fragment implements InternetStatus {
             userViewModel.getAllCart();
         }else if (currentSate!=CONTENT){
             currentSate=CONTENT;
+            root.setVisibility(View.VISIBLE);
             statefulLayout.showContent();
         }
 
@@ -275,7 +283,7 @@ public class Cart extends Fragment implements InternetStatus {
     public void notConnect() {
         if (currentSate!=NETWORK) {
             currentSate=NETWORK;
-            statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+            statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
         }
     }
 }

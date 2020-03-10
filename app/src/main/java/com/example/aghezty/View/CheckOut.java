@@ -141,6 +141,6 @@ public class CheckOut extends Fragment implements InternetStatus {
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 }

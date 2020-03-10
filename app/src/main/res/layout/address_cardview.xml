@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address Number :"
+                    android:text="@string/address_number"
                     android:id="@+id/card_address_num"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
@@ -54,13 +54,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
-                    android:layout_toRightOf="@+id/card_address_num"
+                    android:layout_toEndOf="@+id/card_address_num"
                     android:id="@+id/card_an_address_num"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
 
 
                     />
@@ -93,12 +93,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address :"
+                    android:text="@string/address"
                     android:id="@+id/card_address"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     />
 
 
@@ -106,13 +106,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
-                    android:layout_toRightOf="@+id/card_address"
+                    android:layout_toEndOf="@+id/card_address"
                     android:id="@+id/card_an_address"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
 
 
                     />
@@ -135,12 +135,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="City :"
+                    android:text="@string/city"
                     android:id="@+id/card_city"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     />
 
 
@@ -148,13 +148,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
-                    android:layout_toRightOf="@+id/card_city"
+                    android:layout_toEndOf="@+id/card_city"
                     android:id="@+id/card_an_city"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
 
 
                     />
@@ -173,12 +173,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Governorate :"
+                    android:text="@string/governorate"
                     android:id="@+id/card_governorate"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     />
 
 
@@ -186,13 +186,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
-                    android:layout_toRightOf="@+id/card_governorate"
+                    android:layout_toEndOf="@+id/card_governorate"
                     android:id="@+id/card_an_governorate"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
 
 
                     />

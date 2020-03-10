@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CUSTOMER INFORMATION"
+                    android:text="@string/customer_information"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
@@ -65,13 +65,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:id="@+id/name"
                     android:layout_below="@+id/line"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
 
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     />
                 <TextView
@@ -79,10 +79,10 @@
                     android:layout_height="wrap_content"
                     android:text="Yaseer"
                     android:id="@+id/an_name"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/line"
                     />
@@ -90,12 +90,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="E-mail"
+                    android:text="@string/e_mail"
                     android:id="@+id/email"
                     android:layout_below="@+id/name"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:layout_marginLeft="15sp"
+                    android:layout_marginStart="15sp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -108,8 +108,8 @@
                     android:layout_below="@+id/name"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -117,12 +117,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone Number"
+                    android:text="@string/phone_number"
                     android:id="@+id/phone"
                     android:layout_below="@+id/email"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -135,8 +135,8 @@
                     android:layout_below="@+id/email"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -167,7 +167,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SHIPPING INFORMATION"
+                    android:text="@string/shipping_address"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
@@ -188,13 +188,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="City"
+                    android:text="@string/city"
                     android:id="@+id/city"
                     android:layout_below="@+id/line2"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
 
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     />
                 <TextView
@@ -202,10 +202,10 @@
                     android:layout_height="wrap_content"
                     android:text="Cairo"
                     android:id="@+id/an_city"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/line2"
                     />
@@ -213,12 +213,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Governorate"
+                    android:text="@string/governorate"
                     android:id="@+id/governorate"
                     android:layout_below="@+id/city"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:layout_marginLeft="15sp"
+                    android:layout_marginStart="15sp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -231,8 +231,8 @@
                     android:layout_below="@+id/city"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -240,12 +240,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:id="@+id/address"
                     android:layout_below="@+id/governorate"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -258,8 +258,8 @@
                     android:layout_below="@+id/governorate"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -290,7 +290,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PAYMENT METHOD"
+                    android:text="@string/payment_method"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
@@ -311,13 +311,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payment Method"
+                    android:text="@string/payment_method_field"
                     android:id="@+id/payment_method_t"
                     android:layout_below="@+id/line3"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
 
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     />
                 <TextView
@@ -325,10 +325,10 @@
                     android:layout_height="wrap_content"
                     android:text="Credit Card"
                     android:id="@+id/an_payment_method"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/line3"
                     />
@@ -350,7 +350,7 @@
 
                         android:textColor="@color/grey"
                         android:textSize="15sp"
-                        android:layout_marginLeft="15sp"
+                        android:layout_marginStart="15sp"
 
                         />
 
@@ -363,8 +363,8 @@
 
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
 
                         />
 
@@ -377,7 +377,7 @@
                         android:layout_below="@+id/card_name"
                         android:textColor="@color/grey"
                         android:textSize="15sp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -390,8 +390,8 @@
                         android:layout_below="@+id/card_name"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -404,7 +404,7 @@
                         android:layout_below="@+id/credit_num"
                         android:textColor="@color/grey"
                         android:textSize="15sp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -417,8 +417,8 @@
                         android:layout_below="@+id/credit_num"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -448,7 +448,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Total Price"
+                    android:text="@string/total_price"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
@@ -469,13 +469,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sub Total"
+                    android:text="@string/sub_total"
                     android:id="@+id/sub_total"
                     android:layout_below="@+id/line4"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
 
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     />
                 <TextView
@@ -483,10 +483,10 @@
                     android:layout_height="wrap_content"
                     android:text="1599.99 .EGP"
                     android:id="@+id/an_sub_total"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/line4"
                     />
@@ -498,12 +498,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Coupon Discount"
+                    android:text="@string/coupon_discount"
                     android:id="@+id/coupon_discount"
                     android:layout_below="@+id/sub_total"
                     android:textColor="@color/grey"
                     android:textSize="15sp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -516,8 +516,8 @@
                     android:layout_below="@+id/sub_total"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     />
 
@@ -526,12 +526,12 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shipping Amount"
+                        android:text="@string/shipping_amount"
                         android:id="@+id/shipping_ammount"
                         android:layout_below="@+id/coupon_discount"
                         android:textColor="@color/grey"
                         android:textSize="15sp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -544,8 +544,8 @@
                         android:layout_below="@+id/coupon_discount"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -553,12 +553,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Price"
+                        android:text="@string/total_price"
                         android:id="@+id/total_price_t"
                         android:layout_below="@+id/shipping_ammount"
                         android:textColor="@color/grey"
                         android:textSize="15sp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -571,8 +571,8 @@
                         android:layout_below="@+id/shipping_ammount"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
                         android:layout_marginTop="20dp"
                         />
 
@@ -606,10 +606,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:background="@drawable/button_background"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:id="@+id/submit"
                 android:layout_marginBottom="5dp"
                 />
@@ -621,9 +621,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_white_background"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:text="Back"
-                android:layout_toRightOf="@+id/next"
+                android:layout_marginStart="5dp"
+                android:text="@string/back"
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:layout_marginBottom="5dp"

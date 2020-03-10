@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -95,6 +96,10 @@ public class Profile extends Fragment implements InternetStatus {
     ProgressBar progressBar;
 
 
+    @BindView(R.id.root)
+    RelativeLayout root;
+
+
     public Profile() {
         // Required empty public constructor
 
@@ -105,6 +110,7 @@ public class Profile extends Fragment implements InternetStatus {
                     userInfo = currentUserInfo;
                     assignView();
                     statefulLayout.showContent();
+                    root.setVisibility(View.VISIBLE);
                 }
             }
         };
@@ -207,7 +213,7 @@ public class Profile extends Fragment implements InternetStatus {
         if (name.length>1&&name[1] != null) {
             userLastName.setText(name[1]);
         } else {
-            firstName.setText("Name");
+            firstName.setText(getResources().getString(R.string.name));
             lastName.setVisibility(View.GONE);
             userLastName.setVisibility(View.GONE);
         }
@@ -275,6 +281,6 @@ public class Profile extends Fragment implements InternetStatus {
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 }

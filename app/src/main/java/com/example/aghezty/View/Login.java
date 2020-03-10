@@ -118,7 +118,7 @@ public class Login extends Fragment implements InternetStatus {
             if (isOnline) {
                 navController.navigate(R.id.action_login_to_register1);
             }else {
-                Toasty.warning(getContext(),"Check your Connection Please").show();
+                Toasty.warning(getContext(),getResources().getString(R.string.check_connection_warning)).show();
             }
         });
 
@@ -126,7 +126,7 @@ public class Login extends Fragment implements InternetStatus {
             if (isOnline) {
                 validationFields();
             }else {
-                Toasty.warning(getContext(),"Check your Connection Please").show();
+                Toasty.warning(getContext(),getResources().getString(R.string.check_connection_warning)).show();
             }
         });
 
@@ -141,13 +141,13 @@ public class Login extends Fragment implements InternetStatus {
 
              if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
 
-                email.setError("Email Format Not Correct");
+                email.setError(getResources().getString(R.string.email_not_correct_warning));
             }else {
                  statefulLayout.showLoading(" ");
                  userViewModel.userLogin(email.getText().toString(), password.getText().toString(), new CompletableListener() {
                      @Override
                      public void onSuccess() {
-                         Toasty.success(getContext(),"Successful Login",Toast.LENGTH_SHORT).show();
+                         Toasty.success(getContext(),getResources().getString(R.string.successful_login),Toast.LENGTH_SHORT).show();
                          getActivity().finish();
                      }
 
@@ -161,7 +161,7 @@ public class Login extends Fragment implements InternetStatus {
 
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
 
 

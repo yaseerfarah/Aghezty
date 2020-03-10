@@ -274,7 +274,7 @@ public class AddNewAddress extends Fragment implements InternetStatus {
 
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -288,7 +288,7 @@ public class AddNewAddress extends Fragment implements InternetStatus {
             @Override
             public void onSuccess() {
                 navController.navigateUp();
-                Toasty.success(getContext(),"Successful Add New Address",Toast.LENGTH_SHORT).show();
+                Toasty.success(getContext(),getResources().getString(R.string.success_add_address),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -315,7 +315,7 @@ public class AddNewAddress extends Fragment implements InternetStatus {
             @Override
             public void onSuccess() {
                 navController.navigateUp();
-                Toasty.success(getContext(),"Successful Update Address",Toast.LENGTH_SHORT).show();
+                Toasty.success(getContext(),getResources().getString(R.string.successful_update_address),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -368,6 +368,6 @@ public class AddNewAddress extends Fragment implements InternetStatus {
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 }

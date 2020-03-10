@@ -88,7 +88,7 @@ public class MyAddresses extends Fragment implements InternetStatus {
                 if (!addressInfos.isEmpty()){
                     statefulLayout.showContent();
                 }else {
-                    statefulLayout.showEmpty("You have no Addresses");
+                    statefulLayout.showEmpty(getResources().getString(R.string.no_addresses));
                 }
 
             }
@@ -173,6 +173,6 @@ public class MyAddresses extends Fragment implements InternetStatus {
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 }

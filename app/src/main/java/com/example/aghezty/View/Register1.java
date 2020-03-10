@@ -112,7 +112,7 @@ public class Register1 extends Fragment {
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
 
-                email.setError("Email Format Not Correct");
+                email.setError(getResources().getString(R.string.email_not_correct_warning));
             }else {
 
 
@@ -129,7 +129,7 @@ public class Register1 extends Fragment {
 
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
 
 

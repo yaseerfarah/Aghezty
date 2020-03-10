@@ -239,9 +239,10 @@ public class ProductDetails extends Fragment implements InternetStatus {
 
         if (userViewModel.checkInCart(productInfo)){
             addToCart.setEnabled(false);
-            addToCart.setText("Already in Cart");
+            addToCart.setText(getResources().getString(R.string.already_in_cart));
         }
 
+        statefulLayout.showLoading(" ");
 
         addToCart.setOnClickListener(v -> {
             if (userViewModel.isLogin()) {
@@ -249,8 +250,8 @@ public class ProductDetails extends Fragment implements InternetStatus {
                 userViewModel.addCartInfo(productInfo, quantity, new CompletableListener() {
                     @Override
                     public void onSuccess() {
-                        Toasty.success(getContext(), "Success Add to Cart", Toast.LENGTH_SHORT).show();
-                        addToCart.setText("Already in Cart");
+                        Toasty.success(getContext(), getResources().getString(R.string.success_add_cart), Toast.LENGTH_SHORT).show();
+                        addToCart.setText(getResources().getString(R.string.already_in_cart));
                     }
 
                     @Override
@@ -494,16 +495,18 @@ public class ProductDetails extends Fragment implements InternetStatus {
     @Override
     public void Connect() {
         if (sliderInfoList.isEmpty()) {
+
             productViewModel.getInnerProductByID(productInfo, innerProductListener);
-            statefulLayout.showLoading(" ");
+
         }else {
+
             statefulLayout.showContent();
         }
     }
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 
 

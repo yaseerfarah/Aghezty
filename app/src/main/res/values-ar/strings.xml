@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">أجهزتي</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <array name="check_out_step">
+        <item>Customer</item>
+        <item>Shipping</item>
+        <item>Payment</item>
+        <item>Confirm</item>
+
+    </array>
+
+    <string name="home">الرئيسية</string>
+    <string name="offers">التخفيضات</string>
+    <string name="cart">عربة التسوق</string>
+    <string name="profile">حسابي</string>
+    <string name="categories">الفئات</string>
+
+
+    <string name="edit_profile">تعديل البيانات</string>
+    <string name="my_addresses">عناويني</string>
+    <string name="change_password">تغيير كلمة السر</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="search">البحث</string>
+    <string name="best_categories">أفضل الفئات</string>
+    <string name="new_arrivals">وصل حديثاً</string>
+    <string name="just_for_you">من أجلك</string>
+    <string name="check_connection"> تحقق من إتصالك</string>
+    <string name="order_by">الترتيب</string>
+    <string name="filter_by">التصنيف</string>
+    <string name="no_match">لا يوجد تشابه</string>
+    <string name="all">الكل</string>
+    <string name="h_to_l">السعر من الأعلى إلى الأقل</string>
+    <string name="l_to_h">السعر من الأقل إلى الأعلى</string>
+    <string name="coupon">كوبون</string>
+    <string name="apply">تفعيل</string>
+    <string name="coupon_discount">الخصم : </string>
+    <string name="egp">ج.م</string>
+    <string name="total">المجموع : </string>
+    <string name="check_out">تنفيذ الشراء</string>
+    <string name="cart_empty">عربة التسوق خالية</string>
+    <string name="success_delete">تم الحذف بنجاح</string>
+    <string name="first_name">الإسم الأول</string>
+    <string name="last_name">الإسم الأخير</string>
+    <string name="e_mail">البريد الإلكتروني</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="aghezty_com_2020_all_rights_reserved">Aghezty.com 2020 ©. All Rights Reserved.</string>
+    <string name="name">الإسم</string>
+    <string name="brand">الماركة</string>
+    <string name="new_address">عنوان جديد</string>
+    <string name="governorate">المحافظة</string>
+    <string name="city">المدينة</string>
+    <string name="address">العنوان</string>
+    <string name="save">حفظ</string>
+    <string name="complete_fields_warining">الرجاء إدخال كل البيانات</string>
+    <string name="success_add_address">تمت الإضافة بنجاح</string>
+    <string name="successful_update_address">تم التحديث بنجاح</string>
+    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="no_addresses">ليس لديك عناوين</string>
+    <string name="new_password">الرقم السري الجديد</string>
+    <string name="old_password">الرقم السري القديم</string>
+    <string name="confirm_password">تأكيد الرقم السري</string>
+    <string name="check_connection_warning">الرجاء التحقق من الإتصال</string>
+    <string name="pass_least_6_char_warning">على الأقل 6 حروف او أرقام</string>
+    <string name="confirm_pass">الرجاء تأكيد الرقم السري</string>
+    <string name="successful_change_pass">تم التغيير بنجاح</string>
+    <string name="edit_picture">تفيير الصورة</string>
+    <string name="email_not_correct_warning">البريد الإالكتروني ليس صحيح</string>
+    <string name="available_quantity">الكمية المتاحة :</string>
+    <string name="details">التفاصيل</string>
+    <string name="evaluation">التقييم</string>
+    <string name="overall_rating">التقييم العام</string>
+    <string name="based_on">معتمد على</string>
+    <string name="add_to_cart">إضافة إالى عربة التسوق</string>
+    <string name="quantity">الكمية</string>
+    <string name="already_in_cart">بالفعل في عربة التسوق</string>
+    <string name="success_add_cart">تمت الإضافة بنجاح</string>
+    <string name="next">التالي</string>
+    <string name="shipping_address">عنوان الشحن</string>
+    <string name="shipping_amount">تكلفة الشحن</string>
+    <string name="select_from_my_addresses">الإختيار من عناويني</string>
+    <string name="back">الرجوع</string>
+    <string name="cash_on_delivery">الدفع عند الإستلام</string>
+    <string name="credit_on_delivery">البطاقة عند الاستلام</string>
+    <string name="paypal">باي بال - paypal</string>
+    <string name="customer_information">معلومات المستخدم</string>
+    <string name="payment_method">طريقة الدفع</string>
+    <string name="payment_method_field">طريقة الدفع</string>
+    <string name="total_price">المجموع الكلي</string>
+    <string name="sub_total">المجموع الأولي</string>
+    <string name="submit">شراء</string>
+    <string name="select_address_warning">الرجاء الاختيار من العناوين</string>
+    <string name="successful_checkout">تم الشراء بنجاح</string>
+    <string name="heavy_machines">الأجهزة الثقيلة</string>
+    <string name="light_devices">الأجهزة الخفيفة</string>
+    <string name="price">السعر</string>
+    <string name="clear">مسح</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="password">الرقم السري</string>
+    <string name="forgot_password">هل نسيت الرقم السري ؟</string>
+    <string name="don_t_have_an_account"> ليس لديك حساب ؟</string>
+    <string name="sign_up">مستخدم جديد</string>
+    <string name="already_have_an_account">هل لديك بالفعل حساب ؟</string>
+    <string name="success_signup">تم التسجيل بنجاح</string>
+    <string name="successful_login">تم التسجيل بنجاح</string>
+    <string name="address_number">العنوان رقم</string>
+    <string name="done">تم</string>
+    <string name="order_id">رقم الطلب</string>
+    <string name="order_status">حالة الطلب</string>
+    <string name="order_time">تاريخ الطلب</string>
+
+
+    <string-array name="price_range_filter">
+
+        <item>الكل</item>
+        <item>أقل من 1000</item>
+        <item>من 1000 إلى 3000</item>
+        <item>من 3000 إالى 6000</item>
+        <item>من 6000 إالى 10000</item>
+        <item>أكثر من 10000</item>
+
+
+    </string-array>
+
+
+    <string-array name="order_by">
+
+        <item>الكل</item>
+        <item>السعر من الأعلى إالى الأقل</item>
+        <item>السعر من الأقل الى الاعلى</item>
+
+    </string-array>
+
+
+
+
+
+
+</resources>

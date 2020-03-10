@@ -67,7 +67,7 @@
             android:layout_centerInParent="true"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
 
             >
 
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign Up"
+                    android:text="@string/sign_up"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
@@ -106,17 +106,17 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="First Name"
+                        android:layout_gravity="start"
+                        android:text="@string/first_name"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:hint="First name"
+                        android:hint="@string/first_name"
                         android:gravity="center"
                         android:imeOptions="actionNext"
                         android:layout_marginTop="10dp"
@@ -137,17 +137,17 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="Last Name"
+                        android:layout_gravity="start"
+                        android:text="@string/last_name"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:hint="Last Name"
+                        android:hint="@string/last_name"
                         android:gravity="center"
                         android:imeOptions="actionNext"
                         android:layout_marginTop="10dp"
@@ -168,17 +168,17 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="E-mail"
+                        android:layout_gravity="start"
+                        android:text="@string/e_mail"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:hint="E-mail"
+                        android:hint="@string/e_mail"
                         android:gravity="center"
                         android:imeOptions="actionNext"
                         android:layout_marginTop="10dp"
@@ -201,17 +201,17 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="Phone Number"
+                        android:layout_gravity="start"
+                        android:text="@string/phone_number"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:hint="Phone Number"
+                        android:hint="@string/phone_number"
                         android:gravity="center"
                         android:imeOptions="actionDone"
                         android:layout_marginTop="10dp"
@@ -234,7 +234,7 @@
                     android:id="@+id/next"
                     android:layout_below="@+id/phone_info"
                     android:background="@drawable/button_background"
-                    android:text="Next"
+                    android:text="@string/next"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:textColor="@android:color/white"
@@ -258,7 +258,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Already have an Account ?"
+                        android:text="@string/already_have_an_account"
                         android:textColor="@color/grey"
                         android:textSize="15sp"
 
@@ -269,8 +269,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Sign In"
-                        android:layout_marginLeft="10dp"
+                        android:text="@string/sign_in"
+                        android:layout_marginStart="10dp"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp"
 

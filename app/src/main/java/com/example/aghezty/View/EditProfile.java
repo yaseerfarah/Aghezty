@@ -164,7 +164,7 @@ public class EditProfile extends Fragment implements InternetStatus {
             if (isOnline) {
                 validationFields();
             }else {
-                Toasty.warning(getContext(),"Check your Connection Please").show();
+                Toasty.warning(getContext(),getResources().getString(R.string.check_connection_warning)).show();
             }
         });
 
@@ -201,7 +201,7 @@ public class EditProfile extends Fragment implements InternetStatus {
             statefulLayout.showLoading(" ");
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString().trim()).matches()){
-                email.setError("Email Format Not Correct");
+                email.setError(getResources().getString(R.string.email_not_correct_warning));
             }else {
 
 
@@ -227,7 +227,7 @@ public class EditProfile extends Fragment implements InternetStatus {
 
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -251,7 +251,6 @@ public class EditProfile extends Fragment implements InternetStatus {
         }
         email.setText(userInfo.getEmail());
         phoneNumber.setText(userInfo.getPhoneNumber());
-
 
     }
 

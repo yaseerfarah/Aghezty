@@ -117,7 +117,7 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
             public void onChanged(List<BrandInfo> brandInfos) {
                 if (brandInfos != null && !isBrandCatDone) {
                     brandSubCategoryList = brandInfos;
-                    parentCategoriesList.add(new FilterInfo(0, "Brand", null, FilterInfo.BRAND));
+                    parentCategoriesList.add(new FilterInfo(0, getResources().getString(R.string.brand), null, FilterInfo.BRAND));
 
                     parentCategoryCardViewAdapter.notifyDataSetChanged();
                     isBrandCatDone=true;
@@ -273,6 +273,6 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
 }

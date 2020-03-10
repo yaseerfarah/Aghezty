@@ -102,7 +102,7 @@ public class AddressCardViewAdapter extends RecyclerView.Adapter<AddressCardView
                 userViewModel.deleteAddress(addressInfoList.get(holder.getAdapterPosition()), holder.getAdapterPosition(), new CompletableListener() {
                     @Override
                     public void onSuccess() {
-                        Toasty.success(context,"Successful Delete Address", Toast.LENGTH_LONG).show();
+                        Toasty.success(context,context.getResources().getString(R.string.success_delete), Toast.LENGTH_LONG).show();
                     }
 
                     @Override

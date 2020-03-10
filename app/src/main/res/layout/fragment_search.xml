@@ -29,7 +29,7 @@
                     android:layout_marginLeft="40dp"
                     android:id="@+id/search"
                     android:textSize="20sp"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:inputType="text"
                     android:imeOptions="actionSearch"
                     android:paddingLeft="20dp"

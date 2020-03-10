@@ -19,12 +19,17 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        >
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/root"
+            android:visibility="gone"
+            >
 
 
 <RelativeLayout
@@ -153,23 +158,23 @@
                         <ImageButton
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:backgroundTint="@color/grey"
                             android:id="@+id/setting"
                             android:layout_marginTop="10dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginEnd="10dp"
                             android:background="@drawable/ic_settings_black_24dp"
                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="First Name"
+                            android:text="@string/first_name"
                             android:id="@+id/first"
                             android:layout_below="@+id/setting"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
                             android:layout_marginTop="10dp"
                             />
                         <TextView
@@ -177,10 +182,10 @@
                             android:layout_height="wrap_content"
                             android:text="Yaseer"
                             android:id="@+id/an_first"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:textColor="@color/black"
                             android:textSize="15sp"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginEnd="15dp"
                             android:layout_marginTop="10dp"
                             android:layout_below="@+id/setting"
                             />
@@ -188,12 +193,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Last Name"
+                            android:text="@string/last_name"
                             android:id="@+id/last"
                             android:layout_below="@+id/first"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:layout_marginLeft="15sp"
+                            android:layout_marginStart="15sp"
                             android:layout_marginTop="20dp"
                             />
 
@@ -206,8 +211,8 @@
                             android:layout_below="@+id/first"
                             android:textColor="@color/black"
                             android:textSize="15sp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="15dp"
                             android:layout_marginTop="20dp"
                             />
 
@@ -215,12 +220,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="E-mail"
+                            android:text="@string/e_mail"
                             android:id="@+id/email"
                             android:layout_below="@+id/last"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
                             android:layout_marginTop="20dp"
                             />
 
@@ -233,8 +238,8 @@
                             android:layout_below="@+id/last"
                             android:textColor="@color/black"
                             android:textSize="15sp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="15dp"
                             android:layout_marginTop="20dp"
                             />
 
@@ -244,12 +249,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Phone Number"
+                            android:text="@string/phone_number"
                             android:id="@+id/phone"
                             android:layout_below="@+id/email"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
                             android:layout_marginTop="20dp"
                             />
                         <TextView
@@ -260,8 +265,8 @@
                             android:layout_below="@+id/email"
                             android:textColor="@color/black"
                             android:textSize="15sp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="15dp"
                             android:layout_marginTop="20dp"
                             />
 
@@ -309,8 +314,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_whatsapp"
                         android:id="@+id/whatsapp"
-                        android:layout_toRightOf="@+id/facebook"
-                        android:layout_marginLeft="20dp"
+                        android:layout_toEndOf="@+id/facebook"
+                        android:layout_marginStart="20dp"
                         />
 
 
@@ -320,8 +325,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_call"
                         android:id="@+id/call"
-                        android:layout_toRightOf="@+id/whatsapp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_toEndOf="@+id/whatsapp"
+                        android:layout_marginStart="20dp"
                         />
 
 
@@ -330,8 +335,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_message"
                         android:id="@+id/message"
-                        android:layout_toRightOf="@+id/call"
-                        android:layout_marginLeft="20dp"
+                        android:layout_toEndOf="@+id/call"
+                        android:layout_marginStart="20dp"
                         />
 
 
@@ -341,8 +346,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_email"
                         android:id="@+id/send_email"
-                        android:layout_toRightOf="@+id/message"
-                        android:layout_marginLeft="20dp"
+                        android:layout_toEndOf="@+id/message"
+                        android:layout_marginStart="20dp"
                         />
 
                 </RelativeLayout>
@@ -372,8 +377,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_mastercard"
                         android:id="@+id/master"
-                        android:layout_toRightOf="@+id/visa"
-                        android:layout_marginLeft="20dp"
+                        android:layout_toEndOf="@+id/visa"
+                        android:layout_marginStart="20dp"
                         />
 
 
@@ -385,7 +390,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aghezty.com 2020 ©. All Rights Reserved."
+                    android:text="@string/aghezty_com_2020_all_rights_reserved"
                     android:layout_marginTop="10dp"
                     android:textSize="12sp"
                     android:textStyle="bold"

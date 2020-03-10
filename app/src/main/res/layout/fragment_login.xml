@@ -96,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign In"
+                    android:text="@string/sign_in"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
@@ -119,17 +119,17 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="E-mail"
+                        android:layout_gravity="start"
+                        android:text="@string/e_mail"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:hint="E-mail"
+                        android:hint="@string/e_mail"
                         android:gravity="center"
                         android:imeOptions="actionNext"
                         android:layout_marginTop="10dp"
@@ -152,17 +152,17 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:text="Password"
+                        android:layout_gravity="start"
+                        android:text="@string/password"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:hint="Password"
+                        android:hint="@string/password"
                         android:gravity="center"
                         android:imeOptions="actionDone"
                         android:layout_marginTop="10dp"
@@ -176,13 +176,14 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Forgot Password ?"
+                    android:text="@string/forgot_password"
                     android:textColor="@color/grey"
                     android:textSize="13sp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="start"
                     android:id="@+id/forgot_pass"
                     android:layout_below="@+id/password_info"
                     android:layout_marginTop="15dp"
@@ -197,7 +198,7 @@
                     android:id="@+id/login"
                     android:layout_below="@+id/forgot_pass"
                     android:background="@drawable/button_background"
-                    android:text="Sign In"
+                    android:text="@string/sign_in"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:textColor="@android:color/white"
@@ -222,7 +223,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Don't have an Account ?"
+                        android:text="@string/don_t_have_an_account"
                         android:textColor="@color/grey"
                         android:textSize="15sp"
 
@@ -233,8 +234,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Sign Up"
-                        android:layout_marginLeft="10dp"
+                        android:text="@string/sign_up"
+                        android:layout_marginStart="10dp"
                         android:textColor="@color/dark_blue"
                         android:textSize="15sp"
 

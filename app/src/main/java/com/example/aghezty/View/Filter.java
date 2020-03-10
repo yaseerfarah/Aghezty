@@ -249,7 +249,7 @@ public class Filter extends Fragment implements InternetStatus {
 
 
 
-            create_dialog("Heavy Machines",heavyMachines,categories_select,heavy_choice,FILTER);
+            create_dialog(getResources().getString(R.string.heavy_machines),heavyMachines,categories_select,heavy_choice,FILTER);
 
         });
 
@@ -257,7 +257,7 @@ public class Filter extends Fragment implements InternetStatus {
 
 
 
-            create_dialog("Light Devices",lightDevices,categories_select,light_choice,FILTER);
+            create_dialog(getResources().getString(R.string.light_devices),lightDevices,categories_select,light_choice,FILTER);
 
         });
 
@@ -266,7 +266,7 @@ public class Filter extends Fragment implements InternetStatus {
 
 
 
-            create_dialog("Brand",brandInfoList,brandInfoList_select,brand_choice,FILTER);
+            create_dialog(getResources().getString(R.string.brand),brandInfoList,brandInfoList_select,brand_choice,FILTER);
 
         });
 
@@ -284,7 +284,7 @@ public class Filter extends Fragment implements InternetStatus {
 
 
 
-            create_dialog("Price Range",items,priceRange_select,price_choice,ORDER);
+            create_dialog(getResources().getString(R.string.price),items,priceRange_select,price_choice,ORDER);
         });
 
 
@@ -399,7 +399,7 @@ public class Filter extends Fragment implements InternetStatus {
 
     @Override
     public void notConnect() {
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
 
     }
 }

@@ -71,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/root"
-
+        android:visibility="gone"
         >
 
 
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_search"
                         android:backgroundTint="@color/gray"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_centerVertical="true"
                         android:id="@+id/searchicon"
                         />
@@ -142,9 +142,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Search"
+                        android:text="@string/search"
                         android:layout_toEndOf="@+id/searchicon"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:textSize="18sp"
                         android:textColor="@color/gray"
                         android:layout_centerVertical="true"
@@ -181,7 +181,7 @@
                 android:id="@+id/cat_logo1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:backgroundTint="@color/orange"
                 android:background="@drawable/ic_prize"
 
@@ -189,12 +189,12 @@
 
             <TextView
                 android:id="@+id/cat_title1"
-                android:layout_toRightOf="@+id/cat_logo1"
+                android:layout_toEndOf="@+id/cat_logo1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="2dp"
-                android:text="Best Categories"
+                android:text="@string/best_categories"
                 android:textColor="@android:color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />

@@ -194,7 +194,7 @@ public class Shipping extends Fragment implements InternetStatus {
         next.setOnClickListener(v -> {
 
             if (addressInfo==null){
-                Toasty.warning(getContext(),"Select your Address Please",Toast.LENGTH_SHORT).show();
+                Toasty.warning(getContext(),getResources().getString(R.string.select_address_warning),Toast.LENGTH_SHORT).show();
             }
             else if (addressInfo.getId()>0) {
 
@@ -250,7 +250,7 @@ public class Shipping extends Fragment implements InternetStatus {
         TextView title=dialog.findViewById(R.id.title);
         Button done=dialog.findViewById(R.id.done);
         RecyclerView recyclerView=dialog.findViewById(R.id.filter_recycler);
-        title.setText("My Address");
+        title.setText(getResources().getString(R.string.my_addresses));
 
 
         CheckOutAddressCardViewAdapter  checkOutAddressCardViewAdapter=new CheckOutAddressCardViewAdapter(getContext(),addressInfoList,addressInfo);

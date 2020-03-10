@@ -83,6 +83,9 @@ public class Home extends Fragment implements InternetStatus {
     @BindView(R.id.stateful)
      StatefulLayout statefulLayout;
 
+    @BindView(R.id.root)
+    RelativeLayout root;
+
     private List<HomeRecylerData> homeRecylerDataList=new ArrayList<>();
     private List<FilterInfo> categoryInfoList=new ArrayList<>();
     private List<String> sliderInfoList=new ArrayList<>();
@@ -108,8 +111,8 @@ public class Home extends Fragment implements InternetStatus {
             @Override
             public void onChanged(HomeData homeData) {
                 homeRecylerDataList.clear();
-                homeRecylerDataList.add(new HomeRecylerData("New Arrivals",R.drawable.ic_new,homeData.getRecently_added()));
-                homeRecylerDataList.add(new HomeRecylerData("Just For You",R.drawable.ic_gift,homeData.getSelected_for_you()));
+                homeRecylerDataList.add(new HomeRecylerData(getResources().getString(R.string.new_arrivals),R.drawable.ic_new,homeData.getRecently_added()));
+                homeRecylerDataList.add(new HomeRecylerData(getResources().getString(R.string.just_for_you),R.drawable.ic_gift,homeData.getSelected_for_you()));
 
                 categoryInfoList.clear();
                 for (CategoryInfo categoryInfo:homeData.getHomepage_cat()){
@@ -128,6 +131,7 @@ public class Home extends Fragment implements InternetStatus {
                 categoryCardViewAdapter.notifyDataSetChanged();
 
                statefulLayout.showContent();
+               root.setVisibility(View.VISIBLE);
 
                 add_Dots(getContext(),0);
 
@@ -324,7 +328,7 @@ public class Home extends Fragment implements InternetStatus {
     @Override
     public void notConnect() {
 
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
 
     }
 

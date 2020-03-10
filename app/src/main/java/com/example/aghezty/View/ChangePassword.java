@@ -127,7 +127,7 @@ public class ChangePassword extends Fragment implements InternetStatus {
             if (isOnline) {
                 validationFields();
             }else {
-                Toasty.warning(getContext(),"Check your Connection Please").show();
+                Toasty.warning(getContext(),getResources().getString(R.string.check_connection_warning)).show();
             }
         });
 
@@ -160,19 +160,19 @@ public class ChangePassword extends Fragment implements InternetStatus {
 
             if (new_password.getText().toString().length()<6){
 
-                new_password.setError("The password must be at least 6 characters");
+                new_password.setError(getResources().getString(R.string.pass_least_6_char_warning));
 
             }
             else if(!isConfirm){
 
-                Toasty.error(getContext(),"Confirm Your Password please", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(),getResources().getString(R.string.confirm_pass), Toast.LENGTH_SHORT).show();
             }else {
 
                 statefulLayout.showLoading(" ");
                 userViewModel.updateUserPassword(old_password.getText().toString(), new_password.getText().toString(), new CompletableListener() {
                     @Override
                     public void onSuccess() {
-                        Toasty.success(getContext(),"Successful Change password",Toast.LENGTH_SHORT).show();
+                        Toasty.success(getContext(),getResources().getString(R.string.successful_change_pass),Toast.LENGTH_SHORT).show();
                         navController.navigateUp();
                     }
 
@@ -185,7 +185,7 @@ public class ChangePassword extends Fragment implements InternetStatus {
 
 
         }else {
-            Toasty.error(getContext(),"Complete All Fields Please", Toast.LENGTH_SHORT).show();
+            Toasty.error(getContext(),getResources().getString(R.string.complete_fields_warining), Toast.LENGTH_SHORT).show();
         }
 
 

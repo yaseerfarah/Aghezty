@@ -134,7 +134,7 @@ public class Offers extends Fragment implements InternetStatus {
                     if (productFilterData.getProductList().size()>0){
                         statefulLayout.showContent();
                     }else {
-                        statefulLayout.showEmpty("No Match");
+                        statefulLayout.showEmpty(getResources().getString(R.string.no_match));
                     }
 
                 }
@@ -309,14 +309,14 @@ public class Offers extends Fragment implements InternetStatus {
         TextView title=dialog.findViewById(R.id.title);
         Button done=dialog.findViewById(R.id.done);
         RecyclerView recyclerView=dialog.findViewById(R.id.filter_recycler);
-        title.setText("Order By");
+        title.setText(getResources().getString(R.string.order_by));
 
         List<FilterInfo> items=new ArrayList<>();
         List<FilterInfo> selected=new ArrayList<>();
 
-        items.add(new FilterInfo(ALL,"All",null,FilterInfo.CATEGORY));
-        items.add(new FilterInfo(High_To_Low_Price,"High To Low Price",null,FilterInfo.CATEGORY));
-        items.add(new FilterInfo(Low_To_High_Price,"Low To High Price",null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(ALL,getResources().getString(R.string.all),null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(High_To_Low_Price,getResources().getString(R.string.h_to_l),null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(Low_To_High_Price,getResources().getString(R.string.l_to_h),null,FilterInfo.CATEGORY));
 
 
             selected.add(items.get(filterOption.getOrderBy()));
@@ -357,7 +357,7 @@ public class Offers extends Fragment implements InternetStatus {
     @Override
     public void notConnect() {
         isOnline=false;
-        statefulLayout.showCustom(networkCustom.message("Oooopss...  Check your Connection"));
+        statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
         progressBar.setVisibility(View.GONE);
         isLoading = false;
 
