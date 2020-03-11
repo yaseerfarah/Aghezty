@@ -4,7 +4,13 @@ package com.example.aghezty.POJO;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
+
 @Entity
 public class CartInfo {
 
@@ -18,15 +24,16 @@ public class CartInfo {
     @SerializedName("total_price")
     private int pro_totalPrice;
 
-    private String pro_name,pro_imageUrl;
+    private String pro_name_en,pro_name_ar,pro_imageUrl;
 
 
-    public CartInfo(int product_id, int quantity, int pro_price, int pro_totalPrice, String pro_name, String pro_imageUrl) {
+    public CartInfo(int product_id, int quantity, int pro_price, int pro_totalPrice, String pro_name_en, String pro_name_ar, String pro_imageUrl) {
         this.product_id = product_id;
         this.quantity = quantity;
         this.pro_price = pro_price;
         this.pro_totalPrice = pro_totalPrice;
-        this.pro_name = pro_name;
+        this.pro_name_en = pro_name_en;
+        this.pro_name_ar = pro_name_ar;
         this.pro_imageUrl = pro_imageUrl;
     }
 
@@ -54,12 +61,20 @@ public class CartInfo {
         this.pro_price = pro_price;
     }
 
-    public String getPro_name() {
-        return pro_name;
+    public String getPro_name_en() {
+        return pro_name_en;
     }
 
-    public void setPro_name(String pro_name) {
-        this.pro_name = pro_name;
+    public void setPro_name_en(String pro_name_en) {
+        this.pro_name_en = pro_name_en;
+    }
+
+    public String getPro_name_ar() {
+        return pro_name_ar;
+    }
+
+    public void setPro_name_ar(String pro_name_ar) {
+        this.pro_name_ar = pro_name_ar;
     }
 
     public String getPro_imageUrl() {
@@ -78,6 +93,17 @@ public class CartInfo {
     public void setPro_totalPrice(int pro_totalPrice) {
         this.pro_totalPrice = pro_totalPrice;
     }
+
+
+
+    public String getProName(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return pro_name_en;
+        }
+        return pro_name_ar;
+    }
+
+
 
     public boolean compare(CartInfo cartInfo){
 

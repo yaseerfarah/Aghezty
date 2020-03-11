@@ -117,7 +117,7 @@ public class Home extends Fragment implements InternetStatus {
                 categoryInfoList.clear();
                 for (CategoryInfo categoryInfo:homeData.getHomepage_cat()){
 
-                    categoryInfoList.add(new FilterInfo(categoryInfo.getId(),categoryInfo.getTitle_en(),categoryInfo.getImage(),FilterInfo.CATEGORY));
+                    categoryInfoList.add(new FilterInfo(categoryInfo.getId(),categoryInfo.getTitle_en(),categoryInfo.getTitle_ar(),categoryInfo.getImage(),FilterInfo.CATEGORY));
                 }
 
 

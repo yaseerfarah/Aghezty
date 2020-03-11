@@ -1,20 +1,29 @@
 package com.example.aghezty.Adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CartDiffUtil;
@@ -86,9 +95,25 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
             }
         });
 
-        Glide.with(context).load(cartsInfoList.get(holder.getAdapterPosition()).getPro_imageUrl()).into(holder.imageView);
+        holder.progressBar.setVisibility(View.VISIBLE);
+        Glide.with(context).load(cartsInfoList.get(holder.getAdapterPosition()).getPro_imageUrl())
+                .apply(RequestOptions.timeoutOf(60*1000))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.e(getClass().getName(),e.getMessage());
+                        return false;
+                    }
 
-        holder.title.setText(cartsInfoList.get(holder.getAdapterPosition()).getPro_name());
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        return false;
+                    }
+                })
+                .into(holder.imageView);
+
+        holder.title.setText(cartsInfoList.get(holder.getAdapterPosition()).getProName());
         holder.price.setText(String.valueOf(NumberFormat.getInstance(Locale.US).format(cartsInfoList.get(holder.getAdapterPosition()).getPro_price())));
         holder.quantity.setText(String.valueOf(cartsInfoList.get(holder.getAdapterPosition()).getQuantity()));
 
@@ -150,6 +175,7 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
         ImageView imageView;
         TextView title,quantity,price;
         ImageButton close,increase,decrease;
+        ProgressBar progressBar;
 
         public Pro_holder(View itemView) {
             super(itemView);
@@ -160,6 +186,7 @@ public class CartCardViewAdapter extends RecyclerView.Adapter<CartCardViewAdapte
            title=(TextView) itemView.findViewById(R.id.card_title);
             quantity=(TextView) itemView.findViewById(R.id.q_text);
             price=(TextView) itemView.findViewById(R.id.card_price);
+            progressBar=(ProgressBar) itemView.findViewById(R.id.progress);
 
         }
     }

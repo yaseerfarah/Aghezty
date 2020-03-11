@@ -98,7 +98,7 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
                     parentSubCategoryList=categoryInfos;
                   for (CategoryInfo categoryInfo:categoryInfos){
 
-                      parentCategoriesList.add(new FilterInfo(categoryInfo.getId(),categoryInfo.getTitle_en(),null,FilterInfo.CATEGORY));
+                      parentCategoriesList.add(new FilterInfo(categoryInfo.getId(),categoryInfo.getTitle_en(),categoryInfo.getTitle_ar(),null,FilterInfo.CATEGORY));
 
                   }
 
@@ -117,7 +117,7 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
             public void onChanged(List<BrandInfo> brandInfos) {
                 if (brandInfos != null && !isBrandCatDone) {
                     brandSubCategoryList = brandInfos;
-                    parentCategoriesList.add(new FilterInfo(0, getResources().getString(R.string.brand), null, FilterInfo.BRAND));
+                    parentCategoriesList.add(new FilterInfo(0, getResources().getString(R.string.brand), getResources().getString(R.string.brand),null, FilterInfo.BRAND));
 
                     parentCategoryCardViewAdapter.notifyDataSetChanged();
                     isBrandCatDone=true;
@@ -228,7 +228,7 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
 
               for (CategoryInfo categoryInfo1:categoryInfo.getSub_cats()){
 
-                  categoriesList.add(new FilterInfo(categoryInfo1.getId(),categoryInfo1.getTitle_en(),categoryInfo1.getImage(),FilterInfo.CATEGORY));
+                  categoriesList.add(new FilterInfo(categoryInfo1.getId(),categoryInfo1.getTitle_en(),categoryInfo1.getTitle_ar(),categoryInfo1.getImage(),FilterInfo.CATEGORY));
 
               }
               categoryCardViewAdapter.notifyDataSetChanged();
@@ -245,7 +245,7 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
         categoriesList.clear();
         for (BrandInfo brandInfo:brandSubCategoryList){
 
-            categoriesList.add(new FilterInfo(brandInfo.getId(),brandInfo.getTitle_en(),brandInfo.getImage(),FilterInfo.BRAND));
+            categoriesList.add(new FilterInfo(brandInfo.getId(),brandInfo.getTitle_en(),brandInfo.getTitle_ar(),brandInfo.getImage(),FilterInfo.BRAND));
 
         }
         categoryCardViewAdapter.notifyDataSetChanged();

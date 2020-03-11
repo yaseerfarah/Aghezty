@@ -49,6 +49,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -65,9 +66,11 @@ import okhttp3.RequestBody;
 import retrofit2.Response;
 
 import static com.example.aghezty.Constants.IS_LOGIN;
+import static com.example.aghezty.Constants.LOCALE_LANGUAGE;
 import static com.example.aghezty.Constants.USER_COUPON_DISCOUNT;
 import static com.example.aghezty.Constants.USER_INFO;
 import static com.example.aghezty.Constants.USER_TOKEN;
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class UserViewModel extends ViewModel {
 
@@ -101,6 +104,10 @@ public class UserViewModel extends ViewModel {
 
     private boolean isLogin;
 
+
+    private Locale locale;
+
+
     @Inject
     public UserViewModel(Context context, SharedPreferencesMethod sharedPreferencesMethod,CartInfoRoomMethod cartInfoRoomMethod,AgheztyApi agheztyApi) {
         this.context = context;
@@ -131,8 +138,28 @@ public class UserViewModel extends ViewModel {
             currentUserInfo=new UserInfo();
         }
 
+        String lang=sharedPreferencesMethod.getString(LOCALE_LANGUAGE);
+
+        if (lang.length()>0){
+            locale=new Locale(lang);
+            localeLanguage=locale;
+        }else {
+           setLocale(Locale.getDefault());
+
+        }
+
     }
 
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        sharedPreferencesMethod.setString(LOCALE_LANGUAGE,locale.getLanguage());
+        localeLanguage=locale;
+        this.locale = locale;
+    }
 
     public LiveData<UserInfo> getCurrentUserInfoLiveData() {
         return currentUserInfoMediatorLiveData;
@@ -208,7 +235,7 @@ public class UserViewModel extends ViewModel {
     }
 
     public void addCartInfo(ProductInfo productInfo,int quantity,CompletableListener completableListener){
-        CartInfo cartInfo=new CartInfo(productInfo.getId(),quantity,productInfo.getDiscount()!=null?productInfo.getPrice_after_discount():productInfo.getPrice(),productInfo.getDiscount()!=null?productInfo.getPrice_after_discount()*quantity:productInfo.getPrice()*quantity,productInfo.getTitle_en(),productInfo.getMain_image());
+        CartInfo cartInfo=new CartInfo(productInfo.getId(),quantity,productInfo.getDiscount()!=null?productInfo.getPrice_after_discount():productInfo.getPrice(),productInfo.getDiscount()!=null?productInfo.getPrice_after_discount()*quantity:productInfo.getPrice()*quantity,productInfo.getTitle_en(),productInfo.getTitle_ar(),productInfo.getMain_image());
 
         cartInfoRoomMethod.insertSticker(cartInfo, new CompletableListener() {
             @Override

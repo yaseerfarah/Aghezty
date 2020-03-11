@@ -297,7 +297,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
             }
         });
 
-        pro_title.setText(productInfo.getTitle_en());
+        pro_title.setText(productInfo.getTitile());
 
         if (productInfo.getDiscount()!=null){
 
@@ -328,7 +328,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
             evaluationToggle.setVisibility(View.GONE);
             evaluation_layout.setVisibility(View.GONE);
             details_layout.setVisibility(View.VISIBLE);
-            pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
+            pro_Description.setText(Html.fromHtml(productInfo.getDescription()));
         }
 
 
@@ -362,7 +362,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
 
         evaluationToggle.setEnabled(true);
         detailsToggle.setEnabled(false);
-        pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
+        pro_Description.setText(Html.fromHtml(productInfo.getDescription()));
         details_layout.setVisibility(View.VISIBLE);
 
         detailsToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -377,7 +377,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
                 evaluation_layout.setVisibility(View.GONE);
                 details_layout.setVisibility(View.VISIBLE);
 
-                pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
+                pro_Description.setText(Html.fromHtml(productInfo.getDescription()));
 
             }
 

@@ -3,7 +3,12 @@ package com.example.aghezty.POJO;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class AddressInfo implements Parcelable {
 
@@ -102,6 +107,26 @@ public class AddressInfo implements Parcelable {
     public void setShippingAmount(int shippingAmount) {
         this.shippingAmount = shippingAmount;
     }
+
+
+
+    public String getCity(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return city_en;
+        }
+        return city_ar;
+    }
+
+
+    public String getGovernorate(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return governorate_en;
+        }
+        return governorate_ar;
+    }
+
+
+
 
     public boolean compare(AddressInfo addressInfo){
 

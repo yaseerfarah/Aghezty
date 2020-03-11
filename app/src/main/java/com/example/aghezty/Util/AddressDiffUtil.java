@@ -61,7 +61,7 @@ public class AddressDiffUtil extends DiffUtil.Callback {
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
 
-        Toast.makeText(context,"hi",Toast.LENGTH_SHORT).show();
+
         AddressInfo newModel = newList.get(newItemPosition);
         AddressInfo oldModel = oldList.get(oldItemPosition);
 
@@ -69,11 +69,11 @@ public class AddressDiffUtil extends DiffUtil.Callback {
 
         if (newModel.getAddress()!=oldModel.getAddress()) {
             diff.putString(DIFF_ADDRESS, newModel.getAddress());
-        }else if (newModel.getCity_en().matches(oldModel.getCity_en())){
-            diff.putString(DIFF_CITY,newModel.getCity_en());
+        }else if (newModel.getCity().matches(oldModel.getCity())){
+            diff.putString(DIFF_CITY,newModel.getCity());
 
-        }else if (newModel.getGovernorate_en().matches(oldModel.getGovernorate_en())){
-            diff.putString(DIFF_GOVERNORATE,newModel.getGovernorate_en());
+        }else if (newModel.getGovernorate().matches(oldModel.getGovernorate())){
+            diff.putString(DIFF_GOVERNORATE,newModel.getGovernorate());
 
         }
 

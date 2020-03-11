@@ -111,6 +111,8 @@
     <string name="order_id">Order ID</string>
     <string name="order_status">Order Status</string>
     <string name="order_time">Order Time</string>
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
 
 
     <string-array name="price_range_filter">

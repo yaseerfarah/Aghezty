@@ -107,14 +107,14 @@ public class CategoryCardViewAdapter extends RecyclerView.Adapter<CategoryCardVi
             if (categoryInfoList.get(holder.getAdapterPosition()).getType()==FilterInfo.CATEGORY) {
 
                 List<FilterInfo> categoryID = new ArrayList<>();
-                categoryID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName(), null, FilterInfo.CATEGORY));
+                categoryID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName_en(),categoryInfoList.get(holder.getAdapterPosition()).getName_ar(), null, FilterInfo.CATEGORY));
                 productViewModel.setFilter(categoryID, null, ALL,ALL, false);
                 navController.navigate(R.id.action_global_productList);
 
             }else {
 
                 List<FilterInfo> brandID = new ArrayList<>();
-                brandID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName(), null, FilterInfo.BRAND));
+                brandID.add(new FilterInfo(categoryInfoList.get(holder.getAdapterPosition()).getId(), categoryInfoList.get(holder.getAdapterPosition()).getName_en(),categoryInfoList.get(holder.getAdapterPosition()).getName_ar(), null, FilterInfo.BRAND));
                 productViewModel.setFilter(null, brandID, ALL,ALL ,false);
                 navController.navigate(R.id.action_global_productList);
             }

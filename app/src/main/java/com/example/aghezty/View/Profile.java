@@ -1,7 +1,10 @@
 package com.example.aghezty.View;
 
 
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -14,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -40,12 +44,17 @@ import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 import es.dmoral.toasty.Toasty;
+
+import static com.example.aghezty.Constants.localeLanguage;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,6 +97,10 @@ public class Profile extends Fragment implements InternetStatus {
 
     @BindView(R.id.setting)
     ImageButton editProfile;
+
+
+    @BindView(R.id.language)
+    ImageButton language;
 
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
@@ -174,6 +187,13 @@ public class Profile extends Fragment implements InternetStatus {
 
         editProfile.setOnClickListener(v -> {
             popUp_Menu();
+        });
+
+
+        language.setOnClickListener(v -> {
+
+           languagePopUp_Menu();
+
         });
 
 
@@ -269,6 +289,45 @@ public class Profile extends Fragment implements InternetStatus {
     }
 
 
+
+    private void languagePopUp_Menu(){
+
+        //Creating the instance of PopupMenu
+        PopupMenu popup = new PopupMenu(getContext(), language);
+
+        //Inflating the Popup using xml file
+        popup.getMenuInflater()
+                .inflate(R.menu.language_popup_menu, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.arabic:
+                        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+                            setLocale("ar");
+                        }
+                        break;
+
+                    case R.id.english:
+                        if (!localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+                            setLocale("en");
+                        }
+                        break;
+
+
+                }
+
+                return true;
+            }
+        });
+
+        popup.show(); //showing popup menu
+
+    }
+
+
     @Override
     public void Connect() {
         if (userInfo==null) {
@@ -283,4 +342,23 @@ public class Profile extends Fragment implements InternetStatus {
     public void notConnect() {
         statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
+
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+
+        conf.setLocale(myLocale);
+        conf.setLayoutDirection(myLocale);
+        res.updateConfiguration(conf, dm);
+        userViewModel.setLocale(myLocale);
+        Locale.setDefault(myLocale);
+        Intent refresh = new Intent(getContext(), MainActivity.class);
+        getActivity().finish();
+        startActivity(refresh);
+    }
+
+
 }

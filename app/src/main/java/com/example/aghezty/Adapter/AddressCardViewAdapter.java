@@ -115,8 +115,8 @@ public class AddressCardViewAdapter extends RecyclerView.Adapter<AddressCardView
 
 
         holder.address.setText(addressInfoList.get(holder.getAdapterPosition()).getAddress());
-        holder.city.setText(addressInfoList.get(holder.getAdapterPosition()).getCity_en());
-        holder.governorate.setText(addressInfoList.get(holder.getAdapterPosition()).getGovernorate_en());
+        holder.city.setText(addressInfoList.get(holder.getAdapterPosition()).getCity());
+        holder.governorate.setText(addressInfoList.get(holder.getAdapterPosition()).getGovernorate());
         holder.address_num.setText(String.valueOf(holder.getAdapterPosition()+1));
         holder.cardView.setOnClickListener(v -> {
             Bundle bundle=new Bundle();

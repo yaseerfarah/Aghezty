@@ -1,8 +1,12 @@
 package com.example.aghezty.POJO;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class CategoryInfo {
 
@@ -77,4 +81,14 @@ public class CategoryInfo {
     public void setSub_cats(List<CategoryInfo> sub_cats) {
         this.sub_cats = sub_cats;
     }
+
+
+    public String getTitle(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return title_en;
+        }
+        return title_ar;
+    }
+
+
 }

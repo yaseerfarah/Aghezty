@@ -142,13 +142,13 @@ public class Filter extends Fragment implements InternetStatus {
                         if (categoryInfo.getId()==3&&categoryInfo.getSub_cats()!=null){
 
                             for (CategoryInfo Info:categoryInfo.getSub_cats()){
-                                heavyMachines.add(new FilterInfo( Info.getId(),Info.getTitle_en(),null,FilterInfo.CATEGORY));
+                                heavyMachines.add(new FilterInfo( Info.getId(),Info.getTitle_en(),Info.getTitle_ar(),null,FilterInfo.CATEGORY));
                             }
 
 
                         }else if (categoryInfo.getId()==13&&categoryInfo.getSub_cats()!=null){
                             for (CategoryInfo Info:categoryInfo.getSub_cats()){
-                                lightDevices.add(new FilterInfo( Info.getId(),Info.getTitle_en(),null,FilterInfo.CATEGORY));
+                                lightDevices.add(new FilterInfo( Info.getId(),Info.getTitle_en(),Info.getTitle_ar(),null,FilterInfo.CATEGORY));
                             }
 
                         }
@@ -171,7 +171,7 @@ public class Filter extends Fragment implements InternetStatus {
 
                 if (brandInfos!=null&&!isBrandCatDone){
                     for (BrandInfo Info:brandInfos){
-                        brandInfoList.add(new FilterInfo(Info.getId(),Info.getTitle_en(),null,FilterInfo.BRAND) );
+                        brandInfoList.add(new FilterInfo(Info.getId(),Info.getTitle_en(),Info.getTitle_ar(),null,FilterInfo.BRAND) );
                     }
                     isBrandCatDone=true;
                     progress();
@@ -243,7 +243,7 @@ public class Filter extends Fragment implements InternetStatus {
 
         navController= Navigation.findNavController(view);
 
-        priceRange_select.add(new FilterInfo(0,priceRange.get(0),null,FilterInfo.CATEGORY));
+        priceRange_select.add(new FilterInfo(0,priceRange.get(0),priceRange.get(0),null,FilterInfo.CATEGORY));
 
         heavy_layout.setOnClickListener(v -> {
 
@@ -275,12 +275,12 @@ public class Filter extends Fragment implements InternetStatus {
 
             List<FilterInfo>items=new ArrayList<>();
 
-            items.add(new FilterInfo(0,priceRange.get(0),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(1000,priceRange.get(1),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(3000,priceRange.get(2),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(6000,priceRange.get(3),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(10000,priceRange.get(4),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(20000,priceRange.get(5),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(0,priceRange.get(0),priceRange.get(0),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(1000,priceRange.get(1),priceRange.get(1),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(3000,priceRange.get(2),priceRange.get(2),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(6000,priceRange.get(3),priceRange.get(3),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(10000,priceRange.get(4),priceRange.get(4),null,FilterInfo.CATEGORY) );
+            items.add(new FilterInfo(20000,priceRange.get(5),priceRange.get(5),null,FilterInfo.CATEGORY) );
 
 
 
@@ -375,7 +375,7 @@ public class Filter extends Fragment implements InternetStatus {
 
             categories_select.addAll(productViewModel.getFilterOption().getCategoriesID());
             brandInfoList_select.addAll(productViewModel.getFilterOption().getBrandID());
-            priceRange_select.add(new FilterInfo(productViewModel.getFilterOption().getPriceRange(),null,null,FilterInfo.CATEGORY));
+            priceRange_select.add(new FilterInfo(productViewModel.getFilterOption().getPriceRange(),null,null,null,FilterInfo.CATEGORY));
 
 
 

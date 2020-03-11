@@ -3,9 +3,13 @@ package com.example.aghezty.POJO;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class ProductInfo implements Parcelable {
 
@@ -48,6 +52,8 @@ public class ProductInfo implements Parcelable {
 
     @SerializedName("gallery")
     private List<String> gallery;
+
+
 
 
     public List<Rate> getRates() {
@@ -170,6 +176,32 @@ public class ProductInfo implements Parcelable {
 
     public void setGallery(List<String> gallery) {
         this.gallery = gallery;
+    }
+
+
+
+
+
+
+    public String getDescription(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return description_en;
+        }
+        return description_ar;
+    }
+
+    public String getShortDescription(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return short_description_en;
+        }
+        return short_description_ar;
+    }
+
+    public String getTitile(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return title_en;
+        }
+        return title_ar;
     }
 
     private ProductInfo(Parcel in){

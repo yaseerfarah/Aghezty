@@ -1,6 +1,11 @@
 package com.example.aghezty.POJO;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class GovernorateInfo {
     @SerializedName("id")
@@ -34,4 +39,13 @@ public class GovernorateInfo {
     public void setGovernorate_ar(String governorate_ar) {
         this.governorate_ar = governorate_ar;
     }
+
+
+    public String getGovernorate(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return governorate_en;
+        }
+        return governorate_ar;
+    }
+
 }

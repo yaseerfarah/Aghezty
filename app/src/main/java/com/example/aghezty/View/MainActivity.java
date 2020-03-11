@@ -16,9 +16,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +39,7 @@ import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -41,6 +48,8 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import q.rorbin.badgeview.QBadgeView;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+
         setContentView(R.layout.activity_main);
 
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
@@ -87,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
 
         bottomNavigationView=findViewById(R.id.bottom_nav);
+
 
 
         NavController navController= Navigation.findNavController(this,R.id.fragment);
@@ -205,6 +216,9 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
 
 
+
+
+
     private void addBadge(int number) {
         // add badge
         cartBadge.setVisibility(View.VISIBLE);
@@ -224,6 +238,56 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         }
         return startDestination;
     }
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(updateBaseContextLocale(base));
+    }
+
+    private Context updateBaseContextLocale(Context context) {
+
+        Locale.setDefault(localeLanguage);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return updateResourcesLocale(context, localeLanguage);
+        }
+
+        return updateResourcesLocaleLegacy(context, localeLanguage);
+    }
+
+
+    private Context updateResourcesLocale(Context context, Locale locale) {
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLayoutDirection(locale);
+        return context.createConfigurationContext(configuration);
+    }
+
+    @SuppressWarnings("deprecation")
+    private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+        configuration.setLayoutDirection(locale);
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        return context;
+    }
+
+
+
+
+
+
 
 
 }

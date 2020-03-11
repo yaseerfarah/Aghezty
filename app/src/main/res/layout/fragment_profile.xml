@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/root"
-            android:visibility="gone"
+
             >
 
 
@@ -164,6 +164,17 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/ic_settings_black_24dp"
+                            />
+
+                        <ImageButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentStart="true"
+                            android:backgroundTint="@color/grey"
+                            android:id="@+id/language"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/ic_language_black_24dp"
                             />
 
                         <TextView

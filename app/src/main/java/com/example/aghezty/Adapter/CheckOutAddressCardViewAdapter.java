@@ -63,7 +63,7 @@ public class CheckOutAddressCardViewAdapter extends RecyclerView.Adapter<CheckOu
 
 
 
-        holder.radioButton.setText(itemList.get(holder.getAdapterPosition()).getGovernorate_en()+", "+itemList.get(holder.getAdapterPosition()).getCity_en()+", "+itemList.get(holder.getAdapterPosition()).getAddress());
+        holder.radioButton.setText(itemList.get(holder.getAdapterPosition()).getGovernorate()+", "+itemList.get(holder.getAdapterPosition()).getCity()+", "+itemList.get(holder.getAdapterPosition()).getAddress());
 
         holder.radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){

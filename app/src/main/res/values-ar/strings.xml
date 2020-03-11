@@ -114,6 +114,9 @@
     <string name="order_status">حالة الطلب</string>
     <string name="order_time">تاريخ الطلب</string>
 
+    <string name="arabic">العربية</string>
+    <string name="english">الإنجليزية</string>
+
 
     <string-array name="price_range_filter">
 

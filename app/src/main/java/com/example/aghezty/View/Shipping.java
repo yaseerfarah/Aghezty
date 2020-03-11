@@ -225,15 +225,15 @@ public class Shipping extends Fragment implements InternetStatus {
         }else {
 
             addressInfo=addressInfoList.get(addressInfoList.size()-1);
-            city.setText(addressInfoList.get(addressInfoList.size()-1).getCity_en());
-            governorate.setText(addressInfoList.get(addressInfoList.size()-1).getGovernorate_en());
+            city.setText(addressInfoList.get(addressInfoList.size()-1).getCity());
+            governorate.setText(addressInfoList.get(addressInfoList.size()-1).getGovernorate());
             address.setText(addressInfoList.get(addressInfoList.size()-1).getAddress());
             CheckOutInfo checkOutInfo=userViewModel.getCheckOutInfo();
             checkOutInfo.setAddressId(addressInfo.getId());
             userViewModel.setCheckOutInfo(checkOutInfo);
-           // shippingAmount.setText(NumberFormat.getInstance(Locale.US).format(addressInfoList.get(addressInfoList.size()-1).getShippingAmount()));
+            shippingAmount.setText(NumberFormat.getInstance(Locale.US).format(addressInfoList.get(addressInfoList.size()-1).getShippingAmount())+" "+getResources().getString(R.string.egp));
 
-            shippingAmount.setText("50.99 EGP");
+            //shippingAmount.setText("50.99 EGP");
 
         }
 
@@ -264,9 +264,10 @@ public class Shipping extends Fragment implements InternetStatus {
 
         done.setOnClickListener(v -> {
            addressInfo= checkOutAddressCardViewAdapter.getSelectedItem();
-            city.setText(addressInfo.getCity_en());
-            governorate.setText(addressInfo.getGovernorate_en());
+            city.setText(addressInfo.getCity());
+            governorate.setText(addressInfo.getGovernorate());
             address.setText(addressInfo.getAddress());
+            shippingAmount.setText(NumberFormat.getInstance(Locale.US).format(addressInfo.getShippingAmount())+" "+getResources().getString(R.string.egp));
             CheckOutInfo checkOutInfo=userViewModel.getCheckOutInfo();
             checkOutInfo.setAddressId(addressInfo.getId());
             userViewModel.setCheckOutInfo(checkOutInfo);

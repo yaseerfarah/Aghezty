@@ -313,9 +313,9 @@ public class ProductList extends Fragment implements InternetStatus {
         List<FilterInfo> items=new ArrayList<>();
         List<FilterInfo> selected=new ArrayList<>();
 
-        items.add(new FilterInfo(ALL,getResources().getString(R.string.all),null,FilterInfo.CATEGORY));
-        items.add(new FilterInfo(High_To_Low_Price,getResources().getString(R.string.h_to_l),null,FilterInfo.CATEGORY));
-        items.add(new FilterInfo(Low_To_High_Price,getResources().getString(R.string.l_to_h),null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(ALL,getResources().getString(R.string.all),getResources().getString(R.string.all),null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(High_To_Low_Price,getResources().getString(R.string.h_to_l),getResources().getString(R.string.h_to_l),null,FilterInfo.CATEGORY));
+        items.add(new FilterInfo(Low_To_High_Price,getResources().getString(R.string.l_to_h),getResources().getString(R.string.l_to_h),null,FilterInfo.CATEGORY));
 
 
         selected.add(items.get(filterOption.getOrderBy()));

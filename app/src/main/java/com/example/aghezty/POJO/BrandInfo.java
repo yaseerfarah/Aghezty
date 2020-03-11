@@ -1,8 +1,12 @@
 package com.example.aghezty.POJO;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class BrandInfo {
 
@@ -57,4 +61,14 @@ public class BrandInfo {
     public void setSubCategoryInfoList(List<CategoryInfo> subCategoryInfoList) {
         this.subCategoryInfoList = subCategoryInfoList;
     }
+
+
+    public String getTitle(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return title_en;
+        }
+        return title_ar;
+    }
+
+
 }

@@ -1,6 +1,11 @@
 package com.example.aghezty.POJO;
 
+import com.example.aghezty.View.AppController;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Locale;
+
+import static com.example.aghezty.Constants.localeLanguage;
 
 public class CityInfo {
 
@@ -45,5 +50,15 @@ public class CityInfo {
     public void setGovernorate_id(int governorate_id) {
         this.governorate_id = governorate_id;
     }
+
+
+
+    public String getCity(){
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            return city_en;
+        }
+        return city_ar;
+    }
+
 
 }

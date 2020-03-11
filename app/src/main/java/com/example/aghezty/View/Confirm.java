@@ -194,8 +194,8 @@ public class Confirm extends Fragment {
         phone.setText(userInfo.getPhoneNumber());
 
        addressInfo=getSelectedAddressInfoByID(checkOutInfo.getAddressId());
-        city.setText(addressInfo.getCity_en());
-        governorate.setText(addressInfo.getGovernorate_en());
+        city.setText(addressInfo.getCity());
+        governorate.setText(addressInfo.getGovernorate());
         address.setText(addressInfo.getAddress());
 
 
@@ -206,11 +206,11 @@ public class Confirm extends Fragment {
 
         couponDiscount.setText(numberFormat.format(userViewModel.getCouponDiscount()) +" "+getResources().getString(R.string.egp));
 
-       // shippingAmount.setText(numberFormat.format(addressInfo.getShippingAmount())+" EGP");
+        shippingAmount.setText(numberFormat.format(addressInfo.getShippingAmount())+" "+getResources().getString(R.string.egp));
 
-        shippingAmount.setText("50.99 EGP");
+        //shippingAmount.setText("50.99 EGP");
 
-        int total=countSubTotal()-userViewModel.getCouponDiscount()-addressInfo.getShippingAmount();
+        int total=countSubTotal()-userViewModel.getCouponDiscount()+addressInfo.getShippingAmount();
         totalPrice.setText(numberFormat.format(total)+" "+getResources().getString(R.string.egp));
 
 
