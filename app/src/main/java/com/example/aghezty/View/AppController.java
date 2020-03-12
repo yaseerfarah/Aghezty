@@ -68,7 +68,7 @@ public class AppController extends Application implements HasActivityInjector
             localeLanguage = Locale.getDefault();
         }
 
-        Toast.makeText(AppController.this,localeLanguage.getLanguage(),Toast.LENGTH_LONG).show();
+       // Toast.makeText(AppController.this,localeLanguage.getLanguage(),Toast.LENGTH_LONG).show();
 
 
 

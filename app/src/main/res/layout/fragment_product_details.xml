@@ -58,7 +58,6 @@
             android:layout_height="match_parent"
             android:id="@+id/root"
             android:visibility="gone"
-
             >
 
 
@@ -442,13 +441,26 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
                         android:id="@+id/details_layout"
-                        android:visibility="gone"
                         android:layout_below="@+id/tab"
+                        android:visibility="gone"
                         >
+
+                        <ImageButton
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/language"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/round_b"
+                            android:src="@drawable/ic_language_black_24dp"
+
+                            />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_below="@+id/language"
+                            android:layout_marginTop="5dp"
                             android:text="* PANADOL Night is used to give temporary relief of pain when associated with sleeping difficulty.
 
 *It is useful for headache, migraine headache, backache, arthritis, rheumatic and muscle pain, neuralgia, toothache or period pain.

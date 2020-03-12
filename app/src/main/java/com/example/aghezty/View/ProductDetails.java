@@ -61,6 +61,7 @@ import dagger.android.support.AndroidSupportInjection;
 import es.dmoral.toasty.Toasty;
 
 import static com.example.aghezty.Adapter.SliderAdapter.DETAILS;
+import static com.example.aghezty.Constants.localeLanguage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -147,6 +148,10 @@ public class ProductDetails extends Fragment implements InternetStatus {
      ToggleButton evaluationToggle;
 
 
+    @BindView(R.id.language)
+    ImageButton language;
+
+
     private List<String> sliderInfoList=new ArrayList<>();
 
     private ProductInfo productInfo;
@@ -157,6 +162,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
     private int page=0;
     private Timer timer;
     private boolean isStart=false;
+    private boolean isDescriptionEnglish;
 
     private NetworkReceiver networkReceiver;
     private CustomStateOptions networkCustom=new CustomStateOptions().image(R.drawable.ic_signal_wifi_off_black_24dp);
@@ -242,6 +248,13 @@ public class ProductDetails extends Fragment implements InternetStatus {
             addToCart.setText(getResources().getString(R.string.already_in_cart));
         }
 
+        if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            isDescriptionEnglish=true;
+        }else {
+            isDescriptionEnglish=false;
+        }
+
+
         statefulLayout.showLoading(" ");
 
         addToCart.setOnClickListener(v -> {
@@ -264,6 +277,17 @@ public class ProductDetails extends Fragment implements InternetStatus {
                 getActivity().startActivity(new Intent(getContext(),LoginActivity.class));
             }
 
+        });
+
+
+        language.setOnClickListener(v -> {
+            if (isDescriptionEnglish){
+                pro_Description.setText(Html.fromHtml(productInfo.getDescription_ar()));
+                isDescriptionEnglish=false;
+            }else {
+                pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
+                isDescriptionEnglish=true;
+            }
         });
 
 
