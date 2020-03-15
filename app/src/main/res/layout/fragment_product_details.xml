@@ -57,7 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/root"
-            android:visibility="gone"
             >
 
 
@@ -86,7 +85,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/v_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="@dimen/product_details_view_pager_height"
                     android:layout_alignParentTop="true"
                     />
 
@@ -141,7 +140,7 @@
                             android:id="@+id/vtitle"
                             android:text="London Sweetshirt"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/product_details_name_size"
                             android:textColor="@color/dark_blue"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="15dp"
@@ -156,7 +155,6 @@
                             android:layout_below="@+id/vtitle"
                             android:id="@+id/ex_dis"
 
-
                             android:layout_marginTop="8dp"
                             >
                             <TextView
@@ -164,7 +162,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/pro_exprice"
                                 android:text="159.99"
-                                android:textSize="18sp"
+                                android:textSize="@dimen/product_details_ex_price"
                                 android:layout_centerVertical="true"
                                 android:textColor="@android:color/darker_gray"
                                 android:layout_marginStart="15dp"
@@ -177,7 +175,7 @@
                                 android:id="@+id/pro_exegp"
                                 android:text="@string/egp"
                                 android:layout_centerVertical="true"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/product_details_ex_price"
                                 android:textColor="@android:color/darker_gray"
                                 android:layout_toEndOf="@+id/pro_exprice"
                                 android:layout_marginStart="2dp"
@@ -191,7 +189,7 @@
                                 android:id="@+id/pro_discount"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="20dp"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/product_details_dicount_text_size"
                                 android:layout_centerVertical="true"
                                 android:textColor="@android:color/white"
                                 android:text="15%"
@@ -199,7 +197,7 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/home_card_dicount_line_size"
                                 android:layout_marginTop="15dp"
                                 android:id="@+id/pro_linexprice"
                                 android:layout_marginStart="15dp"
@@ -216,7 +214,7 @@
                             android:layout_below="@+id/ex_dis"
                             android:id="@+id/de_available_q_text"
                             android:text="@string/available_quantity"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/product_details_name_size"
                             android:textColor="@color/dark_blue"
                             android:layout_marginTop="8dp"
                             android:layout_marginStart="15dp"
@@ -229,7 +227,7 @@
                             android:id="@+id/de_available_q"
                             android:text="50"
                             android:layout_toEndOf="@+id/de_available_q_text"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/product_details_name_size"
                             android:textColor="@color/dark_blue"
 
                             android:layout_marginTop="8dp"
@@ -252,7 +250,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@+id/star"
                                 android:id="@+id/pro_evaluation"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/product_details_dicount_text_size"
                                 android:textColor="@android:color/white"
                                 android:text="4.9"
                                 />
@@ -285,7 +283,7 @@
                                 android:textStyle="bold"
                                 android:typeface="serif"
                                 android:text="149.99"
-                                android:textSize="20sp"
+                                android:textSize="@dimen/product_details_pro_price"
                                 />
                             <TextView
                                 android:layout_marginStart="5dp"
@@ -298,7 +296,7 @@
                                 android:typeface="serif"
                                 android:text="@string/egp"
                                 android:layout_alignBottom="@+id/pro_price"
-                                android:textSize="15sp"
+                                android:textSize="@dimen/product_details_egp"
                                 />
                         </RelativeLayout>
 
@@ -325,8 +323,8 @@
                         android:layout_height="match_parent">
 
                         <ImageButton
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="@dimen/round_button"
+                            android:layout_height="@dimen/round_button"
                             android:background="@drawable/round_b"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
@@ -337,8 +335,8 @@
                             />
 
                         <ImageButton
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="@dimen/round_button"
+                            android:layout_height="@dimen/round_button"
                             android:background="@drawable/round_b"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
@@ -350,8 +348,8 @@
 
 
                         <TextView
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
+                            android:layout_width="@dimen/round_button"
+                            android:layout_height="@dimen/round_button"
                             android:background="@drawable/round_border_b"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
@@ -414,6 +412,7 @@
                             android:textOff="@string/details"
                             android:textAllCaps="false"
                             android:id="@+id/details_toggle"
+                            android:textSize="@dimen/product_details_dicount_text_size"
                             android:background="@drawable/product_details_toggle"
                             />
 
@@ -425,6 +424,7 @@
                             android:textOff="@string/evaluation"
                             android:id="@+id/evaluation_toggle"
                             android:textAllCaps="false"
+                            android:textSize="@dimen/product_details_dicount_text_size"
                             android:background="@drawable/product_details_toggle"
                             />
 
@@ -442,25 +442,57 @@
                         android:layout_marginBottom="10dp"
                         android:id="@+id/details_layout"
                         android:layout_below="@+id/tab"
-                        android:visibility="gone"
+android:visibility="gone"
                         >
 
-                        <ImageButton
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_alignParentStart="true"
+                        <RadioGroup
+                            android:checkedButton="@+id/english"
                             android:id="@+id/language"
-                            android:layout_marginStart="10dp"
-                            android:background="@drawable/round_b"
-                            android:src="@drawable/ic_language_black_24dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/product_details_switch_height"
 
-                            />
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="50dp"
+                            android:background="@drawable/orange_out_line"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:layout_marginTop="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:layout_marginStart="1dp"
+                                android:id="@+id/arabic"
+                                android:background="@drawable/lang_toggele"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:textSize="@dimen/product_details_dicount_text_size"
+                                android:text="@string/arabic"
+                                android:textColor="@color/black" />
+
+                            <RadioButton
+                                android:layout_marginEnd="1dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginBottom="1dp"
+                                android:id="@+id/english"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/lang_toggele"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:text="@string/english"
+                                android:textSize="@dimen/product_details_dicount_text_size"
+                                android:textColor="@color/white" />
+                        </RadioGroup>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@+id/language"
                             android:layout_marginTop="5dp"
+                            android:textSize="@dimen/product_details_dicount_text_size"
                             android:text="* PANADOL Night is used to give temporary relief of pain when associated with sleeping difficulty.
 
 *It is useful for headache, migraine headache, backache, arthritis, rheumatic and muscle pain, neuralgia, toothache or period pain.
@@ -485,7 +517,7 @@
                         android:layout_marginBottom="10dp"
                         android:id="@+id/evaluation_layout"
                         android:layout_below="@+id/tab"
-                        android:visibility="gone"
+android:visibility="gone"
                         >
 
                         <RelativeLayout
@@ -502,7 +534,7 @@
                                 android:id="@+id/overall_rating"
                                 android:text="@string/overall_rating"
                                 android:textStyle="bold"
-                                android:textSize="18sp"
+                                android:textSize="@dimen/product_details_name_size"
                                 android:textColor="@color/dark_blue"
 
                                 />
@@ -515,7 +547,7 @@
                                 android:layout_below="@+id/overall_rating"
                                 android:text="4.9/5"
                                 android:textStyle="bold"
-                                android:textSize="18sp"
+                                android:textSize="@dimen/product_details_name_size"
                                 android:textColor="@color/orange"
                                 android:layout_marginTop="10dp"
                                 android:layout_centerHorizontal="true"
@@ -540,7 +572,7 @@
                                 android:id="@+id/based_on"
                                 android:text="@string/based_on"
                                 android:layout_below="@+id/rate_star"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/product_details_dicount_text_size"
                                 android:textColor="@color/dark_blue"
                                 android:layout_marginTop="10dp"
                                 android:layout_centerHorizontal="true"
@@ -552,7 +584,7 @@
                                 android:id="@+id/num_rate"
                                 android:text="36"
                                 android:layout_below="@+id/based_on"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/product_details_dicount_text_size"
                                 android:textStyle="bold"
                                 android:textColor="@color/dark_blue"
                                 android:layout_marginTop="10dp"
@@ -586,7 +618,7 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rate5_text"
                                     android:text="5"
-                                    android:textSize="16sp"
+                                    android:textSize="@dimen/product_details_dicount_text_size"
                                     android:textStyle="bold"
                                     android:textColor="@color/dark_blue"
                                     />
@@ -622,7 +654,7 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rate4_text"
                                     android:text="4"
-                                    android:textSize="16sp"
+                                    android:textSize="@dimen/product_details_dicount_text_size"
                                     android:textStyle="bold"
                                     android:textColor="@color/dark_blue"
                                     />
@@ -657,7 +689,7 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rate3_text"
                                     android:text="3"
-                                    android:textSize="16sp"
+                                    android:textSize="@dimen/product_details_dicount_text_size"
                                     android:textStyle="bold"
                                     android:textColor="@color/dark_blue"
                                     />
@@ -692,7 +724,7 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rate2_text"
                                     android:text="2"
-                                    android:textSize="16sp"
+                                    android:textSize="@dimen/product_details_dicount_text_size"
                                     android:textStyle="bold"
                                     android:textColor="@color/dark_blue"
                                     />
@@ -726,7 +758,7 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rate1_text"
                                     android:text="1"
-                                    android:textSize="16sp"
+                                    android:textSize="@dimen/product_details_dicount_text_size"
                                     android:textStyle="bold"
                                     android:textColor="@color/dark_blue"
                                     />

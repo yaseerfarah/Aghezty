@@ -211,6 +211,8 @@
             android:id="@+id/best_categories"
             android:layout_below="@+id/best_categories_title"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/home_best_category_margin"
+            android:layout_marginEnd="@dimen/home_best_category_margin"
             android:nestedScrollingEnabled="false"
             />
 

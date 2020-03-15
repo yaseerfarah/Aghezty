@@ -89,7 +89,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/offer_product_list_filter_size"
                             android:id="@+id/order_text"
                             android:text="@string/order_by"
                             android:textColor="@android:color/black"
@@ -124,7 +124,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/offer_product_list_filter_size"
                             android:id="@+id/filter_text"
                             android:text="@string/filter_by"
                             android:textColor="@android:color/black"
@@ -135,9 +135,6 @@
 
 
                 </RelativeLayout>
-
-
-
 
             </RelativeLayout>
 
@@ -160,30 +157,26 @@
 
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/root"
+                android:layout_below="@+id/home_bar"
+                >
 
 
-
-                <RelativeLayout
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/root"
-                    android:layout_below="@+id/home_bar"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/list_recyclerview"
                     >
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:nestedScrollingEnabled="false"
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/list_recyclerview"
-
-                        >
-
-                    </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
-                </RelativeLayout>
+            </RelativeLayout>
 
 
 

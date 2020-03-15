@@ -9,18 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cart_cardview"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/cart_card_margin"
+        android:layout_marginBottom="@dimen/cart_card_margin_bottom"
+        android:layout_marginRight="@dimen/cart_card_margin"
+        android:layout_marginLeft="@dimen/cart_card_margin"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="105dp"
+                android:layout_width="@dimen/cart_card_image_width"
+                android:layout_height="@dimen/cart_card_image_height"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
@@ -62,7 +62,7 @@
                     android:text="London Sweetshirt"
                     android:id="@+id/card_title"
                     android:textColor="@color/dark_blue"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/cart_card_title_size"
                     android:layout_weight="2"
                     android:textStyle="bold"
 
@@ -89,7 +89,7 @@
                 android:text="50.00"
                 android:id="@+id/card_price"
                 android:textColor="@android:color/holo_blue_dark"
-                android:textSize="15sp"
+                android:textSize="@dimen/cart_card_pro_price"
                 android:textStyle="bold"
 
                 android:layout_below="@+id/quantity_layout"
@@ -106,7 +106,7 @@
                 android:text="@string/egp"
                 android:id="@+id/card_egp"
                 android:textColor="@color/dark_blue"
-                android:textSize="12sp"
+                android:textSize="@dimen/cart_card_egp"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
 
@@ -135,7 +135,7 @@
                     android:text="@string/quantity"
                     android:id="@+id/card_quantity"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/cart_card_pro_price"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
 
@@ -143,8 +143,8 @@
                     />
 
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/cart_card_round_button_size"
+                    android:layout_height="@dimen/cart_card_round_button_size"
                     android:background="@drawable/round_b"
                     android:layout_toEndOf="@+id/card_quantity"
                     android:layout_centerVertical="true"
@@ -154,8 +154,8 @@
                     />
 
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/cart_card_round_button_size"
+                    android:layout_height="@dimen/cart_card_round_button_size"
                     android:background="@drawable/round_b"
 
                     android:src="@drawable/ic_remove_black_24dp"
@@ -168,15 +168,15 @@
 
 
                 <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/cart_card_round_button_size"
+                    android:layout_height="@dimen/cart_card_round_button_size"
                     android:background="@drawable/round_border_b"
                    android:layout_toEndOf="@+id/increase"
                     android:layout_marginStart="10dp"
                     android:id="@+id/q_text"
                     android:text="10"
 
-                    android:textSize="13sp"
+                    android:textSize="@dimen/cart_card_quantity"
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"

@@ -28,7 +28,7 @@
 
            <com.github.florent37.shapeofview.shapes.DiagonalView
                android:layout_width="match_parent"
-               android:layout_height="180dp"
+               android:layout_height="@dimen/edit_profile_shape_height"
                android:id="@+id/shape"
                app:shape_diagonal_angle="10"
                app:shape_diagonal_direction="left"
@@ -48,10 +48,10 @@
 
 
        <androidx.cardview.widget.CardView
-           android:layout_width="80dp"
-           android:layout_height="80dp"
+           android:layout_width="@dimen/edit_profile_image_card"
+           android:layout_height="@dimen/edit_profile_image_card"
            android:id="@+id/person_card"
-           app:cardCornerRadius="40dp"
+           app:cardCornerRadius="@dimen/edit_profile_image_radius"
            android:elevation="12dp"
            android:layout_centerHorizontal="true"
            android:layout_alignBottom="@+id/shape"
@@ -60,7 +60,7 @@
 
            <ImageView
                android:layout_width="match_parent"
-               android:layout_height="80dp"
+               android:layout_height="match_parent"
                android:id="@+id/user_image"
                android:background="@drawable/ic_user"
                android:scaleType="centerCrop"
@@ -92,7 +92,7 @@
            android:layout_marginTop="10dp"
            android:layout_marginBottom="20dp"
            android:layout_centerHorizontal="true"
-           android:layout_marginStart="30dp"
+           android:layout_marginStart="@dimen/edit_profile_margin"
            android:layout_below="@+id/upload_im">
 
 
@@ -131,11 +131,11 @@
                            android:layout_gravity="start"
                            android:text="@string/first_name"
                            android:textColor="@color/dark_blue"
-                           android:textSize="15sp" />
+                           android:textSize="@dimen/edit_profile_text_size" />
 
                        <EditText
                            android:layout_width="match_parent"
-                           android:layout_height="30dp"
+                           android:layout_height="@dimen/edit_profile_field_height"
                            android:hint="@string/first_name"
                            android:gravity="center"
                            android:imeOptions="actionNext"
@@ -162,11 +162,11 @@
                            android:layout_gravity="start"
                            android:text="@string/last_name"
                            android:textColor="@color/dark_blue"
-                           android:textSize="15sp" />
+                           android:textSize="@dimen/edit_profile_text_size" />
 
                        <EditText
                            android:layout_width="match_parent"
-                           android:layout_height="30dp"
+                           android:layout_height="@dimen/edit_profile_field_height"
                            android:hint="@string/last_name"
                            android:gravity="center"
                            android:imeOptions="actionNext"
@@ -193,11 +193,11 @@
                            android:layout_gravity="start"
                            android:text="@string/e_mail"
                            android:textColor="@color/dark_blue"
-                           android:textSize="15sp" />
+                           android:textSize="@dimen/edit_profile_text_size" />
 
                        <EditText
                            android:layout_width="match_parent"
-                           android:layout_height="30dp"
+                           android:layout_height="@dimen/edit_profile_field_height"
                            android:hint="@string/e_mail"
                            android:gravity="center"
                            android:imeOptions="actionNext"
@@ -226,11 +226,11 @@
                            android:layout_gravity="start"
                            android:text="@string/phone_number"
                            android:textColor="@color/dark_blue"
-                           android:textSize="15sp" />
+                           android:textSize="@dimen/edit_profile_text_size" />
 
                        <EditText
                            android:layout_width="match_parent"
-                           android:layout_height="30dp"
+                           android:layout_height="@dimen/edit_profile_field_height"
                            android:hint="@string/phone_number"
                            android:gravity="center"
                            android:imeOptions="actionDone"
@@ -256,7 +256,7 @@
                        android:textStyle="bold"
                        android:layout_centerHorizontal="true"
                        android:textColor="@android:color/white"
-                       android:textSize="14sp"
+                       android:textSize="@dimen/edit_profile_save_size"
                        android:layout_marginTop="20dp"
 
 

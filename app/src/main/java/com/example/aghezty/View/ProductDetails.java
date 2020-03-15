@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -149,7 +151,13 @@ public class ProductDetails extends Fragment implements InternetStatus {
 
 
     @BindView(R.id.language)
-    ImageButton language;
+    RadioGroup language;
+
+    @BindView(R.id.english)
+    RadioButton english;
+
+    @BindView(R.id.arabic)
+    RadioButton arabic;
 
 
     private List<String> sliderInfoList=new ArrayList<>();
@@ -249,13 +257,50 @@ public class ProductDetails extends Fragment implements InternetStatus {
         }
 
         if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+            english.setChecked(true);
+            english.setTextColor(getResources().getColor(R.color.white));
+            arabic.setTextColor(getResources().getColor(R.color.black));
             isDescriptionEnglish=true;
         }else {
+            arabic.setChecked(true);
+            arabic.setTextColor(getResources().getColor(R.color.white));
+            english.setTextColor(getResources().getColor(R.color.black));
             isDescriptionEnglish=false;
         }
 
 
         statefulLayout.showLoading(" ");
+
+
+        english.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            if (isChecked){
+                english.setTextColor(getResources().getColor(R.color.white));
+                pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
+                isDescriptionEnglish=true;
+
+            }else {
+                english.setTextColor(getResources().getColor(R.color.black));
+            }
+
+        });
+
+
+        arabic.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            if (isChecked){
+                arabic.setTextColor(getResources().getColor(R.color.white));
+                pro_Description.setText(Html.fromHtml(productInfo.getDescription_ar()));
+                isDescriptionEnglish=false;
+            }else {
+                arabic.setTextColor(getResources().getColor(R.color.black));
+            }
+
+        });
+
+
+
+
 
         addToCart.setOnClickListener(v -> {
             if (userViewModel.isLogin()) {
@@ -280,15 +325,9 @@ public class ProductDetails extends Fragment implements InternetStatus {
         });
 
 
-        language.setOnClickListener(v -> {
-            if (isDescriptionEnglish){
-                pro_Description.setText(Html.fromHtml(productInfo.getDescription_ar()));
-                isDescriptionEnglish=false;
-            }else {
-                pro_Description.setText(Html.fromHtml(productInfo.getDescription_en()));
-                isDescriptionEnglish=true;
-            }
-        });
+
+
+
 
 
 

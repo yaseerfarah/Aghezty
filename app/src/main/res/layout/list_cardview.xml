@@ -27,10 +27,10 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="@dimen/list_card_image_height"
             android:id="@+id/pro_image"
-            android:scaleType="fitXY"
-            android:layout_margin="5dp"
+            android:scaleType="fitCenter"
+            android:layout_margin="@dimen/list_card_image_margin"
 
 
             />
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/star"
                 android:id="@+id/pro_evaluation"
-                android:textSize="15sp"
+                android:textSize="@dimen/list_card_evaluation_size"
                 android:textColor="@android:color/white"
                 android:text="4.9"
                 />
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/discount_background"
             android:id="@+id/pro_discount"
-            android:textSize="15sp"
+            android:textSize="@dimen/list_card_discount_size"
             android:textColor="@android:color/white"
             android:text="100%0OFF"
             android:layout_marginEnd="8dp"
@@ -110,7 +110,7 @@
                 android:layout_height="60dp"
                 android:layout_alignParentStart="true"
                 android:maxHeight="60dp"
-                android:textSize="15sp"
+                android:textSize="@dimen/list_card_pro_name"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/dark_blue"
@@ -145,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/pro_exprice"
                         android:text="15555.99"
-                        android:textSize="17sp"
+                        android:textSize="@dimen/list_card_pro_ex_price"
                         android:textColor="@android:color/darker_gray"
                         android:layout_marginStart="5dp"
                         android:textStyle="normal"
@@ -156,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/pro_exegp"
                         android:text="@string/egp"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/list_card_pro_ex_price"
                         android:textColor="@android:color/darker_gray"
                         android:layout_toEndOf="@+id/pro_exprice"
                         android:layout_marginStart="3dp"
@@ -193,7 +193,7 @@
                     android:typeface="serif"
                     android:text="149.99"
                     android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/list_card_pro_price"
                     />
                 <TextView
                     android:layout_marginStart="5dp"
@@ -206,7 +206,7 @@
                     android:textColor="@color/dark_blue"
                     android:typeface="serif"
                     android:text="@string/egp"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/list_card_egp"
 
                     />
 

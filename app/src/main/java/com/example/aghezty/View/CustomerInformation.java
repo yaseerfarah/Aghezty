@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -44,6 +45,7 @@ import es.dmoral.toasty.Toasty;
 public class CustomerInformation extends Fragment implements InternetStatus {
 
 
+    private final Observer<UserInfo> currentUserInfoObserver;
     @Inject
     ViewModelFactory viewModelFactory;
     private UserViewModel userViewModel;
@@ -79,6 +81,21 @@ public class CustomerInformation extends Fragment implements InternetStatus {
 
         this.viewPagerWeakReference=viewPagerWeakReference;
 
+
+        currentUserInfoObserver=new Observer<UserInfo>() {
+            @Override
+            public void onChanged(UserInfo currentUserInfo) {
+                if (currentUserInfo!=null) {
+                    userInfo = currentUserInfo;
+                    assignView();
+                    statefulLayout.showContent();
+
+                }
+            }
+        };
+
+
+
     }
 
 
@@ -91,12 +108,16 @@ public class CustomerInformation extends Fragment implements InternetStatus {
         netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         getActivity().registerReceiver(networkReceiver,netFilter);
 
+        userViewModel.getCurrentUserInfoLiveData().observe(this,currentUserInfoObserver);
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
         getActivity().unregisterReceiver(networkReceiver);
+
+        userViewModel.getCurrentUserInfoLiveData().removeObservers(this);
     }
 
 
@@ -105,7 +126,7 @@ public class CustomerInformation extends Fragment implements InternetStatus {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
-        userInfo=userViewModel.getCurrentUserInfo();
+        //userInfo=userViewModel.getCurrentUserInfo();
         networkReceiver=new NetworkReceiver(this);
     }
 
@@ -123,7 +144,7 @@ public class CustomerInformation extends Fragment implements InternetStatus {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
 
-        assignView();
+       // assignView();
 
         next.setOnClickListener(v -> {
             if (isOnline) {
@@ -191,6 +212,12 @@ public class CustomerInformation extends Fragment implements InternetStatus {
     @Override
     public void Connect() {
         isOnline=true;
+        if (userInfo==null) {
+            statefulLayout.showLoading("");
+            userViewModel.getLoginUserInfo();
+        }else {
+            statefulLayout.showContent();
+        }
     }
 
     @Override

@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/cart_margin_start"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
                     android:id="@+id/confirm"
@@ -86,12 +86,12 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="@dimen/cart_info_margin"
                         >
 
                         <Button
                             android:layout_width="wrap_content"
-                            android:layout_height="30dp"
+                            android:layout_height="@dimen/cart_coupon_apply"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="10dp"
                             android:id="@+id/coupon_apply"
@@ -104,7 +104,7 @@
 
                         <EditText
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="@dimen/cart_coupon_apply"
                             android:hint="@string/coupon"
                             android:paddingStart="10dp"
                             android:gravity="center"
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/coupon_discount"
                             android:textColor="@color/dark_blue"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/cart_coupon_discount"
                             android:layout_below="@+id/check_coupon_layout"
                             android:layout_marginTop="5dp"
                             android:id="@+id/coupon_discount"
@@ -169,7 +169,7 @@
                             android:typeface="serif"
                             android:layout_toEndOf="@+id/coupon_discount"
                             android:textColor="@color/dark_blue"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/cart_coupon_discount"
                             android:id="@+id/an_coupon_discount"
                             />
 
@@ -184,7 +184,7 @@
                             android:layout_toEndOf="@+id/an_coupon_discount"
                             android:layout_alignBottom="@+id/an_coupon_discount"
                             android:textColor="@color/dark_blue"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/cart_egp"
                             android:layout_marginStart="5dp"
 
                             />
@@ -197,7 +197,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/total"
                             android:textColor="@color/dark_blue"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/cart_coupon_discount"
                             android:layout_below="@+id/coupon_discount"
                             android:layout_marginTop="5dp"
                             android:id="@+id/total"
@@ -214,7 +214,7 @@
                             android:typeface="serif"
                             android:layout_toEndOf="@+id/total"
                             android:textColor="@color/dark_blue"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/cart_coupon_discount"
                             android:id="@+id/total_price"
                             />
 
@@ -229,7 +229,7 @@
                             android:layout_alignBottom="@+id/total_price"
                             android:gravity="bottom"
                             android:textColor="@color/dark_blue"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/cart_egp"
                             android:layout_marginStart="5dp"
                             android:id="@+id/total_priceegp"
                             />
@@ -244,7 +244,7 @@
                             android:text="@string/check_out"
                             android:textStyle="bold"
                             android:textColor="@android:color/white"
-                            android:textSize="17sp"
+                            android:textSize="@dimen/cart_checkout_text_size"
                             android:layout_marginBottom="5dp"
                             />
 

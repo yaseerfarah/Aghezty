@@ -346,8 +346,10 @@ public class ProductList extends Fragment implements InternetStatus {
     @Override
     public void Connect() {
         isOnline=true;
-        productViewModel.getProductFilter();
-        statefulLayout.showLoading(" ");
+        if (productViewModel.isFilter()) {
+            productViewModel.getProductFilter();
+            statefulLayout.showLoading(" ");
+        }
 
     }
 

@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/star"
                 android:id="@+id/pro_evaluation"
-                android:textSize="12sp"
+                android:textSize="@dimen/home_card_evaluation_size"
                 android:textColor="@android:color/white"
                 android:text="4.9"
                 />
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/discount_background"
             android:id="@+id/pro_discount"
-            android:textSize="12sp"
+            android:textSize="@dimen/home_card_discount_size"
             android:textColor="@android:color/white"
             android:text="100%0OFF"
             android:layout_marginEnd="8dp"
@@ -110,7 +110,7 @@
                 android:layout_height="60dp"
                 android:layout_alignParentStart="true"
                 android:maxHeight="60dp"
-                android:textSize="14sp"
+                android:textSize="@dimen/home_card_pro_name_size"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/dark_blue"
@@ -165,7 +165,7 @@
                         />
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="@dimen/home_card_dicount_line_size"
                         android:layout_marginTop="10dp"
                         android:id="@+id/pro_linexprice"
                         android:layout_marginStart="5dp"
@@ -193,7 +193,7 @@
                     android:typeface="serif"
                     android:text="149.99"
                     android:textStyle="bold"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/home_card_pro_price"
                     />
                 <TextView
                     android:layout_marginStart="5dp"
@@ -206,7 +206,7 @@
                     android:textColor="@color/dark_blue"
                     android:typeface="serif"
                     android:text="@string/egp"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/home_card_egp_size"
                     />
 
             </RelativeLayout>

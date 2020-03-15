@@ -18,10 +18,10 @@
 
         <ImageButton
             android:id="@+id/logo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:maxHeight="30dp"
-            android:maxWidth="30dp"
+            android:layout_width="@dimen/horizontal_recycler_card"
+            android:layout_height="@dimen/horizontal_recycler_card"
+            android:maxHeight="@dimen/horizontal_recycler_card"
+            android:maxWidth="@dimen/horizontal_recycler_card"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/orange"
             android:background="@drawable/ic_prize"
@@ -37,7 +37,7 @@
             android:layout_marginTop="2dp"
             android:text="Best Categories"
             android:textColor="@color/dark_blue"
-            android:textSize="18dp"
+            android:textSize="@dimen/horizontal_recycler_title_size"
             android:textStyle="bold"
 
             />

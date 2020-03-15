@@ -5,7 +5,9 @@
     android:layout_width="@dimen/best_category_card_size"
     android:layout_height="@dimen/best_category_card_size"
     app:cardBackgroundColor="@color/orange"
-    android:layout_margin="10dp"
+    android:layout_marginLeft="@dimen/best_categories_margin"
+    android:layout_marginRight="@dimen/best_categories_margin"
+    android:layout_marginTop="10dp"
     app:cardCornerRadius="5dp"
     android:id="@+id/cat_card"
     >
@@ -18,8 +20,8 @@
         >
 
         <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/best_category_image_width"
+            android:layout_height="@dimen/best_category_image_height"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
@@ -55,7 +57,7 @@
             android:layout_weight="1"
             android:text="Kitchen Ventilating Fan"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="@dimen/best_category_title_size"
             android:textStyle="bold" />
 
 
