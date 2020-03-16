@@ -179,8 +179,8 @@
 
             <ImageButton
                 android:id="@+id/cat_logo1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/horizontal_recycler_card"
+                android:layout_height="@dimen/horizontal_recycler_card"
                 android:layout_marginStart="5dp"
                 android:backgroundTint="@color/orange"
                 android:background="@drawable/ic_prize"
@@ -195,8 +195,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="2dp"
                 android:text="@string/best_categories"
-                android:textColor="@android:color/black"
-                android:textSize="18dp"
+                android:textColor="@color/dark_blue"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/horizontal_recycler_title_size"
                 android:textStyle="bold" />
 
 
@@ -210,7 +211,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/best_categories"
             android:layout_below="@+id/best_categories_title"
-            android:layout_marginTop="10dp"
+
             android:layout_marginStart="@dimen/home_best_category_margin"
             android:layout_marginEnd="@dimen/home_best_category_margin"
             android:nestedScrollingEnabled="false"

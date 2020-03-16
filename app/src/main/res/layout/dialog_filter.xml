@@ -5,8 +5,8 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
-        android:layout_height="400dp">
+        android:layout_width="@dimen/filter_dialog_width"
+        android:layout_height="@dimen/filter_dialog_height">
 
 
         <RelativeLayout
@@ -22,7 +22,7 @@
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="@dimen/filter_dialog_title_size"
                 android:id="@+id/title"/>
 
 
@@ -50,7 +50,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:textColor="@android:color/white"
-                android:textSize="13sp"
+                android:textSize="@dimen/filter_dialog_done_size"
                 android:layout_marginBottom="20dp"
 
                 />

@@ -219,7 +219,7 @@ public class Offers extends Fragment implements InternetStatus {
 
 
         listRecycler.setLayoutManager(productLayout);
-        listRecycler.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(5,getResources()),GridSpacingItemDecoration.ListLayout,displayWidth,(int)getResources().getDimension(R.dimen.list_card_width)));
+        listRecycler.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(5,getResources()),GridSpacingItemDecoration.Category,displayWidth,(int)getResources().getDimensionPixelSize(R.dimen.list_card_width)));
 
 
 

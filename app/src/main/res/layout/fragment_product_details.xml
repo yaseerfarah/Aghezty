@@ -795,20 +795,20 @@ android:visibility="gone"
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/product_details_add_to_cart_height"
             android:layout_alignParentBottom="true"
             android:background="@drawable/button_background"
             android:text="@string/add_to_cart"
             android:textColor="@android:color/white"
-            android:textSize="17sp"
-            android:layout_marginEnd="100dp"
+            android:textSize="@dimen/product_details_add_to_cart_size"
+            android:layout_marginEnd="@dimen/product_details_add_to_cart_width"
             android:id="@+id/desc_add_tocart"
 
             />
 
         <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/product_details_add_to_cart_width"
+            android:layout_height="@dimen/product_details_add_to_cart_height"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/border"
@@ -819,9 +819,9 @@ android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:text="@string/quantity"
                 android:textColor="@color/dark_blue"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/product_details_quantity_margin_top"
                 android:id="@+id/user_q_text"
-                android:textSize="13sp"
+                android:textSize="@dimen/product_details_quantity_size"
                 />
 
             <TextView
@@ -834,7 +834,7 @@ android:visibility="gone"
                 android:textStyle="bold"
 
                 android:id="@+id/user_q_number"
-                android:textSize="15sp"
+                android:textSize="@dimen/product_details_an_quantity"
                 />
         </RelativeLayout>
 

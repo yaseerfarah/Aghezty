@@ -28,7 +28,7 @@
             android:text="@string/shipping_address"
             android:textColor="@color/dark_blue"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/checout_title_size"
             android:id="@+id/shipping_info"
             android:layout_marginTop="35dp"
 
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/select_from_my_addresses"
-                android:textSize="18sp"
+                android:textSize="@dimen/checout_title_size"
                 android:textColor="@color/dark_blue"
 
                 />
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_new_address"
-                android:textSize="18sp"
+                android:textSize="@dimen/checout_title_size"
                 android:textColor="@color/dark_blue"
 
                 />
@@ -126,7 +126,7 @@
 
                     android:id="@+id/card_address"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/checout_text_size"
                     android:layout_centerVertical="true"
 
                     />
@@ -140,7 +140,7 @@
                     android:id="@+id/an_address"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/checkout_text_an_size"
                     android:gravity="end"
 
                     android:layout_marginStart="10dp"
@@ -165,7 +165,7 @@
                     android:text="@string/shipping_amount"
                     android:id="@id/shipping_amount"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/checout_text_size"
                     android:layout_centerVertical="true"
 
                     />
@@ -179,7 +179,7 @@
                     android:id="@+id/an_shipping_amount"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/checkout_text_an_size"
                     android:gravity="end"
 
                     android:layout_marginStart="10dp"
@@ -204,7 +204,7 @@
                     android:text="@string/city"
                     android:id="@+id/card_city"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/checout_text_size"
                     android:layout_centerVertical="true"
 
                     />
@@ -218,7 +218,7 @@
                     android:id="@+id/an_city"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/checkout_text_an_size"
                     android:layout_centerVertical="true"
                     android:gravity="end"
                     android:layout_marginStart="10dp"
@@ -243,7 +243,7 @@
                     android:text="@string/governorate"
                     android:id="@+id/card_governorate"
                     android:textColor="@color/grey"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/checout_text_size"
                     android:layout_centerVertical="true"
 
                     />
@@ -257,7 +257,7 @@
                     android:id="@+id/an_governorate"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/checkout_text_an_size"
                     android:gravity="end"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
@@ -293,7 +293,7 @@
                 android:background="@drawable/button_background"
                 android:text="@string/next"
                 android:textColor="@android:color/white"
-                android:textSize="15sp"
+                android:textSize="@dimen/checout_text_size"
                 android:layout_marginStart="5dp"
                 android:id="@+id/next"
                 android:layout_marginBottom="5dp"
@@ -309,7 +309,7 @@
                 android:layout_marginStart="5dp"
                 android:text="@string/back"
                 android:textColor="@android:color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/checout_text_size"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/back"
 

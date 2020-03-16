@@ -5,8 +5,7 @@
     android:layout_width="@dimen/best_category_card_size"
     android:layout_height="@dimen/best_category_card_size"
     app:cardBackgroundColor="@color/orange"
-    android:layout_marginLeft="@dimen/best_categories_margin"
-    android:layout_marginRight="@dimen/best_categories_margin"
+
     android:layout_marginTop="10dp"
     app:cardCornerRadius="5dp"
     android:id="@+id/cat_card"

@@ -152,6 +152,8 @@ public class Confirm extends Fragment {
         numberFormat=NumberFormat.getInstance(Locale.US);
 
         submit.setOnClickListener(v -> {
+            submit.setEnabled(false);
+            back.setEnabled(false);
             statefulLayout.showLoading(" ");
             userViewModel.checkOut(new CompletableListener() {
                 @Override
@@ -160,11 +162,14 @@ public class Confirm extends Fragment {
                     statefulLayout.showContent();
                     navController.navigateUp();
 
+
                 }
 
                 @Override
                 public void onFailure(String message) {
                     statefulLayout.showContent();
+                    submit.setEnabled(true);
+                    back.setEnabled(true);
                 }
             });
 

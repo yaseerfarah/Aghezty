@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="100dp"
+    android:layout_width="@dimen/category_card_width"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/white"
-    android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
     app:cardCornerRadius="2dp"
     android:id="@+id/cat_card"
     >
@@ -17,10 +17,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/category_card_image_height"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/category_card_image_margin"
+            android:layout_marginRight="@dimen/category_card_image_margin"
             android:id="@+id/img_cont"
             >
             <ProgressBar
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/category_name"
             android:text="Oven"
-            android:textSize="14sp"
+            android:textSize="@dimen/category_card_text_size"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/img_cont"

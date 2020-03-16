@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="@dimen/parent_category_card_width"
     android:layout_height="wrap_content"
     android:id="@+id/parent_category"
     android:clickable="true"
@@ -10,8 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
+
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         >
@@ -26,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Android"
-                android:textSize="15sp"
+                android:textSize="@dimen/parent_category_card_text_size"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:gravity="center_horizontal|center_vertical"

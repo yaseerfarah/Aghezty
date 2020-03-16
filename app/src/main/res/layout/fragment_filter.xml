@@ -62,7 +62,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="@string/clear"
-                   android:textSize="15sp"
+                   android:textSize="@dimen/filter_clear_size"
                    android:textColor="@color/light_red"
                    android:layout_alignParentEnd="true"
                    android:layout_margin="10dp"
@@ -85,7 +85,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/heavy_machines"
-                       android:textSize="18sp"
+                       android:textSize="@dimen/filter_text_size"
                        android:textColor="@color/dark_blue"
                        android:id="@+id/heavy_cat"
                        />
@@ -134,7 +134,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/light_devices"
-                       android:textSize="18sp"
+                       android:textSize="@dimen/filter_text_size"
                        android:textColor="@color/dark_blue"
                        android:id="@+id/light_cat"
                        />
@@ -180,7 +180,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/brand"
-                       android:textSize="18sp"
+                       android:textSize="@dimen/filter_text_size"
                        android:textColor="@color/dark_blue"
                        android:id="@+id/brand_cat"
                        />
@@ -228,7 +228,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="@string/price"
-                       android:textSize="18sp"
+                       android:textSize="@dimen/filter_text_size"
                        android:textColor="@color/dark_blue"
                        android:id="@+id/price_cat"
                        />
@@ -273,7 +273,7 @@
                    android:textAllCaps="false"
                    android:textStyle="bold"
                    android:textColor="@android:color/white"
-                   android:textSize="17sp"
+                   android:textSize="@dimen/filter_text_size"
                    android:layout_alignParentBottom="true"
                    android:layout_marginBottom="20dp"
                    android:layout_marginRight="50dp"

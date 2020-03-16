@@ -14,7 +14,7 @@
 
         <com.github.florent37.shapeofview.shapes.DiagonalView
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="@dimen/register_shape_height"
             android:id="@+id/shape_top"
             app:shape_diagonal_angle="12"
             app:shape_diagonal_direction="left"
@@ -37,7 +37,7 @@
 
         <com.github.florent37.shapeofview.shapes.DiagonalView
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="@dimen/register_shape_height"
             android:id="@+id/shape_down"
             app:shape_diagonal_angle="12"
             app:shape_diagonal_direction="right"
@@ -67,7 +67,7 @@
             android:layout_centerInParent="true"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="@dimen/register_margin"
 
             >
 
@@ -91,7 +91,7 @@
                     android:gravity="center"
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
-                    android:textSize="23sp"
+                    android:textSize="@dimen/register_title_size"
                     android:id="@+id/sign_up"
 
                     android:layout_centerInParent="true"
@@ -111,11 +111,11 @@
                         android:layout_gravity="start"
                         android:text="@string/first_name"
                         android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/register_text_size" />
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/register_field_size"
                         android:hint="@string/first_name"
                         android:gravity="center"
                         android:imeOptions="actionNext"
@@ -142,11 +142,11 @@
                         android:layout_gravity="start"
                         android:text="@string/last_name"
                         android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/register_text_size" />
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/register_field_size"
                         android:hint="@string/last_name"
                         android:gravity="center"
                         android:imeOptions="actionNext"
@@ -173,11 +173,11 @@
                         android:layout_gravity="start"
                         android:text="@string/e_mail"
                         android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/register_text_size" />
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/register_field_size"
                         android:hint="@string/e_mail"
                         android:gravity="center"
                         android:imeOptions="actionNext"
@@ -206,11 +206,11 @@
                         android:layout_gravity="start"
                         android:text="@string/phone_number"
                         android:textColor="@color/dark_blue"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/register_text_size" />
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/register_field_size"
                         android:hint="@string/phone_number"
                         android:gravity="center"
                         android:imeOptions="actionDone"
@@ -238,7 +238,7 @@
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/register_signup_size"
                     android:layout_marginTop="20dp"
 
 
@@ -260,7 +260,7 @@
                         android:layout_gravity="center"
                         android:text="@string/already_have_an_account"
                         android:textColor="@color/grey"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/register_text_size"
 
                         />
 
@@ -272,7 +272,7 @@
                         android:text="@string/sign_in"
                         android:layout_marginStart="10dp"
                         android:textColor="@color/dark_blue"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/register_text_size"
 
                         />
 

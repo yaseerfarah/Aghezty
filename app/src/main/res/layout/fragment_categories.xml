@@ -54,7 +54,7 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="145dp"
+                    android:layout_width="@dimen/categories_parent_width"
                     android:layout_height="match_parent"
                     android:id="@+id/parent_categories_recycler"
 

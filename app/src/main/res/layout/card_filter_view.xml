@@ -10,7 +10,7 @@
     <RadioButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/filter_dialog_text_size"
         android:text="Order By"
         android:gravity="end|fill_vertical"
         android:paddingEnd="10dp"
@@ -29,7 +29,7 @@
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/filter_dialog_text_size"
         android:text="Order By"
         android:gravity="end|fill_vertical"
         android:paddingEnd="10dp"

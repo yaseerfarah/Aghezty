@@ -89,7 +89,7 @@
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:textSize="17sp"
+        android:textSize="@dimen/myaddresses_add_new_address_size"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title_layout"
                 android:layout_toEndOf="@+id/image_layout"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/cart_card_margin_top"
                 android:id="@+id/quantity_layout"
                 >
                 <TextView

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+
+    // Home Layout
+    <dimen name="home_search_size">22sp</dimen>
+    <dimen name="search_height">50dp</dimen>
+    <dimen name="view_search_overlay">400dp</dimen>
+    <dimen name="view_pager_height">370dp</dimen>
+    <dimen name="best_category_margin">70dp</dimen>
+    <dimen name="home_best_category_margin">0dp</dimen>
+
+    // Best Category card
+    <dimen name="best_category_card_size">300dp</dimen>
+    <dimen name="best_category_image_width">270dp</dimen>
+    <dimen name="best_category_image_height">210dp</dimen>
+    <dimen name="best_category_title_size">20sp</dimen>
+    <dimen name="best_categories_margin">10dp</dimen>
+
+    //Horizontal Recycler Card
+    <dimen name="horizontal_recycler_card">45dp</dimen>
+    <dimen name="horizontal_recycler_title_size">22sp</dimen>
+
+    // Home Card View
+    <dimen name="home_card_width">290dp</dimen>
+    <dimen name="home_card_height">390dp</dimen>
+    <dimen name="home_card_pro_name_size">18sp</dimen>
+    <dimen name="home_card_pro_price">21sp</dimen>
+    <dimen name="home_card_discount_size">16sp</dimen>
+    <dimen name="home_card_evaluation_size">16sp</dimen>
+    <dimen name="home_card_egp_size">17sp</dimen>
+    <dimen name="home_card_dicount_line_size" >1.5dp</dimen>
+    <dimen name="home_card_image_height">230dp</dimen>
+
+
+    // Offer Product List Layout
+    <dimen name="offer_product_list_filter_size">20sp</dimen>
+    <dimen name="list_card_width">350dp</dimen>
+    <dimen name="list_card_height">470dp</dimen>
+    <dimen name="list_card_image_height">290dp</dimen>
+    <dimen name="list_card_pro_price">24sp</dimen>
+    <dimen name="list_card_egp">19sp</dimen>
+    <dimen name="list_card_pro_name">19sp</dimen>
+    <dimen name="list_card_pro_ex_price">21sp</dimen>
+    <dimen name="list_card_discount_size">19sp</dimen>
+    <dimen name="list_card_evaluation_size">19sp</dimen>
+    <dimen name="list_card_image_margin">10dp</dimen>
+
+    // Product Details Layout
+    <dimen name="product_details_view_pager_height">400dp</dimen>
+    <dimen name="product_details_name_size">24sp</dimen>
+    <dimen name="product_details_ex_price">23sp</dimen>
+    <dimen name="product_details_dicount_text_size">20sp</dimen>
+    <dimen name="product_details_pro_price">24sp</dimen>
+    <dimen name="product_details_egp">19sp</dimen>
+    <dimen name="round_button">76dp</dimen>
+    <dimen name="product_details_switch_height">50dp</dimen>
+    <dimen name="product_details_add_to_cart_size">21sp</dimen>
+    <dimen name="product_details_quantity_size">17sp</dimen>
+    <dimen name="product_details_an_quantity">19sp</dimen>
+    <dimen name="product_details_add_to_cart_width">200dp</dimen>
+    <dimen name="product_details_add_to_cart_height">68dp</dimen>
+    <dimen name="product_details_quantity_margin_top">15dp</dimen>
+
+
+
+    //Cart Layout
+    <dimen name="cart_margin_start">35dp</dimen>
+    <dimen name="cart_coupon_apply">45dp</dimen>
+    <dimen name="cart_coupon_discount">20sp</dimen>
+    <dimen name="cart_egp">17sp</dimen>
+    <dimen name="cart_checkout_text_size">21sp</dimen>
+    <dimen name="cart_info_margin">18dp</dimen>
+    <dimen name="cart_apply_size">15sp</dimen>
+
+
+    // Card View
+    <dimen name="cart_card_margin">30dp</dimen>
+    <dimen name="cart_card_margin_bottom">20dp</dimen>
+    <dimen name="cart_card_image_width">150dp</dimen>
+    <dimen name="cart_card_image_height">155dp</dimen>
+    <dimen name="cart_card_title_size">20sp</dimen>
+    <dimen name="cart_card_pro_price">19sp</dimen>
+    <dimen name="cart_card_egp">16sp</dimen>
+    <dimen name="cart_card_round_button_size">40dp</dimen>
+    <dimen name="cart_card_quantity">17sp</dimen>
+    <dimen name="cart_card_margin_top">15dp</dimen>
+
+
+    // Profile Layout
+    <dimen name="profile_info_text_size">19sp</dimen>
+    <dimen name="profile_name_size">23sp</dimen>
+    <dimen name="profile_image_card">120dp</dimen>
+    <dimen name="profile_image_radius">60dp</dimen>
+    <dimen name="profile_shape_height">330dp</dimen>
+    <dimen name="profile_info_margin">40dp</dimen>
+
+
+
+    // Add New Address Layout
+    <dimen name="add_new_address_shape_size">340dp</dimen>
+    <dimen name="add_new_address_margin_start">130dp</dimen>
+    <dimen name="add_new_address_title">27sp</dimen>
+    <dimen name="add_new_address_text_size">19sp</dimen>
+    <dimen name="add_new_address_field_height">45dp</dimen>
+    <dimen name="add_new_address_save_size">18sp</dimen>
+
+
+    //My Addresses
+    <dimen name="myaddresses_add_new_address_size">21sp</dimen>
+
+
+    // My Addresses Card
+    <dimen name="myaddresses_margin">20dp</dimen>
+    <dimen name="myaddresses_text_size">19sp</dimen>
+    <dimen name="myaddresses_an_text_size">20sp</dimen>
+
+
+
+    //Edit Profile Layout
+    <dimen name="edit_profile_shape_height">340dp</dimen>
+    <dimen name="edit_profile_image_card">120dp</dimen>
+
+    <dimen name="edit_profile_image_radius">60dp</dimen>
+    <dimen name="edit_profile_text_size">19sp</dimen>
+    <dimen name="edit_profile_field_height">45dp</dimen>
+    <dimen name="edit_profile_save_size">18sp</dimen>
+    <dimen name="edit_profile_margin">100dp</dimen>
+
+
+    //Change Password Layout
+    <dimen name="change_password_shape_height">340dp</dimen>
+    <dimen name="change_password_margin">100dp</dimen>
+    <dimen name="change_password_title_size">27sp</dimen>
+    <dimen name="change_password_text_size">19sp</dimen>
+    <dimen name="change_password_field_height">45dp</dimen>
+    <dimen name="change_password_save_size">18sp</dimen>
+
+
+
+    // Categories Layout
+    <dimen name="categories_parent_width">185dp</dimen>
+
+
+    // Category card
+    <dimen name="category_card_width">150dp</dimen>
+    <dimen name="category_card_image_height">110dp</dimen>
+    <dimen name="category_card_image_margin">20dp</dimen>
+    <dimen name="category_card_text_size">15sp</dimen>
+
+
+    // Parent Category Card
+    <dimen name="parent_category_card_width">200dp</dimen>
+    <dimen name="parent_category_card_text_size">16sp</dimen>
+
+    //Login Layout
+    <dimen name="login_shape_height">240dp</dimen>
+    <dimen name="login_title_size">24sp</dimen>
+    <dimen name="login_text_size">16sp</dimen>
+    <dimen name="login_field_height">40dp</dimen>
+    <dimen name="login_forget_password_size">14sp</dimen>
+    <dimen name="login_signin_size">15sp</dimen>
+    <dimen name="login_margin">80dp</dimen>
+
+
+
+    // Register Layout
+    <dimen name="register_shape_height">240dp</dimen>
+    <dimen name="register_margin">80dp</dimen>
+    <dimen name="register_title_size">24sp</dimen>
+    <dimen name="register_text_size">16sp</dimen>
+    <dimen name="register_signup_size">15sp</dimen>
+    <dimen name="register_field_size">40dp</dimen>
+
+
+
+    //Checkout
+    <dimen name="checout_title_size">19sp</dimen>
+    <dimen name="checout_text_size">16sp</dimen>
+    <dimen name="checkout_field_height">40dp</dimen>
+    <dimen name="checkout_text_an_size">17sp</dimen>
+
+
+    // Filter Layout
+    <dimen name="filter_clear_size">16sp</dimen>
+    <dimen name="filter_text_size">19sp</dimen>
+
+
+
+    // Filter Dialog
+    <dimen name="filter_dialog_width">400dp</dimen>
+    <dimen name="filter_dialog_height">500dp</dimen>
+    <dimen name="filter_dialog_done_size">14sp</dimen>
+    <dimen name="filter_dialog_title_size">21sp</dimen>
+    <dimen name="filter_dialog_text_size">19sp</dimen>
+
+
+
+</resources>

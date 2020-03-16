@@ -10,7 +10,7 @@
         android:text="@string/payment_method"
         android:textColor="@color/dark_blue"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/checout_title_size"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:id="@+id/payment_method"
@@ -30,7 +30,7 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="@dimen/checout_title_size"
             android:text="@string/cash_on_delivery"
             android:gravity="end|fill_vertical"
             android:paddingEnd="10dp"
@@ -48,7 +48,7 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="@dimen/checout_title_size"
             android:text="@string/credit_on_delivery"
             android:gravity="end|fill_vertical"
             android:paddingEnd="10dp"
@@ -67,7 +67,7 @@
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="@dimen/checout_title_size"
             android:text="@string/paypal"
             android:gravity="end|fill_vertical"
             android:paddingEnd="10dp"
@@ -107,7 +107,7 @@
             android:background="@drawable/button_background"
             android:text="@string/next"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/checout_text_size"
             android:layout_marginEnd="5dp"
             android:id="@+id/next"
             android:layout_marginBottom="5dp"
@@ -123,7 +123,7 @@
             android:layout_marginStart="5dp"
             android:text="@string/back"
             android:textColor="@android:color/black"
-            android:textSize="15sp"
+            android:textSize="@dimen/checout_text_size"
             android:layout_marginBottom="5dp"
             android:id="@+id/back"
 

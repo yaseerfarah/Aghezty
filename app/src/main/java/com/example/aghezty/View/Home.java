@@ -215,7 +215,7 @@ public class Home extends Fragment implements InternetStatus {
 
         bestcategories.setLayoutManager(new GridLayoutManager(getContext(),2));
 
-        bestcategories.addItemDecoration(new GridSpacingItemDecoration(2,(int)getResources().getDimensionPixelSize(R.dimen.best_category_margin),GridSpacingItemDecoration.Category,displayWidth,(int)getResources().getDimension(R.dimen.best_category_card_size)));
+        bestcategories.addItemDecoration(new GridSpacingItemDecoration(2,(int)getResources().getDimensionPixelSize(R.dimen.best_category_margin),GridSpacingItemDecoration.Category,displayWidth,(int)getResources().getDimensionPixelSize(R.dimen.best_category_card_size)));
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

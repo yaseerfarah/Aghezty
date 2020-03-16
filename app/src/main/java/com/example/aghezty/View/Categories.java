@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 import static com.example.aghezty.Adapter.CategoryCardViewAdapter.CATEGORIES;
+import static com.example.aghezty.Util.GridSpacingItemDecoration.Category;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -196,11 +198,13 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         int displayWidth = displayMetrics.widthPixels;
-        categoryRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
-        categoryRecycler.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(10,getResources()),GridSpacingItemDecoration.HomeLayout,displayWidth,(int)getResources().getDimension(R.dimen.best_category_card_size)));
+        categoryRecycler.post(() -> {
+            categoryRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
+            categoryRecycler.setAdapter(categoryCardViewAdapter);
+            Log.e("minus",String.valueOf(displayWidth-getResources().getDimensionPixelSize(R.dimen.categories_parent_width)));
+            categoryRecycler.addItemDecoration(new GridSpacingItemDecoration(2,10,Category,displayWidth-getResources().getDimensionPixelSize(R.dimen.categories_parent_width),getResources().getDimensionPixelSize(R.dimen.category_card_width)));
 
-
-        categoryRecycler.setAdapter(categoryCardViewAdapter);
+        });
 
 
 
