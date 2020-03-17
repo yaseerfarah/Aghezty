@@ -31,7 +31,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/checkout_confirm_info_margin"
             android:id="@+id/customer_info_card"
             >
 
@@ -153,7 +153,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/checkout_confirm_info_margin"
             android:id="@+id/shipping_info_card"
             android:layout_below="@+id/customer_info_card"
             >
@@ -276,7 +276,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/checkout_confirm_info_margin"
             android:id="@+id/payment_method_card"
             android:layout_below="@+id/shipping_info_card"
             >
@@ -433,7 +433,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/checkout_confirm_info_margin"
             android:id="@+id/total_price_card"
             android:layout_below="@+id/payment_method_card"
 

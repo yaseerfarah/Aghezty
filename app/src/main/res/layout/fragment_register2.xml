@@ -83,8 +83,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="@dimen/register_info_margin"
+                    android:layout_marginRight="@dimen/register_info_margin"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="20dp"
 
@@ -130,7 +130,7 @@
 
                             <Spinner
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp"
+                                android:layout_height="@dimen/register_field_size"
                                 android:hint="@string/city"
                                 android:gravity="center"
                                 android:imeOptions="actionNext"

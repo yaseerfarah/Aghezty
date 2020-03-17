@@ -118,7 +118,7 @@ public class Register2 extends Fragment implements InternetStatus {
                 }
 
                 ArrayAdapter arrayAdapter=new ArrayAdapter(getContext(),R.layout.text_spinner_layout,items);
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 
                 governorate.setAdapter(arrayAdapter);
                 if (userInfo.getGovernorate()!=null){
@@ -143,7 +143,7 @@ public class Register2 extends Fragment implements InternetStatus {
                 }
 
                 ArrayAdapter arrayAdapter=new ArrayAdapter(getContext(),R.layout.text_spinner_layout,items);
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                arrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 
                 city.setAdapter(arrayAdapter);
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
 
@@ -87,6 +87,7 @@
     <dimen name="cart_card_round_button_size">40dp</dimen>
     <dimen name="cart_card_quantity">14sp</dimen>
     <dimen name="cart_card_margin_top">10dp</dimen>
+    <dimen name="cart_card_text_margin">10dp</dimen>
 
 
     // Profile Layout
@@ -107,6 +108,7 @@
     <dimen name="add_new_address_text_size">16sp</dimen>
     <dimen name="add_new_address_field_height">40dp</dimen>
     <dimen name="add_new_address_save_size">15sp</dimen>
+    <dimen name="add_new_address_info_margin">20dp</dimen>
 
 
     //My Addresses
@@ -120,7 +122,7 @@
     //Edit Profile Layout
     <dimen name="edit_profile_shape_height">240dp</dimen>
     <dimen name="edit_profile_image_card">100dp</dimen>
-
+    <dimen name="edit_profile_info_margin">20dp</dimen>
     <dimen name="edit_profile_image_radius">50dp</dimen>
     <dimen name="edit_profile_text_size">16sp</dimen>
     <dimen name="edit_profile_field_height">40dp</dimen>
@@ -135,6 +137,7 @@
     <dimen name="change_password_text_size">16sp</dimen>
     <dimen name="change_password_field_height">40dp</dimen>
     <dimen name="change_password_save_size">15sp</dimen>
+    <dimen name="change_password_info_margin">20dp</dimen>
 
 
 
@@ -161,6 +164,7 @@
     <dimen name="login_forget_password_size">14sp</dimen>
     <dimen name="login_signin_size">15sp</dimen>
     <dimen name="login_margin">80dp</dimen>
+    <dimen name="login_info_margin">20dp</dimen>
 
 
 
@@ -171,6 +175,7 @@
     <dimen name="register_text_size">16sp</dimen>
     <dimen name="register_signup_size">15sp</dimen>
     <dimen name="register_field_size">40dp</dimen>
+    <dimen name="register_info_margin">20dp</dimen>
 
 
 
@@ -179,6 +184,10 @@
     <dimen name="checout_text_size">16sp</dimen>
     <dimen name="checkout_field_height">40dp</dimen>
     <dimen name="checkout_text_an_size">17sp</dimen>
+    <dimen name="checkout_info_margin">10dp</dimen>
+    <dimen name="checkout_confirm_info_margin">30dp</dimen>
+    <dimen name="checkout_stepper_text_size">13dp</dimen>
+    <dimen name="checkout_stepper_size">15dp</dimen>
 
 
     // Filter Layout
@@ -193,6 +202,18 @@
     <dimen name="filter_dialog_done_size">14sp</dimen>
     <dimen name="filter_dialog_title_size">21sp</dimen>
     <dimen name="filter_dialog_text_size">19sp</dimen>
+
+
+
+    <dimen name="popup_text_size">15sp</dimen>
+
+    // Spinner Text
+    <dimen name="spinner_text_size">16sp</dimen>
+    <dimen name="spinner_text_padding">5dp</dimen>
+
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">15sp</dimen>
+    <dimen name="bottom_nav_icon_size">29dp</dimen>
+    <dimen name="design_bottom_navigation_height" tools:override="true">66dp</dimen>
 
 
 
