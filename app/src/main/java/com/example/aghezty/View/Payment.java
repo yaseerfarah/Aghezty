@@ -14,22 +14,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.POJO.AddressInfo;
+import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
+import com.gturedi.views.StatefulLayout;
 
 import java.lang.ref.WeakReference;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,16 +52,33 @@ public class Payment extends Fragment {
     private UserViewModel userViewModel;
 
     private CheckOutInfo checkOutInfo;
+    NumberFormat numberFormat;
+    private AddressInfo addressInfo;
 
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
+
+    private List<AddressInfo> addressInfoList=new ArrayList<>();
+    private List<CartInfo> cartInfoList =new ArrayList<>();
 
     @BindView(R.id.radio_group)
     RadioGroup paymentMethod;
 
-    @BindView(R.id.next)
-    Button next;
+    @BindView(R.id.submit)
+    Button submit;
     @BindView(R.id.back)
     Button back;
+
+    @BindView(R.id.paypal)
+    Button paypalPayment;
+
+    @BindView(R.id.an_sub_total)
+    TextView subTotal;
+    @BindView(R.id.an_coupon_discount)
+    TextView couponDiscount;
+    @BindView(R.id.an_total_price)
+    TextView totalPrice;
+    @BindView(R.id.an_shipping_amount)
+    TextView shippingAmount;
 
     @BindView(R.id.cash_layout)
     RadioButton cash;
@@ -59,6 +86,9 @@ public class Payment extends Fragment {
     RadioButton creditCard;
     @BindView(R.id.paypal_layout)
     RadioButton paypal;
+
+    @BindView(R.id.stateful)
+    StatefulLayout statefulLayout;
 
     public Payment(WeakReference<CheckOutViewPager> viewPagerWeakReference) {
         // Required empty public constructor
@@ -73,7 +103,11 @@ public class Payment extends Fragment {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
-        checkOutInfo=userViewModel.getCheckOutInfo();
+
+        cartInfoList.clear();
+        cartInfoList.addAll(userViewModel.getCartInfolist());
+        addressInfoList.clear();
+        addressInfoList.addAll(userViewModel.getAddressInfoList());
     }
 
 
@@ -87,11 +121,17 @@ public class Payment extends Fragment {
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+        assignView();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
 
-
+        numberFormat= NumberFormat.getInstance(Locale.US);
 
 
 
@@ -100,6 +140,7 @@ public class Payment extends Fragment {
 
             if (isChecked){
                 checkOutInfo.setPaymentId(1);
+                paypalPayment.setVisibility(View.GONE);
                 checkOutInfo.setPaymentMethod(cash.getText().toString());
                 userViewModel.setCheckOutInfo(checkOutInfo);
             }
@@ -110,6 +151,7 @@ public class Payment extends Fragment {
 
             if (isChecked){
                 checkOutInfo.setPaymentId(2);
+                paypalPayment.setVisibility(View.GONE);
                 checkOutInfo.setPaymentMethod(creditCard.getText().toString());
                 userViewModel.setCheckOutInfo(checkOutInfo);
             }
@@ -120,11 +162,68 @@ public class Payment extends Fragment {
 
             if (isChecked){
                 checkOutInfo.setPaymentId(3);
+                paypalPayment.setVisibility(View.VISIBLE);
                 checkOutInfo.setPaymentMethod(paypal.getText().toString());
                 userViewModel.setCheckOutInfo(checkOutInfo);
             }
 
         });
+
+
+
+
+
+
+
+        submit.setOnClickListener(v -> {
+
+            statefulLayout.showLoading(" ");
+            userViewModel.checkOut(new CompletableListener() {
+                @Override
+                public void onSuccess() {
+                    Toasty.success(view.getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
+                    statefulLayout.showContent();
+
+                    if (viewPagerWeakReference.get() != null) {
+                        viewPagerWeakReference.get().setCurrentItem(3);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    statefulLayout.showContent();
+
+
+                }
+            });
+
+
+
+        });
+        back.setOnClickListener(v -> {
+            if (viewPagerWeakReference.get()!=null){
+                viewPagerWeakReference.get().setCurrentItem(1);
+            }
+        });
+
+    }
+
+
+    private void assignView(){
+        checkOutInfo=userViewModel.getCheckOutInfo();
+        addressInfo=getSelectedAddressInfoByID(checkOutInfo.getAddressId());
+
+        subTotal.setText(numberFormat.format(countSubTotal())+" "+getResources().getString(R.string.egp));
+
+        couponDiscount.setText(numberFormat.format(userViewModel.getCouponDiscount()) +" "+getResources().getString(R.string.egp));
+
+        shippingAmount.setText(numberFormat.format(addressInfo.getShippingAmount())+" "+getResources().getString(R.string.egp));
+
+
+
+        int total=countSubTotal()-userViewModel.getCouponDiscount()+addressInfo.getShippingAmount();
+        totalPrice.setText(numberFormat.format(total)+" "+getResources().getString(R.string.egp));
 
 
 
@@ -148,21 +247,32 @@ public class Payment extends Fragment {
         }
 
 
-
-        next.setOnClickListener(v -> {
-
-            if (viewPagerWeakReference.get() != null) {
-                viewPagerWeakReference.get().setCurrentItem(3);
-            }
-
-        });
-        back.setOnClickListener(v -> {
-            if (viewPagerWeakReference.get()!=null){
-                viewPagerWeakReference.get().setCurrentItem(1);
-            }
-        });
-
-
-
     }
+
+
+    private AddressInfo getSelectedAddressInfoByID(int id){
+
+        for (AddressInfo addressInfo:addressInfoList){
+            if (addressInfo.getId()==id){
+                return addressInfo;
+            }
+        }
+        return null;
+    }
+
+    private int countSubTotal(){
+
+        int subTotal=0;
+
+        for (CartInfo cartInfo:cartInfoList){
+
+            subTotal+=cartInfo.getPro_totalPrice();
+
+        }
+        return subTotal;
+    }
+
+
+
+
 }

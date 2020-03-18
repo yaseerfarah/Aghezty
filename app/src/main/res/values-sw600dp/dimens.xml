@@ -216,5 +216,6 @@
     <dimen name="design_bottom_navigation_height" tools:override="true">66dp</dimen>
 
 
+    <dimen name="cart_qbadge">12sp</dimen>
 
 </resources>

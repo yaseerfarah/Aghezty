@@ -220,4 +220,6 @@
     <dimen name="bottom_nav_icon_size">35dp</dimen>
 
 
+    <dimen name="cart_qbadge">15sp</dimen>
+
 </resources>

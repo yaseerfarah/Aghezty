@@ -82,10 +82,9 @@ public class Confirm extends Fragment {
     @BindView(R.id.an_payment_method)
     TextView paymentMethod;
 
-    @BindView(R.id.submit)
-    Button submit;
-    @BindView(R.id.back)
-    Button back;
+    @BindView(R.id.done)
+    Button done;
+
 
 
     @BindView(R.id.an_sub_total)
@@ -151,37 +150,13 @@ public class Confirm extends Fragment {
         navController= Navigation.findNavController(view);
         numberFormat=NumberFormat.getInstance(Locale.US);
 
-        submit.setOnClickListener(v -> {
-            submit.setEnabled(false);
-            back.setEnabled(false);
-            statefulLayout.showLoading(" ");
-            userViewModel.checkOut(new CompletableListener() {
-                @Override
-                public void onSuccess() {
-                    Toasty.success(view.getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
-                    statefulLayout.showContent();
-                    navController.navigateUp();
-
-
-                }
-
-                @Override
-                public void onFailure(String message) {
-                    statefulLayout.showContent();
-                    submit.setEnabled(true);
-                    back.setEnabled(true);
-                }
-            });
+        done.setOnClickListener(v -> {
+            navController.navigateUp();
 
         });
 
 
-        back.setOnClickListener(v -> {
-            if (viewPagerWeakReference.get()!=null){
-                viewPagerWeakReference.get().setCurrentItem(2);
-            }
 
-        });
 
     }
 

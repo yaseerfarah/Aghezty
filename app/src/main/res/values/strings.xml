@@ -113,6 +113,7 @@
     <string name="order_time">Order Time</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
+    <string name="pay_with_paypal">Pay with <b>Paypal</b></string>
 
 
     <string-array name="price_range_filter">

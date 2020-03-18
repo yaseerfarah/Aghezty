@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
 
         cartBadge=(QBadgeView) new QBadgeView(this)
+                .setBadgeTextSize(getResources().getDimension(R.dimen.cart_qbadge),true)
                 .setGravityOffset(12, 2, true)
                 .bindTarget(bottomNavigationView.findViewById(R.id.cart));
 
