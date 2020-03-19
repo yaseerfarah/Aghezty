@@ -1,6 +1,8 @@
 package com.example.aghezty.View;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aghezty.Constants;
 import com.example.aghezty.Interface.CompletableListener;
+import com.example.aghezty.Interface.PaypalSubmit;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
@@ -27,8 +32,16 @@ import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.gturedi.views.StatefulLayout;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
+import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +54,13 @@ import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 import es.dmoral.toasty.Toasty;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Payment extends Fragment {
+
 
 
     @Inject
@@ -56,9 +72,13 @@ public class Payment extends Fragment {
     private AddressInfo addressInfo;
 
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
+    private PaypalSubmit paypalSubmit;
 
     private List<AddressInfo> addressInfoList=new ArrayList<>();
     private List<CartInfo> cartInfoList =new ArrayList<>();
+
+    private  int total;
+
 
     @BindView(R.id.radio_group)
     RadioGroup paymentMethod;
@@ -90,10 +110,18 @@ public class Payment extends Fragment {
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
 
-    public Payment(WeakReference<CheckOutViewPager> viewPagerWeakReference) {
+
+
+
+
+
+
+
+    public Payment(WeakReference<CheckOutViewPager> viewPagerWeakReference,PaypalSubmit paypalSubmit) {
         // Required empty public constructor
 
         this.viewPagerWeakReference=viewPagerWeakReference;
+        this.paypalSubmit=paypalSubmit;
 
     }
 
@@ -104,11 +132,9 @@ public class Payment extends Fragment {
         AndroidSupportInjection.inject(this);
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
 
-        cartInfoList.clear();
-        cartInfoList.addAll(userViewModel.getCartInfolist());
-        addressInfoList.clear();
-        addressInfoList.addAll(userViewModel.getAddressInfoList());
+
     }
+
 
 
 
@@ -123,6 +149,10 @@ public class Payment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        cartInfoList.clear();
+        cartInfoList.addAll(userViewModel.getCartInfolist());
+        addressInfoList.clear();
+        addressInfoList.addAll(userViewModel.getAddressInfoList());
         assignView();
     }
 
@@ -162,7 +192,7 @@ public class Payment extends Fragment {
 
             if (isChecked){
                 checkOutInfo.setPaymentId(3);
-                paypalPayment.setVisibility(View.VISIBLE);
+                //paypalPayment.setVisibility(View.VISIBLE);
                 checkOutInfo.setPaymentMethod(paypal.getText().toString());
                 userViewModel.setCheckOutInfo(checkOutInfo);
             }
@@ -176,28 +206,11 @@ public class Payment extends Fragment {
 
 
         submit.setOnClickListener(v -> {
-
-            statefulLayout.showLoading(" ");
-            userViewModel.checkOut(new CompletableListener() {
-                @Override
-                public void onSuccess() {
-                    Toasty.success(view.getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
-                    statefulLayout.showContent();
-
-                    if (viewPagerWeakReference.get() != null) {
-                        viewPagerWeakReference.get().setCurrentItem(3);
-                    }
-
-                }
-
-                @Override
-                public void onFailure(String message) {
-                    statefulLayout.showContent();
-
-
-                }
-            });
-
+            if (checkOutInfo.getPaymentId()==3){
+                paypalSubmit.paypalSubmit(total);
+            }else {
+                submitOrder();
+            }
 
 
         });
@@ -208,6 +221,7 @@ public class Payment extends Fragment {
         });
 
     }
+
 
 
     private void assignView(){
@@ -222,7 +236,7 @@ public class Payment extends Fragment {
 
 
 
-        int total=countSubTotal()-userViewModel.getCouponDiscount()+addressInfo.getShippingAmount();
+        total=countSubTotal()-userViewModel.getCouponDiscount()+addressInfo.getShippingAmount();
         totalPrice.setText(numberFormat.format(total)+" "+getResources().getString(R.string.egp));
 
 
@@ -273,6 +287,33 @@ public class Payment extends Fragment {
     }
 
 
+
+
+
+    private void submitOrder(){
+
+        statefulLayout.showLoading(" ");
+        userViewModel.checkOut(new CompletableListener() {
+            @Override
+            public void onSuccess() {
+                Toasty.success(getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
+                statefulLayout.showContent();
+
+                if (viewPagerWeakReference.get() != null) {
+                    viewPagerWeakReference.get().setCurrentItem(3);
+                }
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+                statefulLayout.showContent();
+
+
+            }
+        });
+
+    }
 
 
 }

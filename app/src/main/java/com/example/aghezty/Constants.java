@@ -6,7 +6,7 @@ public class Constants {
 
     public static final String BASE_URL = "https://aghezty.com/api/";
 
-    public static final String PAYPAL_CLIENT_ID ="";
+    public static final String PAYPAL_CLIENT_ID ="AfpopC1l_1US5DkVwgwUWbvKo8_s8aE_49OaCYxLEzQ7FiKNVE4CAtb_4WNLEhB32miOelif1zxWoOsZ";
 
     public static final String USER_FILE_NAME="UserInfo";
     public static final String IS_LOGIN = "Is_Login";

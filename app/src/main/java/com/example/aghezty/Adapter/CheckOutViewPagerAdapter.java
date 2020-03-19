@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.aghezty.Interface.PaypalSubmit;
 import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.View.Confirm;
 import com.example.aghezty.View.CustomerInformation;
@@ -23,18 +24,20 @@ public class CheckOutViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> checkOutFragment=new ArrayList<>();
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
+    private PaypalSubmit paypalSubmit;
 
 
 
 
 
-    public CheckOutViewPagerAdapter(@NonNull FragmentManager fm, int behavior,CheckOutViewPager checkOutViewPager) {
+    public CheckOutViewPagerAdapter(@NonNull FragmentManager fm, int behavior,CheckOutViewPager checkOutViewPager,PaypalSubmit paypalSubmit) {
         super(fm, behavior);
 
         this.viewPagerWeakReference=new WeakReference<>(checkOutViewPager);
+        this.paypalSubmit=paypalSubmit;
         checkOutFragment.add(new CustomerInformation(viewPagerWeakReference));
         checkOutFragment.add(new Shipping(viewPagerWeakReference));
-        checkOutFragment.add(new Payment(viewPagerWeakReference));
+        checkOutFragment.add(new Payment(viewPagerWeakReference,paypalSubmit));
         checkOutFragment.add(new Confirm(viewPagerWeakReference));
     }
 
