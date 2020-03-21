@@ -29,6 +29,7 @@ import com.example.aghezty.Constants;
 import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.Interface.InternetStatus;
 import com.example.aghezty.Interface.PaypalSubmit;
+import com.example.aghezty.POJO.PayPalPaymentDetails;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CheckOutViewPager;
@@ -43,6 +44,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 
@@ -78,6 +80,12 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
     private Shipping shipping;
     private Payment payment;
     private Confirm confirm;
+
+
+    private PayPalPaymentDetails payPalPaymentDetails;
+    private boolean isCheckoutLoading=false;
+
+    private int currentPage=0;
 
     private CheckOutViewPagerAdapter checkOutViewPagerAdapter;
 
@@ -116,8 +124,10 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
         confirm =(Confirm) checkOutViewPagerAdapter.getItem(3);
 
         checkOutFragment.setAdapter(checkOutViewPagerAdapter);
+        checkOutFragment.setCurrentItem(currentPage);
 
         stepperIndicator.setViewPager(checkOutFragment);
+        stepperIndicator.setCurrentStep(currentPage);
 
     }
 
@@ -166,6 +176,23 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
         ButterKnife.bind(this,view);
         navController= Navigation.findNavController(view);
 
+        checkOutFragment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage=position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
     }
 
@@ -178,8 +205,16 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
                 PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirmation != null){
                     try {
-                        String paymentDetails = confirmation.toJSONObject().toString(4);
-                        Log.e("Payment",paymentDetails);
+                        isCheckoutLoading=true;
+                        statefulLayout.post(() -> {
+                            statefulLayout.showLoading(" ");
+                        });
+
+                        JSONObject paymentDetails = confirmation.toJSONObject().getJSONObject("response");
+                        Log.e("Payment",paymentDetails.toString(4));
+                        payPalPaymentDetails.setPaymentID(paymentDetails.getString("id"));
+                        payPalPaymentDetails.setPaymentState(paymentDetails.getString("state"));
+                        userViewModel.setPayPalPaymentDetails(payPalPaymentDetails);
                         submitOrder();
                     } catch (JSONException e){
                         e.printStackTrace();
@@ -196,6 +231,7 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
 
     @Override
     public void Connect() {
+        if (!isCheckoutLoading)
         statefulLayout.showContent();
     }
 
@@ -206,6 +242,8 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
 
     @Override
     public void paypalSubmit(int total) {
+        payPalPaymentDetails=new PayPalPaymentDetails();
+        payPalPaymentDetails.setPaymentAmount(String.valueOf(total));
         PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(total)),"USD",
                 "Order Total Price",PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(getContext(), PaymentActivity.class);
@@ -217,14 +255,14 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
 
     private void submitOrder(){
 
-        statefulLayout.showLoading(" ");
+
         userViewModel.checkOut(new CompletableListener() {
             @Override
             public void onSuccess() {
                 Toasty.success(getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
                 statefulLayout.showContent();
-
-                    checkOutFragment.setCurrentItem(3);
+                checkOutFragment.setCurrentItem(3);
+                isCheckoutLoading=false;
 
 
             }
@@ -232,6 +270,7 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
             @Override
             public void onFailure(String message) {
                 statefulLayout.showContent();
+                isCheckoutLoading=false;
 
 
             }

@@ -34,6 +34,7 @@ import com.example.aghezty.POJO.HomeData;
 import com.example.aghezty.POJO.HomeResponse;
 import com.example.aghezty.POJO.InnerProductResponse;
 import com.example.aghezty.POJO.ParentCategoriesResponse;
+import com.example.aghezty.POJO.PayPalPaymentDetails;
 import com.example.aghezty.POJO.ProductFilterData;
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.UserInfo;
@@ -95,6 +96,8 @@ public class UserViewModel extends ViewModel {
     private List<AddressInfo> addressInfoList;
 
     private int couponDiscount;
+
+    private PayPalPaymentDetails payPalPaymentDetails;
 
     private CheckOutInfo checkOutInfo=new CheckOutInfo();
 
@@ -198,6 +201,14 @@ public class UserViewModel extends ViewModel {
 
     public CheckOutInfo getCheckOutInfo() {
         return checkOutInfo;
+    }
+
+    public PayPalPaymentDetails getPayPalPaymentDetails() {
+        return payPalPaymentDetails;
+    }
+
+    public void setPayPalPaymentDetails(PayPalPaymentDetails payPalPaymentDetails) {
+        this.payPalPaymentDetails = payPalPaymentDetails;
     }
 
     public void setCheckOutInfo(CheckOutInfo checkOutInfo) {

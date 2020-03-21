@@ -6,6 +6,10 @@ public class PayPalPaymentDetails {
     String paymentState;
     String PaymentAmount;
 
+    public PayPalPaymentDetails(){
+
+    }
+
     public PayPalPaymentDetails(String paymentID, String paymentState, String paymentAmount) {
         this.paymentID = paymentID;
         this.paymentState = paymentState;

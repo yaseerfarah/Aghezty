@@ -114,6 +114,8 @@
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
     <string name="pay_with_paypal">Pay with <b>Paypal</b></string>
+    <string name="paypal_id">Payment ID</string>
+    <string name="paypal_state">Payment State</string>
 
 
     <string-array name="price_range_filter">

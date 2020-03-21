@@ -62,83 +62,128 @@
                     android:layout_margin="10dp"
                     />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_layout"
+                android:layout_below="@+id/line"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/name"
                     android:id="@+id/name"
-                    android:layout_below="@+id/line"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/checout_text_size"
+                    android:layout_centerVertical="true"
 
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
                     />
+
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Yaseer"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
                     android:id="@+id/an_name"
-                    android:layout_alignParentEnd="true"
                     android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/name"
                     android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/line"
-                    />
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
 
-                <TextView
+
+                    />
+            </RelativeLayout>
+
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/e_mail"
-                    android:id="@+id/email"
-                    android:layout_below="@+id/name"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
-                    android:layout_marginStart="15sp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="yasserfarah22@gmail.com"
-                    android:id="@+id/an_email"
-                    android:layout_below="@+id/name"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone_number"
-                    android:id="@+id/phone"
-                    android:layout_below="@+id/email"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
+                    android:id="@+id/email_layout"
+                    android:layout_below="@+id/name_layout"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="01123564897"
-                    android:id="@+id/an_phone"
-                    android:layout_below="@+id/email"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
-                    />
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/e_mail"
+                        android:id="@+id/email"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_email"
+                        android:textColor="@color/black"
+
+                        android:layout_toEndOf="@id/email"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/phone_layout"
+                    android:layout_below="@+id/email_layout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_number"
+                        android:id="@+id/phone"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_phone"
+                        android:textColor="@color/black"
+
+                        android:layout_toEndOf="@id/phone"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+
 
 
             </RelativeLayout>
@@ -185,83 +230,121 @@
                     android:layout_margin="10dp"
                     />
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/city"
-                    android:id="@+id/city"
+                    android:id="@+id/city_layout"
                     android:layout_below="@+id/line2"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
-
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cairo"
-                    android:id="@+id/an_city"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/line2"
-                    />
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/city"
+                        android:id="@+id/city"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
 
-                <TextView
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_city"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/city"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/governorate"
-                    android:id="@+id/governorate"
-                    android:layout_below="@+id/city"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
-                    android:layout_marginStart="15sp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cairo"
-                    android:id="@+id/an_governorate"
-                    android:layout_below="@+id/city"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/address"
-                    android:id="@+id/address"
-                    android:layout_below="@+id/governorate"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
+                    android:id="@+id/governorate_layout"
+                    android:layout_below="@+id/city_layout"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Faisal"
-                    android:id="@+id/an_address"
-                    android:layout_below="@+id/governorate"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
-                    />
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/governorate"
+                        android:id="@+id/governorate"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_governorate"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/governorate"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/address_layout"
+                    android:layout_below="@+id/governorate_layout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address"
+                        android:id="@+id/address"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_address"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/address"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
 
 
             </RelativeLayout>
@@ -308,121 +391,135 @@
                     android:layout_margin="10dp"
                     />
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/payment_method_field"
-                    android:id="@+id/payment_method_t"
+                    android:id="@+id/payment_method_layout"
                     android:layout_below="@+id/line3"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
-
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Credit Card"
-                    android:id="@+id/an_payment_method"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/line3"
-                    />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/credit_info"
-                    android:layout_below="@+id/payment_method_t"
-                    android:layout_marginTop="20dp"
-                    android:visibility="gone"
                     >
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name on Card"
-                        android:id="@+id/card_name"
-
+                        android:text="@string/payment_method_field"
+                        android:id="@+id/payment_method_t"
                         android:textColor="@color/grey"
-                        android:textSize="15sp"
-                        android:layout_marginStart="15sp"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
 
                         />
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="YASSER FARAH"
-                        android:id="@+id/an_card_name"
-
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:text="Cairo"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="15dp"
-
-                        />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Credit Card Number"
-                        android:id="@+id/credit_num"
-                        android:layout_below="@+id/card_name"
-                        android:textColor="@color/grey"
-                        android:textSize="15sp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="20dp"
-                        />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0112 3564 8974 548"
-                        android:id="@+id/an_credit_num"
-                        android:layout_below="@+id/card_name"
+                        android:id="@+id/an_payment_method"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@+id/payment_method_t"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
                         />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Expiration Date"
-                        android:id="@+id/expiration_date"
-                        android:layout_below="@+id/credit_num"
-                        android:textColor="@color/grey"
-                        android:textSize="15sp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="20dp"
-                        />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="15/19"
-                        android:id="@+id/an_ex_date"
-                        android:layout_below="@+id/credit_num"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginTop="20dp"
-                        />
-
                 </RelativeLayout>
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/payment_method_layout"
+                   android:layout_marginTop="20dp"
+                   android:id="@+id/paypal_info"
+                   >
+
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/paypal_id_layout"
+
+                       android:layout_marginStart="15dp"
+                       android:layout_marginEnd="15dp"
+                       >
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/paypal_id"
+                           android:id="@+id/paypal_id"
+                           android:textColor="@color/grey"
+                           android:textSize="@dimen/checout_text_size"
+                           android:layout_centerVertical="true"
+
+                           />
+
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text="Cairo"
+                           android:layout_alignParentEnd="true"
+                           android:id="@+id/an_paypal_id"
+                           android:textColor="@color/black"
+                           android:layout_toEndOf="@+id/paypal_id"
+                           android:textSize="@dimen/checkout_text_an_size"
+                           android:layout_centerVertical="true"
+                           android:gravity="end"
+                           android:layout_marginStart="10dp"
+
+
+                           />
+                   </RelativeLayout>
+
+
+
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/paypal_state_layout"
+                       android:layout_below="@+id/paypal_id_layout"
+                       android:layout_marginStart="15dp"
+                       android:layout_marginEnd="15dp"
+                       android:layout_marginTop="20dp"
+                       >
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/paypal_state"
+                           android:id="@+id/paypal_state"
+                           android:textColor="@color/grey"
+                           android:textSize="@dimen/checout_text_size"
+                           android:layout_centerVertical="true"
+
+                           />
+
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text="Cairo"
+                           android:layout_alignParentEnd="true"
+                           android:id="@+id/an_paypal_state"
+                           android:textColor="@color/black"
+                           android:layout_toEndOf="@+id/paypal_state"
+                           android:textSize="@dimen/checkout_text_an_size"
+                           android:layout_centerVertical="true"
+                           android:gravity="end"
+                           android:layout_marginStart="10dp"
+
+
+                           />
+                   </RelativeLayout>
+
+
+
+
+               </RelativeLayout>
+
+
 
 
             </RelativeLayout>

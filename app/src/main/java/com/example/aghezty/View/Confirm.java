@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
+import com.example.aghezty.POJO.PayPalPaymentDetails;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CheckOutViewPager;
@@ -53,6 +55,7 @@ public class Confirm extends Fragment {
 
     private UserInfo userInfo;
     private CheckOutInfo checkOutInfo;
+    private PayPalPaymentDetails payPalPaymentDetails;
 
     private NumberFormat numberFormat;
 
@@ -81,6 +84,13 @@ public class Confirm extends Fragment {
 
     @BindView(R.id.an_payment_method)
     TextView paymentMethod;
+    @BindView(R.id.an_paypal_id)
+    TextView paypalPaymentID;
+    @BindView(R.id.an_paypal_state)
+    TextView paypalPaymentState;
+
+    @BindView(R.id.paypal_info)
+    RelativeLayout paypal_info;
 
     @BindView(R.id.done)
     Button done;
@@ -126,6 +136,9 @@ public class Confirm extends Fragment {
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         userInfo=userViewModel.getCurrentUserInfo();
         checkOutInfo=userViewModel.getCheckOutInfo();
+        if (checkOutInfo.getPaymentId()==3){
+            payPalPaymentDetails=userViewModel.getPayPalPaymentDetails();
+        }
         cartInfoList.clear();
         cartInfoList.addAll(userViewModel.getCartInfolist());
         addressInfoList.clear();
@@ -181,6 +194,12 @@ public class Confirm extends Fragment {
 
 
         paymentMethod.setText(checkOutInfo.getPaymentMethod());
+        if (checkOutInfo.getPaymentId()==3){
+            paypal_info.setVisibility(View.VISIBLE);
+            paypalPaymentID.setText(payPalPaymentDetails.getPaymentID());
+            paypalPaymentState.setText(payPalPaymentDetails.getPaymentState());
+        }
+
 
         subTotal.setText(numberFormat.format(countSubTotal())+" "+getResources().getString(R.string.egp));
 
@@ -192,6 +211,8 @@ public class Confirm extends Fragment {
 
         int total=countSubTotal()-userViewModel.getCouponDiscount()+addressInfo.getShippingAmount();
         totalPrice.setText(numberFormat.format(total)+" "+getResources().getString(R.string.egp));
+
+
 
 
 
