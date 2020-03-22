@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cart_cardview"
+        android:layout_marginTop="@dimen/cart_card_margin"
+        android:layout_marginBottom="@dimen/cart_card_margin_bottom"
+        android:layout_marginRight="@dimen/cart_card_margin"
+        android:layout_marginLeft="@dimen/cart_card_margin"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="@dimen/cart_card_image_width"
+                android:layout_height="@dimen/cart_card_image_height"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/image_layout"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/card_image"
+                    />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    style="@style/CustomInverseProgress"
+                    android:id="@+id/progress"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/image_layout"
+                android:layout_marginLeft="@dimen/cart_card_text_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/title_layout"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="London Sweetshirt"
+                    android:id="@+id/card_title"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/cart_card_title_size"
+                    android:layout_weight="2"
+                    android:textStyle="bold"
+
+                    />
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_close_black_24dp"
+
+                    android:id="@+id/card_close"
+                    />
+
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50.00"
+                android:id="@+id/card_price"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="@dimen/cart_card_pro_price"
+                android:textStyle="bold"
+
+                android:layout_below="@+id/quantity_layout"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="25dp"
+                android:layout_toStartOf="@+id/card_egp"
+                android:typeface="serif"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/egp"
+                android:id="@+id/card_egp"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/cart_card_egp"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+
+                android:layout_below="@+id/quantity_layout"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="30dp"
+                android:typeface="serif"
+                android:layout_marginBottom="10dp"
+
+                />
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_layout"
+                android:layout_toEndOf="@+id/image_layout"
+                android:layout_marginTop="@dimen/cart_card_margin_top"
+                android:id="@+id/quantity_layout"
+                android:layout_marginStart="@dimen/cart_card_text_margin"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quantity"
+                    android:id="@+id/card_quantity"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/cart_card_pro_price"
+                    android:layout_centerVertical="true"
+
+
+
+                    />
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_toEndOf="@+id/card_quantity"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/q_text"
+                    android:text="10"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/cart_card_quantity"
+
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    />
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

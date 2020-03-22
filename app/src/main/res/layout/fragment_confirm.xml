@@ -563,115 +563,167 @@
                     android:layout_margin="10dp"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sub_total"
-                    android:id="@+id/sub_total"
-                    android:layout_below="@+id/line4"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
 
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    />
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1599.99 .EGP"
-                    android:id="@+id/an_sub_total"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
+                    android:id="@+id/sub_total_layout"
+                    android:layout_below="@+id/line4"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/line4"
-                    />
-
-
-
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/coupon_discount"
-                    android:id="@+id/coupon_discount"
-                    android:layout_below="@+id/sub_total"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/checout_text_size"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="999.99 .EGP"
-                    android:id="@+id/an_coupon_discount"
-                    android:layout_below="@+id/sub_total"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="20dp"
-                    />
-
-
-
-                <TextView
+                    >
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/shipping_amount"
-                        android:id="@+id/shipping_ammount"
-                        android:layout_below="@+id/coupon_discount"
+                        android:text="@string/sub_total"
+                        android:id="@+id/sub_total"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/checout_text_size"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_centerVertical="true"
+
                         />
 
 
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_sub_total"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/sub_total"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/coupon_discount_layout"
+                    android:layout_below="@+id/sub_total_layout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    >
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="49.99 .EGP"
-                        android:id="@+id/an_shipping_amount"
-                        android:layout_below="@+id/coupon_discount"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/checkout_text_an_size"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginTop="20dp"
+                        android:text="@string/coupon_discount"
+                        android:id="@+id/coupon_discount"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
+
                         />
 
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_coupon_discount"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/coupon_discount"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/shipping_ammount_layout"
+                    android:layout_below="@+id/coupon_discount_layout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shipping_amount"
+                        android:id="@+id/shipping_ammount"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/checout_text_size"
+                        android:layout_centerVertical="true"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cairo"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/an_shipping_amount"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/shipping_ammount"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
+                        />
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/total_price_layout"
+                    android:layout_below="@+id/shipping_ammount_layout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/total_price"
                         android:id="@+id/total_price_t"
-                        android:layout_below="@+id/shipping_ammount"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/checout_text_size"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_centerVertical="true"
+
                         />
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="649.99 .EGP"
-                        android:id="@+id/an_total_price"
-                        android:layout_below="@+id/shipping_ammount"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/checkout_text_an_size"
+                        android:text="Cairo"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginTop="20dp"
+                        android:id="@+id/an_total_price"
+                        android:textColor="@color/black"
+                        android:layout_toEndOf="@+id/total_price_t"
+                        android:textSize="@dimen/checkout_text_an_size"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginStart="10dp"
+
+
                         />
+                </RelativeLayout>
+
+
 
 
 

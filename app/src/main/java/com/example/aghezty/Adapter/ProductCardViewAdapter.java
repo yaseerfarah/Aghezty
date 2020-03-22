@@ -138,7 +138,16 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
             holder.name.setText(products.get(holder.getAdapterPosition()).getTitle_en());
         }*/
 
-        holder.name.setText(products.get(holder.getAdapterPosition()).getTitile());
+
+       holder.name.post(() -> {
+
+           int noOfLinesVisible = holder.name.getHeight() / holder.name.getLineHeight();
+
+           holder.name.setText(products.get(holder.getAdapterPosition()).getTitile());
+           holder.name.setMaxLines(noOfLinesVisible);
+
+
+       });
 
 
 

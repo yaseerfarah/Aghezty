@@ -131,7 +131,7 @@
 
 
 
-    <dimen name="popup_text_size">12sp</dimen>
+    <dimen name="popup_text_size">13sp</dimen>
     <dimen name="add_new_address_info_margin">10dp</dimen>
     <dimen name="edit_profile_info_margin">10dp</dimen>
     <dimen name="change_password_info_margin">10dp</dimen>

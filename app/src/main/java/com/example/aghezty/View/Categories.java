@@ -268,7 +268,7 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
 
     @Override
     public void Connect() {
-
+        statefulLayout.showLoading(" ");
         productViewModel.getBrandCategories();
         productViewModel.getParentCategories();
         progress();
