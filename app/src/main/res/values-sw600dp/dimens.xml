@@ -218,4 +218,10 @@
 
     <dimen name="cart_qbadge">12sp</dimen>
 
+    //Order Layout
+    <dimen name="order_text_size">16sp</dimen>
+    <dimen name="order_text_an_size">17sp</dimen>
+    <dimen name="order_line_height">1dp</dimen>
+
+
 </resources>

@@ -150,5 +150,8 @@
     <dimen name="checkout_stepper_size">10dp</dimen>
 
     <dimen name="cart_qbadge">3sp</dimen>
+    <dimen name="order_text_size">15sp</dimen>
+    <dimen name="order_text_an_size">16sp</dimen>
 
+    <dimen name="order_line_height">0.5dp</dimen>
 </resources>

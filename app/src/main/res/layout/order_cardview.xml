@@ -29,127 +29,179 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="@dimen/order_line_height"
                 android:id="@+id/order_view1"
                 android:layout_below="@+id/order_product_list"
                 android:layout_marginLeft="18dp"
                 android:layout_marginRight="18dp"
                 android:background="@color/black"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 />
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/order_id"
-                android:id="@+id/order_id"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
+                android:id="@+id/order_id_layout"
                 android:layout_below="@+id/order_view1"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="3dp"
-                />
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_id"
+                    android:id="@+id/order_id"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/order_text_size"
+                    android:layout_centerVertical="true"
+
+                    />
 
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/order_an_id"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/order_id"
+                    android:textSize="@dimen/order_text_an_size"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
+
+
+                    />
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#0125488759"
-                android:id="@+id/order_an_id"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_view1"
-                android:layout_toEndOf="@+id/order_id"
+                android:id="@+id/order_method_layout"
+                android:layout_below="@+id/order_id_layout"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="3dp"
-                />
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payment_method_field"
+                    android:id="@+id/order_method"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/order_text_size"
+                    android:layout_centerVertical="true"
 
-            <TextView
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/order_an_method"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/order_method"
+                    android:textSize="@dimen/order_text_an_size"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
+
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/payment_method_field"
-                android:id="@+id/order_method"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_id"
+                android:id="@+id/order_status_layout"
+                android:layout_below="@+id/order_method_layout"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="3dp"
-                />
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_status"
+                    android:id="@+id/order_status"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/order_text_size"
+                    android:layout_centerVertical="true"
+
+                    />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/order_an_status"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/order_status"
+                    android:textSize="@dimen/order_text_an_size"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
 
-            <TextView
+
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Credit Card"
-                android:id="@+id/order_an_method"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_id"
-                android:layout_toEndOf="@+id/order_method"
+                android:id="@+id/order_time_layout"
+                android:layout_below="@+id/order_status_layout"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="3dp"
-                />
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_time"
+                    android:id="@+id/order_time"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/order_text_size"
+                    android:layout_centerVertical="true"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/order_status"
-                android:id="@+id/order_status"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_method"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                />
+                    />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pending"
-
-                android:id="@+id/order_an_status"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_method"
-                android:layout_toEndOf="@+id/order_status"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/order_time"
-                android:id="@+id/order_time"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_status"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="7dp"
-                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/order_an_time"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/order_time"
+                    android:textSize="@dimen/order_text_an_size"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2019-1-5 11:15Pm"
-                android:id="@+id/order_an_time"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:layout_below="@+id/order_status"
-                android:layout_toEndOf="@+id/order_time"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="7dp"
-                />
+                    />
+            </RelativeLayout>
+
+
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="@dimen/order_line_height"
                 android:id="@+id/order_view2"
-                android:layout_below="@+id/order_time"
+                android:layout_below="@+id/order_time_layout"
                 android:layout_marginLeft="18dp"
                 android:layout_marginRight="18dp"
                 android:background="@color/black"
@@ -157,124 +209,89 @@
                 />
 
 
-            <TextView
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/coupon_discount"
-                android:id="@+id/coupon_discount"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
+                android:id="@+id/order_shipping_layout"
                 android:layout_below="@+id/order_view2"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                />
-            <TextView
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="3dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shipping_amount"
+                    android:id="@+id/shipping_ammount"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/order_text_size"
+                    android:layout_centerVertical="true"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/shipping_price"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/shipping_ammount"
+                    android:textSize="@dimen/order_text_an_size"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
+
+
+                    />
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50.00"
-                android:id="@+id/coupon_discount_price"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:typeface="serif"
-                android:layout_below="@+id/order_view2"
-                android:layout_toEndOf="@+id/coupon_discount"
+                android:id="@+id/order_totalprice_layout"
+                android:layout_below="@+id/order_shipping_layout"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                />
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="20dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_price"
+                    android:id="@+id/order_totalprice"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/order_text_size"
+                    android:layout_centerVertical="true"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=".EGP"
-                android:id="@+id/coupon_egp"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:typeface="serif"
-                android:layout_below="@+id/order_view2"
-                android:layout_toEndOf="@+id/coupon_discount_price"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="8dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/shipping_amount"
-                android:id="@+id/shipping_amount"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:layout_below="@+id/coupon_discount"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="50.00"
-                android:id="@+id/shipping_price"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:typeface="serif"
-                android:layout_below="@+id/coupon_discount"
-                android:layout_toEndOf="@+id/shipping_amount"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=".EGP"
-                android:id="@+id/shipping_egp"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:typeface="serif"
-                android:layout_below="@+id/coupon_discount"
-                android:layout_toEndOf="@+id/shipping_price"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="8dp"
-                />
+                    />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/total_price"
-                android:id="@+id/order_totalprice"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:layout_below="@+id/shipping_amount"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="50.00"
-                android:id="@+id/order_an_total_price"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:typeface="serif"
-                android:layout_below="@+id/shipping_amount"
-                android:layout_toEndOf="@+id/order_totalprice"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cairo"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/order_an_total_price"
+                    android:textColor="@color/black"
+                    android:layout_toEndOf="@+id/order_totalprice"
+                    android:textSize="@dimen/order_text_an_size"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=".EGP"
-                android:id="@+id/order_egp"
-                android:textColor="@color/dark_blue"
-                android:textSize="15sp"
-                android:typeface="serif"
-                android:layout_below="@+id/shipping_amount"
-                android:layout_toEndOf="@+id/order_antotalprice"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="10dp"
-                />
+
+                    />
+            </RelativeLayout>
+
+
+
 
 
 
