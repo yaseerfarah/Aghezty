@@ -145,7 +145,7 @@
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="@dimen/checkout_text_an_size"
-                    android:gravity="end"
+                    android:textAlignment="viewEnd"
 
                     android:layout_marginStart="10dp"
 
@@ -184,7 +184,7 @@
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="@dimen/checkout_text_an_size"
-                    android:gravity="end"
+                    android:textAlignment="viewEnd"
 
                     android:layout_marginStart="10dp"
 
@@ -215,17 +215,16 @@
 
 
                 <TextView
+                    android:id="@+id/an_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cairo"
                     android:layout_alignParentEnd="true"
-                    android:id="@+id/an_city"
-                    android:textColor="@color/dark_blue"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/checkout_text_an_size"
-                    android:layout_centerVertical="true"
-                    android:gravity="end"
                     android:layout_marginStart="10dp"
+                    android:text="Cairo"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/checkout_text_an_size"
+                    android:textStyle="bold"
 
 
                     />
@@ -262,7 +261,7 @@
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="@dimen/checkout_text_an_size"
-                    android:gravity="end"
+                    android:textAlignment="viewEnd"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
 

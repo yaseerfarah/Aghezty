@@ -103,7 +103,7 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
                     android:layout_toEndOf="@+id/card_address"
@@ -111,8 +111,10 @@
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="@dimen/myaddresses_an_text_size"
+                    android:textAlignment="viewEnd"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
 
 
                     />
@@ -145,7 +147,7 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
                     android:layout_toEndOf="@+id/card_city"
@@ -153,8 +155,10 @@
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="@dimen/myaddresses_an_text_size"
+                    android:textAlignment="viewEnd"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
 
 
                     />
@@ -183,7 +187,7 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
                     android:layout_toEndOf="@+id/card_governorate"
@@ -191,8 +195,10 @@
                     android:textColor="@color/dark_blue"
                     android:textStyle="bold"
                     android:textSize="@dimen/myaddresses_an_text_size"
+                    android:textAlignment="viewEnd"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
 
 
                     />

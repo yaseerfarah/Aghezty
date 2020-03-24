@@ -93,7 +93,7 @@
                     android:layout_toEndOf="@+id/name"
                     android:textSize="@dimen/checkout_text_an_size"
                     android:layout_centerVertical="true"
-                    android:gravity="end"
+                    android:textAlignment="viewEnd"
                     android:layout_marginStart="10dp"
 
 
@@ -134,7 +134,7 @@
                         android:layout_toEndOf="@id/email"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -176,7 +176,7 @@
                         android:layout_toEndOf="@id/phone"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -261,7 +261,7 @@
                         android:layout_toEndOf="@+id/city"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -299,7 +299,7 @@
                         android:layout_toEndOf="@+id/governorate"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -338,7 +338,7 @@
                         android:layout_toEndOf="@+id/address"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -422,7 +422,7 @@
                         android:layout_toEndOf="@+id/payment_method_t"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -467,7 +467,7 @@
                            android:layout_toEndOf="@+id/paypal_id"
                            android:textSize="@dimen/checkout_text_an_size"
                            android:layout_centerVertical="true"
-                           android:gravity="end"
+                           android:textAlignment="viewEnd"
                            android:layout_marginStart="10dp"
 
 
@@ -507,7 +507,7 @@
                            android:layout_toEndOf="@+id/paypal_state"
                            android:textSize="@dimen/checkout_text_an_size"
                            android:layout_centerVertical="true"
-                           android:gravity="end"
+                           android:textAlignment="viewEnd"
                            android:layout_marginStart="10dp"
 
 
@@ -595,7 +595,7 @@
                         android:layout_toEndOf="@+id/sub_total"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -637,7 +637,7 @@
                         android:layout_toEndOf="@+id/coupon_discount"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -676,7 +676,7 @@
                         android:layout_toEndOf="@+id/shipping_ammount"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
@@ -716,7 +716,7 @@
                         android:layout_toEndOf="@+id/total_price_t"
                         android:textSize="@dimen/checkout_text_an_size"
                         android:layout_centerVertical="true"
-                        android:gravity="end"
+                        android:textAlignment="viewEnd"
                         android:layout_marginStart="10dp"
 
 
