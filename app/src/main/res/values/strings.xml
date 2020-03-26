@@ -116,6 +116,9 @@
     <string name="pay_with_paypal">Pay with <b>Paypal</b></string>
     <string name="paypal_id">Payment ID</string>
     <string name="paypal_state">Payment State</string>
+    <string name="checkout_total_price">Order Total Price</string>
+    <string name="no_order">You have no Order yet</string>
+    <string name="my_orders">My Orders</string>
 
 
     <string-array name="price_range_filter">

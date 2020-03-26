@@ -273,6 +273,11 @@ public class Profile extends Fragment implements InternetStatus {
                         navController.navigate(R.id.action_profile_to_changePassword);
                         break;
 
+
+                    case R.id.order:
+                        navController.navigate(R.id.action_profile_to_order);
+                        break;
+
                     case R.id.log_out:
                         userViewModel.logOut();
                         navController.navigateUp();

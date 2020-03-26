@@ -24,7 +24,12 @@ public class CartInfo {
     @SerializedName("total_price")
     private int pro_totalPrice;
 
-    private String pro_name_en,pro_name_ar,pro_imageUrl;
+    @SerializedName("title_en")
+    private String pro_name_en;
+    @SerializedName("title_ar")
+    private String pro_name_ar;
+    @SerializedName("main_image")
+    private String pro_imageUrl;
 
 
     public CartInfo(int product_id, int quantity, int pro_price, int pro_totalPrice, String pro_name_en, String pro_name_ar, String pro_imageUrl) {

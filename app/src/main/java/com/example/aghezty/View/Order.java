@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -65,6 +67,15 @@ public class Order extends Fragment implements InternetStatus {
             @Override
             public void onChanged(List<OrderInfo> orderInfos) {
 
+                if (!orderInfos.isEmpty()) {
+                    Collections.reverse(orderInfos);
+                    orderCardViewAdapter.updateOrderList(orderInfos);
+                    statefulLayout.showContent();
+                    orderInfoList.clear();
+                    orderInfoList.addAll(orderInfos);
+                }else {
+                    statefulLayout.showEmpty(getResources().getString(R.string.no_order));
+                }
 
             }
 
@@ -79,6 +90,7 @@ public class Order extends Fragment implements InternetStatus {
         netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         getActivity().registerReceiver(networkReceiver,netFilter);
 
+        userViewModel.getOrderInfoListMediatorLiveData().observe(this,orderObserver);
 
     }
 
@@ -87,6 +99,7 @@ public class Order extends Fragment implements InternetStatus {
     public void onStop() {
         super.onStop();
         getActivity().unregisterReceiver(networkReceiver);
+        userViewModel.getOrderInfoListMediatorLiveData().removeObservers(this);
     }
 
     @Override
@@ -113,7 +126,7 @@ public class Order extends Fragment implements InternetStatus {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        ButterKnife.bind(this,view);
         orderCardViewAdapter=new OrderCardViewAdapter(getContext(),orderInfoList);
 
         orderRecycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
@@ -123,7 +136,9 @@ public class Order extends Fragment implements InternetStatus {
 
     @Override
     public void Connect() {
-        statefulLayout.showContent();
+            statefulLayout.showLoading(" ");
+            userViewModel.getUserOrders();
+
     }
 
     @Override

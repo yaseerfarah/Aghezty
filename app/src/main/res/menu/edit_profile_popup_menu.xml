@@ -18,9 +18,16 @@
         android:title="@string/change_password"
 
         />
+
+    <item
+        android:id="@+id/order"
+        android:title="@string/my_orders"
+        />
+
     <item
         android:id="@+id/log_out"
         android:title="@string/logout"
         />
+
 
 </menu>

@@ -119,6 +119,9 @@
     <string name="pay_with_paypal">Pay with <b>Paypal</b></string>
     <string name="paypal_id">رقم الدفع</string>
     <string name="paypal_state">حالة الدفع</string>
+    <string name="checkout_total_price">Order Total Price</string>
+    <string name="no_order">ليس لديك طلبات</string>
+    <string name="my_orders">طلباتي</string>
 
 
     <string-array name="price_range_filter">

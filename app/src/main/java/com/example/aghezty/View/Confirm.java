@@ -164,7 +164,7 @@ public class Confirm extends Fragment {
         numberFormat=NumberFormat.getInstance(Locale.US);
 
         done.setOnClickListener(v -> {
-            navController.navigateUp();
+            navController.navigate(R.id.action_global_order);
 
         });
 

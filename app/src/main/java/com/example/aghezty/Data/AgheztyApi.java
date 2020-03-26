@@ -7,6 +7,7 @@ import com.example.aghezty.POJO.CheckOutInfo;
 import com.example.aghezty.POJO.CitiesResponse;
 import com.example.aghezty.POJO.GovernorateResponse;
 import com.example.aghezty.POJO.HomeResponse;
+import com.example.aghezty.POJO.OrderResponse;
 import com.example.aghezty.POJO.ParentCategoriesResponse;
 import com.example.aghezty.POJO.ProductFilterResponse;
 import com.example.aghezty.POJO.InnerProductResponse;
@@ -66,6 +67,8 @@ public interface AgheztyApi {
 
 
 
+    @GET("order")
+    Single<Response<OrderResponse>> getUserOrders();
 
 
     @GET("client")

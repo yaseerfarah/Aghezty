@@ -367,53 +367,53 @@
                     android:layout_centerHorizontal="true"
                     >
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_facebook"
                         android:id="@+id/facebook"
+                        app:srcCompat="@drawable/ic_facebook"
                         />
 
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_whatsapp"
                         android:id="@+id/whatsapp"
                         android:layout_toEndOf="@+id/facebook"
                         android:layout_marginStart="20dp"
+                        app:srcCompat="@drawable/ic_whatsapp"
                         />
 
 
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_call"
                         android:id="@+id/call"
                         android:layout_toEndOf="@+id/whatsapp"
                         android:layout_marginStart="20dp"
+                        app:srcCompat="@drawable/ic_call"
                         />
 
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_message"
                         android:id="@+id/message"
                         android:layout_toEndOf="@+id/call"
                         android:layout_marginStart="20dp"
+                        app:srcCompat="@drawable/ic_message"
                         />
 
 
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_email"
                         android:id="@+id/send_email"
                         android:layout_toEndOf="@+id/message"
                         android:layout_marginStart="20dp"
+                        app:srcCompat="@drawable/ic_email"
                         />
 
                 </RelativeLayout>
@@ -430,21 +430,22 @@
                     >
 
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_visa"
                         android:id="@+id/visa"
                         android:layerType="software"
+                        app:srcCompat="@drawable/ic_visa"
                         />
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_mastercard"
                         android:id="@+id/master"
                         android:layout_toEndOf="@+id/visa"
                         android:layout_marginStart="20dp"
+                        app:srcCompat="@drawable/ic_mastercard"
                         />
 
 

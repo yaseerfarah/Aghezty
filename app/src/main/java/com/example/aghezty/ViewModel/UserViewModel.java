@@ -33,6 +33,8 @@ import com.example.aghezty.POJO.GovernorateResponse;
 import com.example.aghezty.POJO.HomeData;
 import com.example.aghezty.POJO.HomeResponse;
 import com.example.aghezty.POJO.InnerProductResponse;
+import com.example.aghezty.POJO.OrderInfo;
+import com.example.aghezty.POJO.OrderResponse;
 import com.example.aghezty.POJO.ParentCategoriesResponse;
 import com.example.aghezty.POJO.PayPalPaymentDetails;
 import com.example.aghezty.POJO.ProductFilterData;
@@ -87,6 +89,7 @@ public class UserViewModel extends ViewModel {
     private MediatorLiveData<List<CityInfo>> citiesListMediatorLiveData;
     private MediatorLiveData<List<CartInfo>> cartListMediatorLiveData;
     private MediatorLiveData<List<AddressInfo>> addressListMediatorLiveData;
+    private MediatorLiveData<List<OrderInfo>> orderListMediatorLiveData;
 
 
 
@@ -94,6 +97,7 @@ public class UserViewModel extends ViewModel {
     private List<CityInfo> cityInfoList;
     private List<CartInfo> cartInfolist;
     private List<AddressInfo> addressInfoList;
+    private List<OrderInfo> orderInfoList;
 
     private int couponDiscount;
 
@@ -123,12 +127,14 @@ public class UserViewModel extends ViewModel {
         this.citiesListMediatorLiveData=new MediatorLiveData<>();
         this.cartListMediatorLiveData=new MediatorLiveData<>();
         this.addressListMediatorLiveData=new MediatorLiveData<>();
+        this.orderListMediatorLiveData=new MediatorLiveData<>();
 
 
         this.governorateInfoList=new ArrayList<>();
         this.cityInfoList=new ArrayList<>();
         this.cartInfolist=new ArrayList<>();
         this.addressInfoList=new ArrayList<>();
+        this.orderInfoList=new ArrayList<>();
 
 
         this.isLogin=checkIsLogin();
@@ -183,6 +189,10 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<List<AddressInfo>> getAddressListMediatorLiveData() {
         return addressListMediatorLiveData;
+    }
+
+    public LiveData<List<OrderInfo>> getOrderInfoListMediatorLiveData() {
+        return orderListMediatorLiveData;
     }
 
 
@@ -721,6 +731,41 @@ public class UserViewModel extends ViewModel {
 
 
     }
+
+    public void getUserOrders(){
+
+
+            disposables.add(agheztyApi.getUserOrders()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(orderResponseResponse -> {
+                        if (orderResponseResponse.isSuccessful()) {
+                            OrderResponse orderResponse=orderResponseResponse.body();
+                            if (orderResponse != null && orderResponse.getOrderInfoList() != null) {
+                                orderInfoList.clear();
+                                orderInfoList.addAll(orderResponse.getOrderInfoList());
+                            }
+
+                            orderListMediatorLiveData.postValue(orderInfoList);
+
+                        } else {
+
+                            Gson gson = new Gson();
+                            //  Log.e("Response",responseBodyResponse.errorBody().string());
+                            ErrorResponse errorResponse = gson.fromJson(orderResponseResponse.errorBody().string(), ErrorResponse.class);
+                            for (String message : errorResponse.getMessages()) {
+                                Log.e("Update Pass Response", message);
+                                Toasty.error(context, message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, this::onError)
+
+            );
+
+
+
+    }
+
 
 
     public void getCouponDiscount(String coupon, CheckCoupon checkCoupon){

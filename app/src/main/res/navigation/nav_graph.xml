@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_profile_to_myAddresses"
             app:destination="@id/myAddresses" />
+        <action
+            android:id="@+id/action_profile_to_order"
+            app:destination="@id/order" />
     </fragment>
     <fragment
         android:id="@+id/cat"
@@ -127,5 +130,15 @@
         android:id="@+id/confirm2"
         android:name="com.example.aghezty.View.Confirm"
         android:label="fragment_confirm"
-        tools:layout="@layout/fragment_confirm" />
+        tools:layout="@layout/fragment_confirm" >
+    </fragment>
+    <fragment
+        android:id="@+id/order"
+        android:name="com.example.aghezty.View.Order"
+        android:label="fragment_order"
+        tools:layout="@layout/fragment_order" />
+    <action
+        android:id="@+id/action_global_order"
+        app:destination="@id/order"
+        app:popUpTo="@+id/home" />
 </navigation>

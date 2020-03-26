@@ -245,7 +245,7 @@ public class CheckOut extends Fragment implements InternetStatus , PaypalSubmit 
         payPalPaymentDetails=new PayPalPaymentDetails();
         payPalPaymentDetails.setPaymentAmount(String.valueOf(total));
         PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(total)),"USD",
-                "Order Total Price",PayPalPayment.PAYMENT_INTENT_SALE);
+                getResources().getString(R.string.checkout_total_price),PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(getContext(), PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
