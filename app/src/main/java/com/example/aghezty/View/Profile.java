@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -99,14 +100,20 @@ public class Profile extends Fragment implements InternetStatus {
     ImageButton editProfile;
 
 
-    @BindView(R.id.language)
-    ImageButton language;
+    @BindView(R.id.my_language_card)
+    CardView language;
 
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
 
     @BindView(R.id.progress)
     ProgressBar progressBar;
+
+    @BindView(R.id.my_order_card)
+    CardView myOrders;
+
+    @BindView(R.id.my_addresses_card)
+    CardView myAddress;
 
 
     @BindView(R.id.root)
@@ -192,10 +199,24 @@ public class Profile extends Fragment implements InternetStatus {
 
         language.setOnClickListener(v -> {
 
-           languagePopUp_Menu();
+            if (localeLanguage.getDisplayLanguage().matches(Locale.ENGLISH.getDisplayLanguage())){
+                setLocale("ar");
+            }else {
+                setLocale("en");
+            }
 
         });
 
+
+
+        myOrders.setOnClickListener(v -> {
+            navController.navigate(R.id.action_profile_to_order);
+        });
+
+
+        myAddress.setOnClickListener(v -> {
+            navController.navigate(R.id.action_profile_to_myAddresses);
+        });
 
     }
 
@@ -265,17 +286,8 @@ public class Profile extends Fragment implements InternetStatus {
                         navController.navigate(R.id.action_profile_to_editProfile);
                         break;
 
-                    case R.id.my_addresses:
-                        navController.navigate(R.id.action_profile_to_myAddresses);
-                        break;
-
                     case R.id.new_password:
                         navController.navigate(R.id.action_profile_to_changePassword);
-                        break;
-
-
-                    case R.id.order:
-                        navController.navigate(R.id.action_profile_to_order);
                         break;
 
                     case R.id.log_out:

@@ -114,7 +114,7 @@ public class Register2 extends Fragment implements InternetStatus {
                 List<String> items=new ArrayList<>();
 
                 for (GovernorateInfo governorateInfo:governorateInfos){
-                    items.add(governorateInfo.getGovernorate_en());
+                    items.add(governorateInfo.getGovernorate());
                 }
 
                 ArrayAdapter arrayAdapter=new ArrayAdapter(getContext(),R.layout.text_spinner_layout,items);
@@ -139,7 +139,7 @@ public class Register2 extends Fragment implements InternetStatus {
                 List<String> items=new ArrayList<>();
 
                 for (CityInfo cityInfo:cityInfos){
-                    items.add(cityInfo.getCity_en());
+                    items.add(cityInfo.getCity());
                 }
 
                 ArrayAdapter arrayAdapter=new ArrayAdapter(getContext(),R.layout.text_spinner_layout,items);

@@ -61,6 +61,7 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
     private List<ProductInfo> products;
     int type;
     private NavController navController;
+    private int noOfLinesVisible;
 
 
     public ProductCardViewAdapter(Context context, List<ProductInfo> products, int type, NavController navController) {
@@ -119,35 +120,23 @@ public class ProductCardViewAdapter extends RecyclerView.Adapter<ProductCardView
                 .into(holder.pro_image);
 
 
-       /* if(type==HOME){
-            if(products.get(holder.getAdapterPosition()).getTitle_en().trim().toCharArray().length>10){
 
-                String title="";
-
-                for(int i=0;i<10;i++){
-                    title+=products.get(holder.getAdapterPosition()).getTitle_en().toString().charAt(i);
-                }
-                holder.name.setText(title+"...");
-            }
-            else {
-                holder.name.setText(products.get(holder.getAdapterPosition()).getTitle_en());
-            }
-        }
-        else {
-
-            holder.name.setText(products.get(holder.getAdapterPosition()).getTitle_en());
-        }*/
-
-
-       holder.name.post(() -> {
-
-           int noOfLinesVisible = holder.name.getHeight() / holder.name.getLineHeight();
-
+       if (noOfLinesVisible>0){
            holder.name.setText(products.get(holder.getAdapterPosition()).getTitile());
            holder.name.setMaxLines(noOfLinesVisible);
+       }else {
+           holder.name.post(() -> {
+
+               noOfLinesVisible = holder.name.getHeight() / holder.name.getLineHeight();
+
+               holder.name.setText(products.get(holder.getAdapterPosition()).getTitile());
+               holder.name.setMaxLines(noOfLinesVisible);
 
 
-       });
+           });
+       }
+
+
 
 
 

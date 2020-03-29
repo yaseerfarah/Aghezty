@@ -122,6 +122,8 @@
     <string name="checkout_total_price">Order Total Price</string>
     <string name="no_order">ليس لديك طلبات</string>
     <string name="my_orders">طلباتي</string>
+    <string name="language">اللغة</string>
+    <string name="an_lang">الإنجليزية</string>
 
 
     <string-array name="price_range_filter">

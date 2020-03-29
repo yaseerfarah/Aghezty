@@ -9,7 +9,7 @@
 
             >
 
-            <solid android:color="@android:color/holo_blue_dark"/>
+            <solid android:color="@color/orange"/>
 
         </shape>
 
@@ -19,7 +19,7 @@
     </item>
 
 
-    <item android:drawable="@drawable/ic_add_black_24dp"
+    <item android:drawable="@drawable/ic_delivery"
         android:bottom="10dp"
         android:left="10dp"
         android:right="10dp"

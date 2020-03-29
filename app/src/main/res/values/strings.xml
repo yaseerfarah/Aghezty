@@ -119,6 +119,8 @@
     <string name="checkout_total_price">Order Total Price</string>
     <string name="no_order">You have no Order yet</string>
     <string name="my_orders">My Orders</string>
+    <string name="language">Language</string>
+    <string name="an_lang">Arabic</string>
 
 
     <string-array name="price_range_filter">

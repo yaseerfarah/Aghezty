@@ -85,6 +85,7 @@ public class ProductList extends Fragment implements InternetStatus {
     private final String TAG=getClass().getName();
 
     private boolean isLoading=false;
+    private boolean isFilter;
 
     @BindView(R.id.list_recyclerview)
     RecyclerView listRecycler;
@@ -121,8 +122,13 @@ public class ProductList extends Fragment implements InternetStatus {
                     productFilterData = productFilterData1;
 
                     productCardViewAdapter.updateProductList(productFilterData1.getProductList());
-                    productInfoList.clear();
-                    productInfoList.addAll(productFilterData1.getProductList());
+                    if (isFilter){
+                        listRecycler.scrollToPosition(0);
+                        isFilter=false;
+                    }
+
+                     productInfoList.clear();
+                     productInfoList.addAll(productFilterData1.getProductList());
                     isLoading = false;
 
                     root.setVisibility(View.VISIBLE);
@@ -346,6 +352,7 @@ public class ProductList extends Fragment implements InternetStatus {
     @Override
     public void Connect() {
         isOnline=true;
+       isFilter= productViewModel.isFilter();
         if (productViewModel.isFilter()) {
             productViewModel.getProductFilter();
             statefulLayout.showLoading(" ");

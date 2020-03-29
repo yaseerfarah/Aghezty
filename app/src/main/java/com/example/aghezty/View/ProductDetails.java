@@ -129,7 +129,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
      RelativeLayout evaluation;
 
     @BindView(R.id.evaluation_layout)
-     RelativeLayout evaluation_layout;
+     LinearLayout evaluation_layout;
     @BindView(R.id.details_layout)
      RelativeLayout details_layout;
 

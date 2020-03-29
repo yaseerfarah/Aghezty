@@ -99,6 +99,9 @@
     <dimen name="profile_image_radius">50dp</dimen>
     <dimen name="profile_shape_height">230dp</dimen>
     <dimen name="profile_info_margin">30dp</dimen>
+    <dimen name="profile_card_margin">20dp</dimen>
+    <dimen name="profile_icon_size">30dp</dimen>
+    <dimen name="profile_copyright_size">13sp</dimen>
 
 
 
@@ -225,6 +228,7 @@
     <dimen name="order_line_height">1dp</dimen>
     <dimen name="order_product_card_margin">10dp</dimen>
     <dimen name="order_card_margin">20dp</dimen>
+
 
 
 </resources>

@@ -60,6 +60,7 @@
     <dimen name="product_details_name_size">20sp</dimen>
     <dimen name="product_details_ex_price">18sp</dimen>
     <dimen name="product_details_dicount_text_size">16sp</dimen>
+    <dimen name="product_details_dicount_an_text_size">15sp</dimen>
     <dimen name="product_details_pro_price">20sp</dimen>
     <dimen name="product_details_egp">15sp</dimen>
     <dimen name="round_button">56dp</dimen>
@@ -104,6 +105,9 @@
     <dimen name="profile_image_radius">40dp</dimen>
     <dimen name="profile_shape_height">180dp</dimen>
     <dimen name="profile_info_margin">10dp</dimen>
+    <dimen name="profile_card_margin">10dp</dimen>
+    <dimen name="profile_icon_size">25dp</dimen>
+    <dimen name="profile_copyright_size">12sp</dimen>
 
 
     // Add New Address Layout

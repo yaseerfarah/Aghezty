@@ -9,19 +9,11 @@
         android:id="@+id/edit_profile"
         android:title="@string/edit_profile"
         />
-    <item
-        android:id="@+id/my_addresses"
-        android:title="@string/my_addresses"
-        />
+
     <item
         android:id="@+id/new_password"
         android:title="@string/change_password"
 
-        />
-
-    <item
-        android:id="@+id/order"
-        android:title="@string/my_orders"
         />
 
     <item

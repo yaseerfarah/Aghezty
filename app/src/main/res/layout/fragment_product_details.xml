@@ -151,7 +151,7 @@
 
 
                         <RelativeLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/vtitle"
                             android:id="@+id/ex_dis"
@@ -443,7 +443,6 @@
                         android:layout_marginBottom="10dp"
                         android:id="@+id/details_layout"
                         android:layout_below="@+id/tab"
-android:visibility="gone"
                         >
 
                         <RadioGroup
@@ -509,24 +508,26 @@ android:visibility="gone"
 
 
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_margin="10dp"
                         android:id="@+id/evaluation_layout"
                         android:layout_below="@+id/tab"
-android:visibility="gone"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:visibility="gone"
                         >
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="15dp"
                             android:id="@+id/text"
+                            android:layout_weight="0"
+                            android:orientation="vertical"
+
                             >
 
                             <TextView
@@ -545,13 +546,12 @@ android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/rate"
-                                android:layout_below="@+id/overall_rating"
                                 android:text="4.9/5"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/product_details_name_size"
                                 android:textColor="@color/orange"
                                 android:layout_marginTop="10dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center"
                                 />
 
 
@@ -560,9 +560,8 @@ android:visibility="gone"
                                 android:layout_height="wrap_content"
                                 style="?attr/ratingBarStyleSmall"
                                 android:id="@+id/rate_star"
-                                android:layout_below="@+id/rate"
                                 android:layout_marginTop="10dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center"
                                 android:rating="4.5"
                                 android:progressTint="@color/orange"
                                 />
@@ -572,28 +571,24 @@ android:visibility="gone"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/based_on"
                                 android:text="@string/based_on"
-                                android:layout_below="@+id/rate_star"
                                 android:textSize="@dimen/product_details_dicount_text_size"
                                 android:textColor="@color/dark_blue"
                                 android:layout_marginTop="10dp"
-                                android:layout_centerHorizontal="true"
-                                />
+                                android:layout_gravity="center"                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/num_rate"
                                 android:text="36"
-                                android:layout_below="@+id/based_on"
                                 android:textSize="@dimen/product_details_dicount_text_size"
                                 android:textStyle="bold"
                                 android:textColor="@color/dark_blue"
                                 android:layout_marginTop="10dp"
-                                android:layout_centerHorizontal="true"
-                                />
+                                android:layout_gravity="center"/>
 
 
-                        </RelativeLayout>
+                        </LinearLayout>
 
 
 
@@ -604,6 +599,7 @@ android:visibility="gone"
                             android:layout_marginTop="30dp"
                             android:layout_marginStart="10dp"
                             android:id="@+id/progress"
+                            android:layout_weight="1"
                             >
 
 
@@ -783,7 +779,7 @@ android:visibility="gone"
 
 
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     </RelativeLayout>
 

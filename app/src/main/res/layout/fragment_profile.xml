@@ -157,25 +157,25 @@
 
                         >
                         <ImageButton
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentEnd="true"
+                            android:layout_width="@dimen/profile_icon_size"
+                            android:layout_height="@dimen/profile_icon_size"
+                            android:layout_alignParentRight="true"
                             android:backgroundTint="@color/grey"
                             android:id="@+id/setting"
                             android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/ic_settings_black_24dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/ic_edit_black_24dp"
                             />
 
                         <ImageButton
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_alignParentStart="true"
-                            android:backgroundTint="@color/grey"
                             android:id="@+id/language"
+                            android:visibility="gone"
                             android:layout_marginTop="10dp"
-                            android:layout_marginStart="10dp"
-                            android:background="@drawable/ic_language_black_24dp"
+                            android:layout_marginStart="15dp"
+                            android:background="@drawable/ic_lang"
                             />
 
 
@@ -186,7 +186,7 @@
                             android:layout_below="@+id/setting"
                             android:layout_marginStart="15dp"
                             android:layout_marginEnd="15dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             >
                             <TextView
                                 android:layout_width="wrap_content"
@@ -195,6 +195,7 @@
                                 android:id="@+id/first"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/profile_info_text_size"
+                                android:textStyle="bold"
                                 android:layout_centerVertical="true"
 
                                 />
@@ -234,6 +235,7 @@
                                 android:id="@+id/last"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/profile_info_text_size"
+                                android:textStyle="bold"
                                 android:layout_centerVertical="true"
 
                                 />
@@ -272,6 +274,7 @@
                                 android:id="@+id/email"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/profile_info_text_size"
+                                android:textStyle="bold"
                                 android:layout_centerVertical="true"
 
                                 />
@@ -310,6 +313,7 @@
                                 android:id="@+id/phone"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/profile_info_text_size"
+                                android:textStyle="bold"
                                 android:layout_centerVertical="true"
 
                                 />
@@ -350,12 +354,204 @@
 
 
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_order_card"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/profile_info_margin"
+                android:layout_marginStart="@dimen/profile_info_margin"
+                android:layout_below="@+id/center_view"
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/image_layout"
+                 android:layout_margin="@dimen/profile_card_margin"
+                    android:id="@+id/title_layout"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
+                        android:background="@drawable/ic_delivery"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_orders"
+                        android:id="@+id/card_title"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/profile_info_text_size"
+                        android:layout_weight="2"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
+                        android:background="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        android:backgroundTint="@color/grey"
+                        android:layout_gravity="center_vertical"
+                        />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_addresses_card"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="@dimen/profile_info_margin"
+                android:layout_marginEnd="@dimen/profile_info_margin"
+                android:layout_below="@+id/my_order_card"
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/image_layout"
+                    android:layout_margin="@dimen/profile_card_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
+                        android:background="@drawable/ic_address"
+                        android:backgroundTint="@color/grey"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_addresses"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/profile_info_text_size"
+                        android:layout_weight="2"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
+                        android:background="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        android:backgroundTint="@color/grey"
+                        android:layout_gravity="center_vertical"
+                        />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_language_card"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="@dimen/profile_info_margin"
+                android:layout_marginEnd="@dimen/profile_info_margin"
+                android:layout_marginBottom="@dimen/profile_info_margin"
+                android:layout_below="@+id/my_addresses_card"
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/profile_card_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
+                        android:background="@drawable/ic_language_black_24dp"
+                        android:backgroundTint="@color/grey"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/language"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/profile_info_text_size"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/an_lang"
+                        android:gravity="end"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/profile_info_text_size"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <ImageButton
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
+                        android:background="@drawable/ic_lang"
+                        android:layout_marginStart="20dp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lower_view"
-                android:layout_below="@+id/center_view"
+                android:layout_below="@+id/my_language_card"
                 android:layout_marginTop="20dp"
 
                 >
@@ -368,16 +564,16 @@
                     >
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
                         android:id="@+id/facebook"
                         app:srcCompat="@drawable/ic_facebook"
                         />
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
                         android:id="@+id/whatsapp"
                         android:layout_toEndOf="@+id/facebook"
                         android:layout_marginStart="20dp"
@@ -387,8 +583,8 @@
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
                         android:id="@+id/call"
                         android:layout_toEndOf="@+id/whatsapp"
                         android:layout_marginStart="20dp"
@@ -397,8 +593,8 @@
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
                         android:id="@+id/message"
                         android:layout_toEndOf="@+id/call"
                         android:layout_marginStart="20dp"
@@ -408,8 +604,8 @@
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/profile_icon_size"
+                        android:layout_height="@dimen/profile_icon_size"
                         android:id="@+id/send_email"
                         android:layout_toEndOf="@+id/message"
                         android:layout_marginStart="20dp"
@@ -459,7 +655,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/aghezty_com_2020_all_rights_reserved"
                     android:layout_marginTop="10dp"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/profile_copyright_size"
                     android:textStyle="bold"
                     android:layout_below="@+id/visa_master"
                     android:textColor="@android:color/darker_gray"

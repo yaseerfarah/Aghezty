@@ -435,6 +435,7 @@
                    android:layout_below="@+id/payment_method_layout"
                    android:layout_marginTop="20dp"
                    android:id="@+id/paypal_info"
+                   android:visibility="gone"
                    >
 
                    <RelativeLayout

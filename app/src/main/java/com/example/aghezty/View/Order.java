@@ -98,6 +98,7 @@ public class Order extends Fragment implements InternetStatus {
     @Override
     public void onStop() {
         super.onStop();
+        orderInfoList.clear();
         getActivity().unregisterReceiver(networkReceiver);
         userViewModel.getOrderInfoListMediatorLiveData().removeObservers(this);
     }
