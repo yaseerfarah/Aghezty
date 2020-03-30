@@ -212,10 +212,10 @@ public class Categories extends Fragment implements OnParentCategoryClick , Inte
 
 
     @Override
-    public void onClick(int id,int type) {
+    public void onClick(FilterInfo filterInfo) {
 
-        if (type==FilterInfo.CATEGORY){
-            getSubCategory(id);
+        if (filterInfo.getType()==FilterInfo.CATEGORY){
+            getSubCategory(filterInfo.getId());
 
         }else {
             getSubBrand();

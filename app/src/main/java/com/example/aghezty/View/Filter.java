@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -32,8 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aghezty.Adapter.FilterOrderCardViewAdapter;
+import com.example.aghezty.Adapter.FilterParentCategoryCardViewAdapter;
 import com.example.aghezty.BroadcastReceiver.NetworkReceiver;
 import com.example.aghezty.Interface.InternetStatus;
+import com.example.aghezty.Interface.OnParentCategoryClick;
 import com.example.aghezty.POJO.BrandInfo;
 import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.FilterInfo;
@@ -60,10 +63,13 @@ import static com.example.aghezty.Adapter.FilterOrderCardViewAdapter.ORDER;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Filter extends Fragment implements InternetStatus {
+public class Filter extends Fragment implements InternetStatus , OnParentCategoryClick {
 
 
     static public final String IS_OFFERS="isOffers";
+
+
+
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -73,11 +79,14 @@ public class Filter extends Fragment implements InternetStatus {
     private NavController navController;
 
 
+    private FilterParentCategoryCardViewAdapter filterParentCategoryCardViewAdapter;
 
-    List<FilterInfo> heavyMachines=new ArrayList<>();
-    List<FilterInfo> lightDevices=new ArrayList<>();
+
+    List<FilterInfo> filterParentList=new ArrayList<>();
+
+    List<CategoryInfo> parentCategoryInfoList=new ArrayList<>();
     List<FilterInfo> brandInfoList=new ArrayList<>();
-    List<String> priceRange;
+    List<FilterInfo> priceRange=new ArrayList<>();
 
 
     List<FilterInfo> categories_select=new ArrayList<>();
@@ -88,27 +97,13 @@ public class Filter extends Fragment implements InternetStatus {
     boolean isparentCatDone=false;
     boolean isBrandCatDone=false;
 
-    @BindView(R.id.heavy_sub_cat)
-    RelativeLayout heavy_layout;
-    @BindView(R.id.light_sub_cat)
-    RelativeLayout light_layout;
-    @BindView(R.id.brand_sub_cat)
-    RelativeLayout brand_layout;
-    @BindView(R.id.price_sub_cat)
-    RelativeLayout price_layout;
 
     @BindView(R.id.root)
     RelativeLayout root;
 
 
-    @BindView(R.id.heavy_choice)
-    TextView heavy_choice;
-    @BindView(R.id.light_choice)
-    TextView light_choice;
-    @BindView(R.id.brand_choice)
-    TextView brand_choice;
-    @BindView(R.id.price_choice)
-    TextView price_choice;
+    @BindView(R.id.filter_recycler_list)
+    RecyclerView filterRecycler;
 
     @BindView(R.id.clear)
     TextView clear_choices;
@@ -137,23 +132,9 @@ public class Filter extends Fragment implements InternetStatus {
             public void onChanged(List<CategoryInfo> categoryInfos) {
                 if (categoryInfos!=null&&!isparentCatDone){
 
-                    for (CategoryInfo categoryInfo:categoryInfos){
 
-                        if (categoryInfo.getId()==3&&categoryInfo.getSub_cats()!=null){
+                    parentCategoryInfoList.addAll(categoryInfos);
 
-                            for (CategoryInfo Info:categoryInfo.getSub_cats()){
-                                heavyMachines.add(new FilterInfo( Info.getId(),Info.getTitle_en(),Info.getTitle_ar(),null,FilterInfo.CATEGORY));
-                            }
-
-
-                        }else if (categoryInfo.getId()==13&&categoryInfo.getSub_cats()!=null){
-                            for (CategoryInfo Info:categoryInfo.getSub_cats()){
-                                lightDevices.add(new FilterInfo( Info.getId(),Info.getTitle_en(),Info.getTitle_ar(),null,FilterInfo.CATEGORY));
-                            }
-
-                        }
-
-                    }
 
                     isparentCatDone=true;
                     progress();
@@ -217,9 +198,23 @@ public class Filter extends Fragment implements InternetStatus {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
         productViewModel= ViewModelProviders.of(this,viewModelFactory).get(ProductViewModel.class);
-        priceRange= Arrays.asList(getResources().getStringArray(R.array.price_range_filter));
         isOffers=getArguments().getBoolean(IS_OFFERS);
         networkReceiver=new NetworkReceiver(this);
+
+
+        List<String> priceList= Arrays.asList(getResources().getStringArray(R.array.price_range_filter));
+
+
+        priceRange.add(new FilterInfo(0,priceList.get(0),priceList.get(0),null,FilterInfo.PRICE) );
+        priceRange.add(new FilterInfo(1000,priceList.get(1),priceList.get(1),null,FilterInfo.PRICE) );
+        priceRange.add(new FilterInfo(3000,priceList.get(2),priceList.get(2),null,FilterInfo.PRICE) );
+        priceRange.add(new FilterInfo(6000,priceList.get(3),priceList.get(3),null,FilterInfo.PRICE) );
+        priceRange.add(new FilterInfo(10000,priceList.get(4),priceList.get(4),null,FilterInfo.PRICE) );
+        priceRange.add(new FilterInfo(20000,priceList.get(5),priceList.get(5),null,FilterInfo.PRICE) );
+
+
+
+
     }
 
 
@@ -239,53 +234,18 @@ public class Filter extends Fragment implements InternetStatus {
 
        // progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getContext(), R.color.orange), PorterDuff.Mode.SRC_IN);
 
-
-
         navController= Navigation.findNavController(view);
 
-        priceRange_select.add(new FilterInfo(0,priceRange.get(0),priceRange.get(0),null,FilterInfo.CATEGORY));
+        priceRange_select.add(priceRange.get(0));
 
-        heavy_layout.setOnClickListener(v -> {
+        filterParentCategoryCardViewAdapter=new FilterParentCategoryCardViewAdapter(getContext(),filterParentList,this);
 
+        filterRecycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
 
-
-            create_dialog(getResources().getString(R.string.heavy_machines),heavyMachines,categories_select,heavy_choice,FILTER);
-
-        });
-
-        light_layout.setOnClickListener(v -> {
+        filterRecycler.setAdapter(filterParentCategoryCardViewAdapter);
 
 
-
-            create_dialog(getResources().getString(R.string.light_devices),lightDevices,categories_select,light_choice,FILTER);
-
-        });
-
-
-        brand_layout.setOnClickListener(v -> {
-
-
-
-            create_dialog(getResources().getString(R.string.brand),brandInfoList,brandInfoList_select,brand_choice,FILTER);
-
-        });
-
-
-        price_layout.setOnClickListener(v -> {
-
-            List<FilterInfo>items=new ArrayList<>();
-
-            items.add(new FilterInfo(0,priceRange.get(0),priceRange.get(0),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(1000,priceRange.get(1),priceRange.get(1),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(3000,priceRange.get(2),priceRange.get(2),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(6000,priceRange.get(3),priceRange.get(3),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(10000,priceRange.get(4),priceRange.get(4),null,FilterInfo.CATEGORY) );
-            items.add(new FilterInfo(20000,priceRange.get(5),priceRange.get(5),null,FilterInfo.CATEGORY) );
-
-
-
-            create_dialog(getResources().getString(R.string.price),items,priceRange_select,price_choice,ORDER);
-        });
+        //create_dialog(getResources().getString(R.string.price),items,priceRange_select,price_choice,ORDER);
 
 
 
@@ -319,14 +279,26 @@ public class Filter extends Fragment implements InternetStatus {
 
         if (isBrandCatDone&&isparentCatDone){
 
-          statefulLayout.showContent();
+            filterParentList.clear();
+
+            for (CategoryInfo categoryInfo:parentCategoryInfoList){
+                if (!categoryInfo.getSub_cats().isEmpty())
+                filterParentList.add(new FilterInfo(categoryInfo.getId(),categoryInfo.getTitle_en(),categoryInfo.getTitle_ar(),null,FilterInfo.CATEGORY));
+            }
+
+            filterParentList.add(new FilterInfo(0,getResources().getString(R.string.brand),getResources().getString(R.string.brand),null,FilterInfo.BRAND));
+            filterParentList.add(new FilterInfo(0,getResources().getString(R.string.price),getResources().getString(R.string.price),null,FilterInfo.PRICE));
+
+            filterParentCategoryCardViewAdapter.notifyDataSetChanged();
+
+            statefulLayout.showContent();
 
         }
     }
 
 
 
-    private void create_dialog(String name, List<FilterInfo> items,List<FilterInfo> selected,TextView choice, int type){
+    private void createFilterItemsdialog(String name, List<FilterInfo> items,List<FilterInfo> selected, int type){
 
 
         final Dialog dialog=new Dialog(getContext());
@@ -349,9 +321,7 @@ public class Filter extends Fragment implements InternetStatus {
             selected.addAll(filterOrderCardViewAdapter.getItemListSelected());
            // Toast.makeText(getContext(),String.valueOf(categories_select.size()),Toast.LENGTH_SHORT).show();
             if (!selected.isEmpty()) {
-                choice.setText(selected.get(0).getName());
             }else {
-                choice.setText("Nothing");
             }
             dialog.dismiss();
 
@@ -381,10 +351,57 @@ public class Filter extends Fragment implements InternetStatus {
 
         }
 
+    }
 
+
+
+
+    private List<FilterInfo> getSubCategory(int id){
+
+        List<FilterInfo> subCategoryList=new ArrayList<>();
+
+        for (CategoryInfo categoryInfo:parentCategoryInfoList){
+
+            if (categoryInfo.getId()==id){
+
+                for (CategoryInfo categoryInfo1:categoryInfo.getSub_cats()){
+
+                    subCategoryList.add(new FilterInfo(categoryInfo1.getId(),categoryInfo1.getTitle_en(),categoryInfo1.getTitle_ar(),categoryInfo1.getImage(),FilterInfo.CATEGORY));
+                }
+            }
+        }
+
+        return subCategoryList;
+
+    }
+
+
+
+
+
+
+
+    @Override
+    public void onClick(FilterInfo filterInfo) {
+
+        switch (filterInfo.getType()){
+            case FilterInfo.CATEGORY :
+                createFilterItemsdialog(filterInfo.getName(),getSubCategory(filterInfo.getId()),categories_select,FILTER);
+                break;
+
+            case FilterInfo.BRAND :
+                createFilterItemsdialog(getResources().getString(R.string.brand),brandInfoList,brandInfoList_select,FILTER);
+                break;
+
+            case FilterInfo.PRICE :
+                createFilterItemsdialog(getResources().getString(R.string.price),priceRange,priceRange_select,ORDER);
+                break;
+
+        }
 
 
     }
+
 
 
     @Override
@@ -402,4 +419,6 @@ public class Filter extends Fragment implements InternetStatus {
         statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
 
     }
+
+
 }

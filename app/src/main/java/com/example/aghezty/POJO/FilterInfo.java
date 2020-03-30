@@ -10,6 +10,7 @@ public class FilterInfo {
 
     static public final int CATEGORY=0;
     static public final int BRAND=1;
+    static public final int PRICE=2;
 
     int id;
     String name_en;

@@ -65,7 +65,7 @@ public class ParentCategoryCardViewAdapter extends RecyclerView.Adapter<ParentCa
 
             holder.textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
-            onParentCategoryClick.onClick(parentCategoryInfoList.get(holder.getAdapterPosition()).getId(),parentCategoryInfoList.get(holder.getAdapterPosition()).getType());
+            onParentCategoryClick.onClick(parentCategoryInfoList.get(holder.getAdapterPosition()));
             lastPressed=holder.textView;
 
         }
@@ -80,7 +80,7 @@ public class ParentCategoryCardViewAdapter extends RecyclerView.Adapter<ParentCa
 
             lastPressed=holder.textView;
 
-            onParentCategoryClick.onClick(parentCategoryInfoList.get(holder.getAdapterPosition()).getId(),parentCategoryInfoList.get(holder.getAdapterPosition()).getType());
+            onParentCategoryClick.onClick(parentCategoryInfoList.get(holder.getAdapterPosition()));
 
         });
 

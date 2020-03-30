@@ -81,6 +81,9 @@ public class Offers extends Fragment implements InternetStatus {
     private final String TAG=getClass().getName();
 
     private boolean isLoading=false;
+    private boolean isFilter;
+
+
     @BindView(R.id.list_recyclerview)
      RecyclerView listRecycler;
     @BindView(R.id.order_by)
@@ -126,6 +129,11 @@ public class Offers extends Fragment implements InternetStatus {
                     productCardViewAdapter.updateProductList(productFilterData1.getProductList());
                     productInfoList.clear();
                     productInfoList.addAll(productFilterData1.getProductList());
+
+                    if (isFilter){
+                        listRecycler.scrollToPosition(0);
+                        isFilter=false;
+                    }
 
                     isLoading = false;
                     // Toast.makeText(getContext(),"onchange",Toast.LENGTH_SHORT).show();
@@ -348,6 +356,7 @@ public class Offers extends Fragment implements InternetStatus {
     @Override
     public void Connect() {
         isOnline=true;
+        isFilter= productViewModel.isFilter();
         if (productViewModel.isFilter()) {
             productViewModel.getProductFilter();
             statefulLayout.showLoading(" ");
