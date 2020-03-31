@@ -360,7 +360,9 @@ public class Offers extends Fragment implements InternetStatus {
         if (productViewModel.isFilter()) {
             productViewModel.getProductFilter();
             statefulLayout.showLoading(" ");
-        }
+        }else {
+        statefulLayout.showContent();
+    }
 
 
 

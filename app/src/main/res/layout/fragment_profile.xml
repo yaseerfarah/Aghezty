@@ -156,16 +156,14 @@
                         android:layout_marginBottom="20dp"
 
                         >
-                        <ImageButton
+                        <ImageView
                             android:layout_width="@dimen/profile_icon_size"
                             android:layout_height="@dimen/profile_icon_size"
                             android:layout_alignParentRight="true"
-                            android:backgroundTint="@color/grey"
                             android:id="@+id/setting"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/ic_edit_black_24dp"
-                            />
+                            app:srcCompat="@drawable/ic_editui"                            />
 
                         <ImageButton
                             android:layout_width="25dp"
@@ -375,10 +373,10 @@
                     android:weightSum="2"
                     >
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="@dimen/profile_icon_size"
                         android:layout_height="@dimen/profile_icon_size"
-                        android:background="@drawable/ic_delivery"
+                        app:srcCompat="@drawable/ic_truck"
                         android:layout_gravity="center_vertical"
 
                         />
@@ -434,11 +432,10 @@
                     android:weightSum="2"
                     >
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="@dimen/profile_icon_size"
                         android:layout_height="@dimen/profile_icon_size"
-                        android:background="@drawable/ic_address"
-                        android:backgroundTint="@color/grey"
+                        app:srcCompat="@drawable/ic_my_address"
                         android:layout_gravity="center_vertical"
 
                         />
@@ -492,11 +489,10 @@
                     android:weightSum="2"
                     >
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="@dimen/profile_icon_size"
                         android:layout_height="@dimen/profile_icon_size"
-                        android:background="@drawable/ic_language_black_24dp"
-                        android:backgroundTint="@color/grey"
+                        app:srcCompat="@drawable/ic_language"
                         android:layout_gravity="center_vertical"
 
                         />
@@ -655,6 +651,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/aghezty_com_2020_all_rights_reserved"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:textSize="@dimen/profile_copyright_size"
                     android:textStyle="bold"
                     android:layout_below="@+id/visa_master"

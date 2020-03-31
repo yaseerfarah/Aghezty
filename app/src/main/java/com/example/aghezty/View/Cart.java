@@ -150,6 +150,7 @@ public class Cart extends Fragment implements InternetStatus {
     @Override
     public void onStart() {
         super.onStart();
+        currentSate=0;
         IntentFilter netFilter=new IntentFilter();
         netFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         getActivity().registerReceiver(networkReceiver,netFilter);
@@ -193,7 +194,7 @@ public class Cart extends Fragment implements InternetStatus {
 
         numberFormat=NumberFormat.getInstance(Locale.US);
 
-        statefulLayout.showLoading(" ");
+
         cartCardViewAdapter=new CartCardViewAdapter(getContext(),cartInfoList,userViewModel);
 
         cartRecycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));

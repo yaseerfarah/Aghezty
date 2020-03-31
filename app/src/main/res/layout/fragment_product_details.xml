@@ -50,7 +50,9 @@
            android:layout_below="@+id/home_bar">
 
 
-
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
 
 
         <RelativeLayout
@@ -68,7 +70,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/desc_add_tocart"
-            android:layout_marginBottom="2dp"
 
             >
 
@@ -837,6 +838,7 @@
 
         </RelativeLayout>
 
+           </RelativeLayout>
        </com.gturedi.views.StatefulLayout>
 
 

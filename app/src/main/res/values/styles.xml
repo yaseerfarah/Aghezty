@@ -17,7 +17,11 @@
 
 
     <style name="CustomInverseProgress" parent="android:Widget.Material.Light.ProgressBar.Small.Inverse">
-        <item name="colorAccent">@color/orange</item></style>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTintMode">src_in</item>
+        <item name="android:indeterminateTint">@color/orange</item>
+
+    </style>
 
     <style name="CustomSmallButton" parent="android:Widget.Button.Small">
         <item name="colorAccent">@color/orange</item>
@@ -34,6 +38,15 @@
 
     <style name="myPopupMenuTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Large">
         <item name="android:textSize">@dimen/popup_text_size</item>
+    </style>
+
+
+    <style name="stfProgress">
+        <item name="android:layout_width">@dimen/stfProgressSize</item>
+        <item name="android:layout_height">@dimen/stfProgressSize</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTintMode">src_in</item>
+        <item name="android:indeterminateTint">@color/orange</item>
     </style>
 
 </resources>

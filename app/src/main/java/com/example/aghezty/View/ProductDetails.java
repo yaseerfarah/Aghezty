@@ -170,6 +170,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
     private int page=0;
     private Timer timer;
     private boolean isStart=false;
+    private boolean isInnerProduct=false;
     private boolean isDescriptionEnglish;
 
     private NetworkReceiver networkReceiver;
@@ -181,10 +182,12 @@ public class ProductDetails extends Fragment implements InternetStatus {
         innerProductListener= new InnerProductListener() {
             @Override
             public void onSuccess(ProductInfo innerProduct) {
+                assignView(productInfo);
                 root.setVisibility(View.VISIBLE);
                 statefulLayout.showContent();
                 productInfo=innerProduct;
-                assignView(productInfo);
+                isInnerProduct=true;
+
                 if (innerProduct.getGallery().size()>1){
                     viewpager_timer(5);
                 }
@@ -269,7 +272,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
         }
 
 
-        statefulLayout.showLoading(" ");
+
 
 
         english.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -557,8 +560,8 @@ public class ProductDetails extends Fragment implements InternetStatus {
 
     @Override
     public void Connect() {
-        if (sliderInfoList.isEmpty()) {
-
+        if (!isInnerProduct) {
+            statefulLayout.showLoading(" ");
             productViewModel.getInnerProductByID(productInfo, innerProductListener);
 
         }else {

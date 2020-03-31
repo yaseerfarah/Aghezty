@@ -97,7 +97,7 @@ public class Profile extends Fragment implements InternetStatus {
     ImageView imageView;
 
     @BindView(R.id.setting)
-    ImageButton editProfile;
+    ImageView editProfile;
 
 
     @BindView(R.id.my_language_card)
