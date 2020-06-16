@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "191087664095",
+    "firebase_url": "https://ivas-apps.firebaseio.com",
+    "project_id": "ivas-apps",
+    "storage_bucket": "ivas-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191087664095:android:d9484dd1e5bef10071826a",
+        "android_client_info": {
+          "package_name": "com.example.aghezty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191087664095-e88hl0evuqu3g8ft2jfle3vdv0o5hle9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-6biComBFvZQnJm2_js811HpvHPHB-so"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191087664095-e88hl0evuqu3g8ft2jfle3vdv0o5hle9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191087664095:android:fc29b0ca5dfa884e71826a",
+        "android_client_info": {
+          "package_name": "eg.com.ivas.ivas_story_maker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191087664095-0jlbfqktluarmn8cm53p1l7p3r5ji7n8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eg.com.ivas.ivas_story_maker",
+            "certificate_hash": "4ce72b1271f7bde542269b27fd7922b203b76197"
+          }
+        },
+        {
+          "client_id": "191087664095-e88hl0evuqu3g8ft2jfle3vdv0o5hle9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-6biComBFvZQnJm2_js811HpvHPHB-so"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191087664095-e88hl0evuqu3g8ft2jfle3vdv0o5hle9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
