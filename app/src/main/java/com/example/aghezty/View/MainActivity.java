@@ -253,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(updateBaseContextLocale(base));
+
     }
 
     private Context updateBaseContextLocale(Context context) {

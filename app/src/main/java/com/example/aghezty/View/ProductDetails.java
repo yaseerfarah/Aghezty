@@ -3,6 +3,7 @@ package com.example.aghezty.View;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -47,6 +48,9 @@ import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -84,7 +88,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
     StatefulLayout statefulLayout;
 
     @BindView(R.id.v_view_pager)
-    ViewPager pro_image;
+    SliderView sliderView;
 
     @BindView(R.id.vtitle)
      TextView pro_title;
@@ -188,9 +192,9 @@ public class ProductDetails extends Fragment implements InternetStatus {
                 productInfo=innerProduct;
                 isInnerProduct=true;
 
-                if (innerProduct.getGallery().size()>1){
-                    viewpager_timer(5);
-                }
+               /* if (innerProduct.getGallery().size()>1){
+                    //viewpager_timer(5);
+                }*/
             }
 
             @Override
@@ -221,7 +225,7 @@ public class ProductDetails extends Fragment implements InternetStatus {
     public void onStop() {
         super.onStop();
         getActivity().unregisterReceiver(networkReceiver);
-        cancel_timer();
+        //cancel_timer();
 
     }
 
@@ -344,24 +348,17 @@ public class ProductDetails extends Fragment implements InternetStatus {
         sliderInfoList.addAll(productInfo.getGallery());
         sliderAdapter=new SliderAdapter(getContext(),sliderInfoList,getActivity(),DETAILS);
 
-        pro_image.setAdapter(sliderAdapter);
-
-        pro_image.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                page=position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        sliderView.setSliderAdapter(sliderAdapter);
+        sliderView.setIndicatorRadius(3);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+         sliderView.setInfiniteAdapterEnabled(false);
+        sliderView.setIndicatorSelectedColor(getResources().getColor(R.color.orange));
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setScrollTimeInSec(3);
+        sliderView.setAutoCycle(true);
+        sliderView.startAutoCycle();
 
         pro_title.setText(productInfo.getTitile());
 
@@ -402,10 +399,11 @@ public class ProductDetails extends Fragment implements InternetStatus {
         order_quantity.setText(String.valueOf(quantity));
 
         add_q.setOnClickListener(v -> {
-
-            quantity++;
-            pro_quantity.setText(String.valueOf(quantity));
-            order_quantity.setText(String.valueOf(quantity));
+            if (quantity<productInfo.getStock()) {
+                quantity++;
+                pro_quantity.setText(String.valueOf(quantity));
+                order_quantity.setText(String.valueOf(quantity));
+            }
 
         });
 
@@ -531,32 +529,8 @@ public class ProductDetails extends Fragment implements InternetStatus {
     }
 
 
-    /// timer for viewpager///////////
-
-    private void viewpager_timer(int second){
-
-        // page=viewPager.getCurrentItem();
-        // Toast.makeText(getActivity(),"timer",Toast.LENGTH_LONG).show();
-        if (!isStart) {
-            isStart=true;
-            timer = new Timer();
-            timer.schedule(new Timer_task(), 2 * 1000, second * 1000);
-        }
 
 
-
-    }
-
-
-    ////////// cancel Timer//////////////////
-
-    public void cancel_timer(){
-        if (timer!=null) {
-            timer.cancel();
-            isStart = false;
-        }
-
-    }
 
     @Override
     public void Connect() {
@@ -574,45 +548,6 @@ public class ProductDetails extends Fragment implements InternetStatus {
     public void notConnect() {
         statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
     }
-
-
-    //////////////////////////////// inner Class for Timer Task//////////////////////////////////////////////
-
-
-    class Timer_task extends TimerTask {
-
-
-
-
-
-        @Override
-        public void run() {
-
-            if(getActivity()!=null){
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if(page>sliderAdapter.getCount()){
-                            page=0;
-                        }
-                        else {
-                            page++;
-                        }
-                        pro_image.setCurrentItem(page);
-                    }
-                });
-            }
-
-
-
-        }
-    }
-
-
-
-
 
 
 }

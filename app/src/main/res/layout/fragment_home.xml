@@ -12,41 +12,7 @@
         android:layout_height="match_parent">
 
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:id="@+id/home_bar"
-            android:background="@android:color/white"
-
-            >
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/home_toolbar"
-                >
-
-
-
-                <ImageView
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_logo"
-                    android:layout_gravity="center"
-                    android:id="@+id/app_logo"
-                    />
-
-
-
-            </androidx.appcompat.widget.Toolbar>
-
-
-
-
-
-        </com.google.android.material.appbar.AppBarLayout>
+       <include layout="@layout/app_bar_layout"/>
 
 
        <com.gturedi.views.StatefulLayout
@@ -62,8 +28,7 @@
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
+    android:id="@+id/scroll"
     >
 
 
@@ -87,19 +52,16 @@
 
             >
 
-            <androidx.viewpager.widget.ViewPager
+
+            <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_pager_height"
-                android:scaleType="fitXY"
-                android:paddingBottom="3.3dp"
-                android:paddingLeft="0dp"
-                android:paddingRight="0dp"
-                android:paddingTop="0dp"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderIndicatorEnabled="true"
+                app:sliderScrollTimeInSec="1" />
 
-
-
-                />
 
 
             <ProgressBar
@@ -163,6 +125,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/view_search"
             android:orientation="horizontal"
+            android:layoutDirection="ltr"
             />
 
 

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_bar"
+        android:background="@color/white"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/home_toolbar"
+
+                >
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_logo"
+                    android:layout_gravity="center"
+                    android:id="@+id/app_logo"
+                    />
+
+
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/home_toolbar"
+                >
+
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/gray"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/center"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/order_by"
+                    android:layout_toStartOf="@+id/center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    >
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_order"
+                        android:id="@+id/order_icon"
+                        android:layout_toEndOf="@+id/order_text"
+                        android:layout_marginStart="20dp"
+                        android:clickable="false"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/offer_product_list_filter_size"
+                        android:id="@+id/order_text"
+                        android:text="@string/order_by"
+                        android:textColor="@android:color/black"
+                        android:clickable="false"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filter_by"
+                    android:layout_toEndOf="@+id/center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:clickable="true"
+                    >
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_filter"
+                        android:id="@+id/filter_icon"
+                        android:layout_toEndOf="@+id/filter_text"
+                        android:layout_marginStart="20dp"
+                        android:clickable="false"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/offer_product_list_filter_size"
+                        android:id="@+id/filter_text"
+                        android:text="@string/filter_by"
+                        android:textColor="@android:color/black"
+                        android:clickable="false"
+                        />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</merge>

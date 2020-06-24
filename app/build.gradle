@@ -128,6 +128,10 @@ dependencies {
     //state-ful layout
     implementation 'com.github.gturedi:stateful-layout:1.2.1'
 
+    // SliderView
+    implementation 'com.github.smarteist:autoimageslider:1.3.9'
+
+
 
     implementation 'org.apache.commons:commons-io:1.3.2'
 

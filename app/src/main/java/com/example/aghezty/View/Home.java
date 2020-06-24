@@ -48,6 +48,9 @@ import com.example.aghezty.ViewModel.ProductViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.gturedi.views.CustomStateOptions;
 import com.gturedi.views.StatefulLayout;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +78,7 @@ public class Home extends Fragment implements InternetStatus {
     private Observer homeObserver;
 
     @BindView(R.id.view_pager)
-     ViewPager viewPager;
+    SliderView viewPager;
     @BindView(R.id.best_categories)
      RecyclerView bestcategories;
     @BindView(R.id.horizontal_recycler)
@@ -135,7 +138,7 @@ public class Home extends Fragment implements InternetStatus {
 
                 add_Dots(getContext(),0);
 
-                viewpager_timer(5);
+               // viewpager_timer(5);
 
             }
         };
@@ -162,7 +165,7 @@ public class Home extends Fragment implements InternetStatus {
         super.onStop();
         getActivity().unregisterReceiver(networkReceiver);
         horizontalRecycler.setAdapter(null);
-        cancel_timer();
+       // cancel_timer();
         productViewModel.getHomeDataLiveData().removeObservers(this);
     }
 
@@ -199,7 +202,20 @@ public class Home extends Fragment implements InternetStatus {
         horizontalRecyclerCardViewAdapter=new HorizontalRecyclerCardViewAdapter(getContext(),homeRecylerDataList,navController,getResources());
 
 
-        viewPager.setAdapter(sliderAdapter);
+        viewPager.setSliderAdapter(sliderAdapter);
+       // viewPager.setIndicatorRadius(5);
+        //viewPager.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+       // viewPager.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        //viewPager.setInfiniteAdapterEnabled(false);
+       // viewPager.setIndicatorSelectedColor(Color.WHITE);
+       // viewPager.setIndicatorUnselectedColor(Color.GRAY);
+
+        viewPager.setScrollTimeInSec(3);
+        viewPager.setAutoCycle(true);
+        viewPager.startAutoCycle();
+
+
         bestcategories.setAdapter(categoryCardViewAdapter);
 
 
@@ -218,24 +234,13 @@ public class Home extends Fragment implements InternetStatus {
         bestcategories.addItemDecoration(new GridSpacingItemDecoration(2,(int)getResources().getDimensionPixelSize(R.dimen.best_category_margin),GridSpacingItemDecoration.Category,displayWidth,(int)getResources().getDimensionPixelSize(R.dimen.best_category_card_size)));
 
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setCurrentPageListener(new SliderView.OnSliderPageListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                page=viewPager.getCurrentItem();
+            public void onSliderPageChanged(int position) {
+                page=position;
                 add_Dots(getContext(),position);
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
         });
-
 
 
         // Finch App if Back Button Pressed
@@ -253,18 +258,20 @@ public class Home extends Fragment implements InternetStatus {
 
 
     private void add_Dots(Context context, int i){
-        dots=new TextView[sliderAdapter.getCount()];
-        linearLayout.removeAllViews();
-        for (int b=0;b<dots.length;b++){
-            dots[b]=new TextView(context);
-            dots[b].setText(Html.fromHtml("&#8226"));
-            dots[b].setTextSize(35);
-            dots[b].setTextColor(getResources().getColor(R.color.grey));
-            linearLayout.addView(dots[b]);
+        if (context!=null) {
+            dots = new TextView[sliderAdapter.getCount()];
+            linearLayout.removeAllViews();
+            for (int b = 0; b < dots.length; b++) {
+                dots[b] = new TextView(context);
+                dots[b].setText(Html.fromHtml("&#8226"));
+                dots[b].setTextSize(35);
+                dots[b].setTextColor(getResources().getColor(R.color.grey));
+                linearLayout.addView(dots[b]);
+            }
+
+            dots[i].setTextColor(getResources().getColor(R.color.orange));
+
         }
-
-        dots[i].setTextColor(getResources().getColor(R.color.orange));
-
     }
 
 
@@ -286,32 +293,6 @@ public class Home extends Fragment implements InternetStatus {
     }
 
 
-    /// timer for viewpager///////////
-
-    private void viewpager_timer(int second){
-
-        // page=viewPager.getCurrentItem();
-        // Toast.makeText(getActivity(),"timer",Toast.LENGTH_LONG).show();
-        if (!isStart) {
-            isStart=true;
-            timer = new Timer();
-            timer.schedule(new Timer_task(), 5 * 1000, second * 1000);
-        }
-
-
-
-    }
-
-
-    ////////// cancel Timer//////////////////
-
-    public void cancel_timer(){
-        if (timer!=null) {
-            timer.cancel();
-            isStart = false;
-        }
-
-    }
 
     @Override
     public void Connect() {
@@ -332,44 +313,6 @@ public class Home extends Fragment implements InternetStatus {
         statefulLayout.showCustom(networkCustom.message(getResources().getString(R.string.check_connection)));
 
     }
-
-
-    //////////////////////////////// inner Class for Timer Task//////////////////////////////////////////////
-
-
-    class Timer_task extends TimerTask {
-
-
-
-
-
-        @Override
-        public void run() {
-
-            if(getActivity()!=null){
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if(page>sliderAdapter.getCount()){
-                            page=0;
-                        }
-                        else {
-                            page++;
-                        }
-                        viewPager.setCurrentItem(page);
-                    }
-                });
-            }
-
-
-
-        }
-    }
-
-
-
 
 
 }

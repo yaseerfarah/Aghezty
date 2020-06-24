@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.balsikandar.crashreporter.utils.CrashUtil;
 import com.example.aghezty.Data.AgheztyApi;
 import com.example.aghezty.Data.CartInfoRoomMethod;
 import com.example.aghezty.Data.CartRoomDatabase;
@@ -49,6 +50,8 @@ import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -408,7 +411,12 @@ public class UserViewModel extends ViewModel {
                                 file
                         );
                 // MultipartBody.Part is used to send also the actual file name
-                body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+                try {
+                    body = MultipartBody.Part.createFormData("image", URLEncoder.encode(file.getName(), "utf-8"), requestFile);
+                } catch (UnsupportedEncodingException e) {
+                   // CrashUtil.logException(e);
+                    e.printStackTrace();
+                }
 
             }
 

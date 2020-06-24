@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.aghezty.POJO.SliderInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.View.Home;
+import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ import java.util.List;
  * Created by DELL on 1/19/2019.
  */
 
-public class SliderAdapter extends PagerAdapter {
+public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderImage> {
     private Context context;
     static public int HOME=1;
     static public int DETAILS=2;
@@ -61,60 +63,69 @@ public class SliderAdapter extends PagerAdapter {
         return slider_image.size();
     }
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view==(RelativeLayout)object;
-    }
 
 
-    @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public SliderImage onCreateViewHolder(ViewGroup parent) {
         View view;
 
-            view = LayoutInflater.from(container.getContext()).inflate(R.layout.slider, container, false);
-        ImageView imageView;
-        ProgressBar progressBar=view.findViewById(R.id.progress);
-        progressBar.setVisibility(View.VISIBLE);
-        if (type==HOME) {
-                imageView = (ImageView) view.findViewById(R.id.image_slider);
-            }else {
-            imageView = (ImageView) view.findViewById(R.id.pro_image_slider);
-            Zoomy.Builder builder = new Zoomy.Builder(activity).target(imageView);
-            builder.register();
-
-        }
-
-            Glide.with(context).load(slider_image.get(position))
-                    .apply(RequestOptions.timeoutOf(60*1000))
-                    .listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    Log.e(getClass().getName(),e.getMessage());
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    return false;
-                }
-            })
-                    .into(imageView);
-
-        container.addView(view);
-
-        return view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider, null);
+        return new SliderImage(view);
     }
-
-
-
-
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((RelativeLayout)object);
+    public void onBindViewHolder(SliderImage holder, int position) {
+
+        ImageView imageView;
+        holder.progressBar.setVisibility(View.VISIBLE);
+
+        if (type==HOME) {
+            imageView = holder.homeSlider;
+        }else {
+            imageView = holder.detailsSlider;
+            Zoomy.Builder builder = new Zoomy.Builder(activity).target(imageView);
+            builder.register();
+        }
+
+        Glide.with(context).load(slider_image.get(position))
+                .apply(RequestOptions.timeoutOf(60*1000))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.e(getClass().getName(),e.getMessage());
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        return false;
+                    }
+                })
+                .into(imageView);
+
     }
+
+
+
+
+    class SliderImage extends SliderViewAdapter.ViewHolder {
+
+        ImageView homeSlider;
+        ImageView detailsSlider;
+        ProgressBar progressBar;
+
+
+        public SliderImage(View itemView) {
+            super(itemView);
+            homeSlider=itemView.findViewById(R.id.image_slider);
+            detailsSlider=itemView.findViewById(R.id.pro_image_slider);
+            progressBar=itemView.findViewById(R.id.progress);
+        }
+    }
+
+
+
 
 
 

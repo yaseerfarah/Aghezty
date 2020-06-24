@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/info_card"
+    android:layout_below="@+id/vline1"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/vtitle"
+                android:text="London Sweetshirt"
+                android:textStyle="bold"
+                android:textSize="@dimen/product_details_name_size"
+                android:textColor="@color/dark_blue"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="15dp"
+                />
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vtitle"
+                android:id="@+id/ex_dis"
+
+                android:layout_marginTop="8dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pro_exprice"
+                    android:text="159.99"
+                    android:textSize="@dimen/product_details_ex_price"
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginStart="15dp"
+                    android:textStyle="normal"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pro_exegp"
+                    android:text="@string/egp"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/product_details_ex_price"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_toEndOf="@+id/pro_exprice"
+                    android:layout_marginStart="2dp"
+                    android:typeface="serif"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/discount_background"
+                    android:id="@+id/pro_discount"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="@dimen/product_details_dicount_text_size"
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/white"
+                    android:text="15%"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/home_card_dicount_line_size"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/pro_linexprice"
+                    android:layout_marginStart="15dp"
+
+                    android:layout_alignEnd="@+id/pro_exegp"
+                    android:background="@android:color/darker_gray"/>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ex_dis"
+                android:id="@+id/de_available_q_text"
+                android:text="@string/available_quantity"
+                android:textSize="@dimen/product_details_name_size"
+                android:textColor="@color/dark_blue"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ex_dis"
+                android:id="@+id/de_available_q"
+                android:text="50"
+                android:layout_toEndOf="@+id/de_available_q_text"
+                android:textSize="@dimen/product_details_name_size"
+                android:textColor="@color/dark_blue"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="15dp"
+                />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/ex_dis"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/evaluation"
+                android:background="@drawable/evaluation_background"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/star"
+                    android:id="@+id/pro_evaluation"
+                    android:textSize="@dimen/product_details_dicount_text_size"
+                    android:textColor="@android:color/white"
+                    android:text="4.9"
+                    />
+                <ImageButton
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:id="@+id/star"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/ic_star"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/de_available_q"
+                android:layout_marginBottom="15dp"
+                >
+
+                <TextView
+                    android:layout_marginStart="15dp"
+                    android:id="@+id/pro_price"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:text="149.99"
+                    android:textSize="@dimen/product_details_pro_price"
+                    />
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/pro_egp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/pro_price"
+                    android:textColor="@color/dark_blue"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:text="@string/egp"
+                    android:layout_alignBottom="@+id/pro_price"
+                    android:textSize="@dimen/product_details_egp"
+                    />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

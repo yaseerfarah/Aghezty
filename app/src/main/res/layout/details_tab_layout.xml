@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="10dp"
+    android:id="@+id/details_layout"
+    android:layout_below="@+id/tab"
+    >
+
+        <RadioGroup
+            android:checkedButton="@+id/english"
+            android:id="@+id/language"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/product_details_switch_height"
+
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/orange_out_line"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginStart="1dp"
+                android:id="@+id/arabic"
+                android:background="@drawable/lang_toggele"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:textSize="@dimen/product_details_dicount_text_size"
+                android:text="@string/arabic"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:id="@+id/english"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/lang_toggele"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/english"
+                android:textSize="@dimen/product_details_dicount_text_size"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/language"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/product_details_dicount_text_size"
+            android:text="* PANADOL Night is used to give temporary relief of pain when associated with sleeping difficulty.
+
+*It is useful for headache, migraine headache, backache, arthritis, rheumatic and muscle pain, neuralgia, toothache or period pain.
+
+*Paracetamol is an analgesic. It works to stop the pain messages from getting through to the brain. It also acts in the brain to reduce fever.
+
+"
+            android:id="@+id/pro_dec"
+            />
+
+</RelativeLayout>
