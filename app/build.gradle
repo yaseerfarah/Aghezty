@@ -138,7 +138,7 @@ dependencies {
 
 
     // PayPal Integration
-    implementation'com.paypal.sdk:paypal-android-sdk:2.16.0'
+   // implementation'com.paypal.sdk:paypal-android-sdk:2.16.0'
 
     //depuge
     implementation 'com.balsikandar.android:crashreporter:1.1.0'

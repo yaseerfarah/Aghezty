@@ -1,12 +1,12 @@
 package com.example.aghezty.View;
 
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -14,34 +14,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.aghezty.Constants;
 import com.example.aghezty.Interface.CompletableListener;
-import com.example.aghezty.Interface.PaypalSubmit;
+import com.example.aghezty.Interface.ObjectCompletableListener;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
-import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CheckOutViewPager;
 import com.example.aghezty.ViewModel.UserViewModel;
 import com.example.aghezty.ViewModel.ViewModelFactory;
 import com.gturedi.views.StatefulLayout;
-import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
-
-import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +47,14 @@ import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 import es.dmoral.toasty.Toasty;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Payment extends Fragment {
 
+
+    public static final int CREDIT_CARD=2;
+    public static final int CASH=1;
 
 
     @Inject
@@ -72,7 +66,6 @@ public class Payment extends Fragment {
     private AddressInfo addressInfo;
 
     private WeakReference<CheckOutViewPager> viewPagerWeakReference;
-    private PaypalSubmit paypalSubmit;
 
     private List<AddressInfo> addressInfoList=new ArrayList<>();
     private List<CartInfo> cartInfoList =new ArrayList<>();
@@ -88,8 +81,7 @@ public class Payment extends Fragment {
     @BindView(R.id.back)
     Button back;
 
-    @BindView(R.id.paypal)
-    Button paypalPayment;
+
 
     @BindView(R.id.an_sub_total)
     TextView subTotal;
@@ -104,8 +96,12 @@ public class Payment extends Fragment {
     RadioButton cash;
     @BindView(R.id.credit_layout)
     RadioButton creditCard;
-    @BindView(R.id.paypal_layout)
-    RadioButton paypal;
+
+    @BindView(R.id.webView)
+    WebView creditWebView;
+
+    @BindView(R.id.payment_opt)
+    NestedScrollView nestedScrollView;
 
     @BindView(R.id.stateful)
     StatefulLayout statefulLayout;
@@ -117,11 +113,11 @@ public class Payment extends Fragment {
 
 
 
-    public Payment(WeakReference<CheckOutViewPager> viewPagerWeakReference,PaypalSubmit paypalSubmit) {
+    public Payment(WeakReference<CheckOutViewPager> viewPagerWeakReference) {
         // Required empty public constructor
 
         this.viewPagerWeakReference=viewPagerWeakReference;
-        this.paypalSubmit=paypalSubmit;
+
 
     }
 
@@ -163,14 +159,10 @@ public class Payment extends Fragment {
 
         numberFormat= NumberFormat.getInstance(Locale.US);
 
-
-
-
         cash.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             if (isChecked){
-                checkOutInfo.setPaymentId(1);
-                paypalPayment.setVisibility(View.GONE);
+                checkOutInfo.setPaymentId(CASH);
                 checkOutInfo.setPaymentMethod(cash.getText().toString());
                 userViewModel.setCheckOutInfo(checkOutInfo);
             }
@@ -180,39 +172,17 @@ public class Payment extends Fragment {
         creditCard.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             if (isChecked){
-                checkOutInfo.setPaymentId(2);
-                paypalPayment.setVisibility(View.GONE);
+                checkOutInfo.setPaymentId(CREDIT_CARD);
                 checkOutInfo.setPaymentMethod(creditCard.getText().toString());
                 userViewModel.setCheckOutInfo(checkOutInfo);
             }
 
         });
 
-        paypal.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
-            if (isChecked){
-                checkOutInfo.setPaymentId(3);
-                //paypalPayment.setVisibility(View.VISIBLE);
-                checkOutInfo.setPaymentMethod(paypal.getText().toString());
-                userViewModel.setCheckOutInfo(checkOutInfo);
-            }
-
-        });
-
-
-
-
-
 
 
         submit.setOnClickListener(v -> {
-            if (checkOutInfo.getPaymentId()==3){
-                paypalSubmit.paypalSubmit(total);
-            }else {
-                submitOrder();
-            }
-
-
+            submitOrder();
         });
         back.setOnClickListener(v -> {
             if (viewPagerWeakReference.get()!=null){
@@ -243,21 +213,13 @@ public class Payment extends Fragment {
 
         switch (checkOutInfo.getPaymentId()){
 
-            case 0:
-                cash.setChecked(true);
-                break;
-            case 1:
-                cash.setChecked(true);
-                break;
-
-            case 2:
+            case CREDIT_CARD:
                 creditCard.setChecked(true);
                 break;
 
-            case 3:
-                paypal.setChecked(true);
+            default:
+                cash.setChecked(true);
                 break;
-
         }
 
 
@@ -293,15 +255,32 @@ public class Payment extends Fragment {
     private void submitOrder(){
 
         statefulLayout.showLoading(" ");
-        userViewModel.checkOut(new CompletableListener() {
+        userViewModel.checkOut(new ObjectCompletableListener<String>() {
             @Override
-            public void onSuccess() {
-                Toasty.success(getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
-                statefulLayout.showContent();
+            public void onSuccess(String orderID) {
 
-                if (viewPagerWeakReference.get() != null) {
-                    viewPagerWeakReference.get().setCurrentItem(3);
+                if (checkOutInfo.getPaymentId()==CASH){
+
+                    Toasty.success(getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
+                    statefulLayout.showContent();
+
+                    if (viewPagerWeakReference.get() != null) {
+                        viewPagerWeakReference.get().setCurrentItem(3);
+                    }
+
+                }else {
+                    statefulLayout.showContent();
+                    nestedScrollView.setVisibility(View.GONE);
+                    creditWebView.setVisibility(View.VISIBLE);
+                    String paymentUrl="https://dev.digizone.com.kw/aghezty_v2_php7/test_nbe_integration?order_id="+orderID;
+                    creditWebView.getSettings().setJavaScriptEnabled(true);
+                    creditWebView.setWebChromeClient(new WebChromeClient());
+                    creditWebView.setWebViewClient(new PaymentWebViewClient(getContext()));
+                    creditWebView.loadUrl(paymentUrl);
+
                 }
+
+
 
             }
 
@@ -309,11 +288,58 @@ public class Payment extends Fragment {
             public void onFailure(String message) {
                 statefulLayout.showContent();
 
-
             }
         });
 
     }
+
+
+    ///////////////////// Payment Webview Client/////////////////
+
+    private class PaymentWebViewClient extends WebViewClient {
+
+        Context context;
+
+        public PaymentWebViewClient(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+
+
+
+        }
+
+
+        @Override
+        public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+            super.doUpdateVisitedHistory(view, url, isReload);
+            if (url.contains("completed")){
+                Toasty.success(getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
+                userViewModel.deleteAllCarts();
+
+                if (viewPagerWeakReference.get() != null) {
+                    viewPagerWeakReference.get().setCurrentItem(3);
+                }
+
+            }else  if (url.contains("failed")){
+                Toasty.error(getContext(),getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
+                nestedScrollView.setVisibility(View.VISIBLE);
+                creditWebView.setVisibility(View.GONE);
+
+            }else  if (url.contains("cancle")){
+                Toasty.warning(context,getResources().getString(R.string.successful_checkout),Toast.LENGTH_SHORT).show();
+                nestedScrollView.setVisibility(View.VISIBLE);
+                creditWebView.setVisibility(View.GONE);
+            }
+
+            Log.e("Link Change",url);
+
+        }
+    }
+
+
 
 
 }

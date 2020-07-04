@@ -17,13 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.aghezty.Interface.CompletableListener;
 import com.example.aghezty.POJO.AddressInfo;
 import com.example.aghezty.POJO.CartInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
-import com.example.aghezty.POJO.PayPalPaymentDetails;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.R;
 import com.example.aghezty.Util.CheckOutViewPager;
@@ -42,7 +39,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
-import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +51,7 @@ public class Confirm extends Fragment {
 
     private UserInfo userInfo;
     private CheckOutInfo checkOutInfo;
-    private PayPalPaymentDetails payPalPaymentDetails;
+
 
     private NumberFormat numberFormat;
 
@@ -136,9 +132,6 @@ public class Confirm extends Fragment {
         userViewModel= ViewModelProviders.of(this,viewModelFactory).get(UserViewModel.class);
         userInfo=userViewModel.getCurrentUserInfo();
         checkOutInfo=userViewModel.getCheckOutInfo();
-        if (checkOutInfo.getPaymentId()==3){
-            payPalPaymentDetails=userViewModel.getPayPalPaymentDetails();
-        }
         cartInfoList.clear();
         cartInfoList.addAll(userViewModel.getCartInfolist());
         addressInfoList.clear();
@@ -194,11 +187,11 @@ public class Confirm extends Fragment {
 
 
         paymentMethod.setText(checkOutInfo.getPaymentMethod());
-        if (checkOutInfo.getPaymentId()==3){
+        /*if (checkOutInfo.getPaymentId()==3){
             paypal_info.setVisibility(View.VISIBLE);
             paypalPaymentID.setText(payPalPaymentDetails.getPaymentID());
             paypalPaymentState.setText(payPalPaymentDetails.getPaymentState());
-        }
+        }*/
 
 
         subTotal.setText(numberFormat.format(countSubTotal())+" "+getResources().getString(R.string.egp));

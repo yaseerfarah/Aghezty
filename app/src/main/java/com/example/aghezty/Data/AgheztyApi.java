@@ -1,21 +1,18 @@
 package com.example.aghezty.Data;
 
 import com.example.aghezty.POJO.AddressInfo;
-import com.example.aghezty.POJO.AddressResponse;
-import com.example.aghezty.POJO.BrandCategoriesResponse;
+import com.example.aghezty.POJO.ArrayBaseResponse;
+import com.example.aghezty.POJO.BrandInfo;
+import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
-import com.example.aghezty.POJO.CitiesResponse;
-import com.example.aghezty.POJO.GovernorateResponse;
-import com.example.aghezty.POJO.HomeResponse;
-import com.example.aghezty.POJO.OrderResponse;
-import com.example.aghezty.POJO.ParentCategoriesResponse;
-import com.example.aghezty.POJO.ProductFilterResponse;
-import com.example.aghezty.POJO.InnerProductResponse;
-import com.example.aghezty.POJO.RegisterParentResponse;
-import com.example.aghezty.POJO.RegisterResponse;
+import com.example.aghezty.POJO.CityInfo;
+import com.example.aghezty.POJO.GovernorateInfo;
+import com.example.aghezty.POJO.HomeData;
+import com.example.aghezty.POJO.ObjectBaseResponse;
+import com.example.aghezty.POJO.OrderInfo;
+import com.example.aghezty.POJO.ProductFilterData;
+import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.UserInfo;
-
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -27,7 +24,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -40,35 +36,35 @@ public interface AgheztyApi {
 
 
     @GET("home")
-    Observable<Response<HomeResponse>> getHome();
+    Observable<Response<ObjectBaseResponse<HomeData>>> getHome();
 
     @GET("categorys")
-    Single<Response<ParentCategoriesResponse>> getParentCategories();
+    Single<Response<ArrayBaseResponse<CategoryInfo>>> getParentCategories();
 
     @GET("brands")
-    Single<Response<BrandCategoriesResponse>> getBrandCategories();
+    Single<Response<ArrayBaseResponse<BrandInfo>>> getBrandCategories();
 
     @GET("products")
-    Single<Response<ProductFilterResponse>> getSpecificProduct(
+    Single<Response<ObjectBaseResponse<ProductFilterData>>> getSpecificProduct(
             @QueryMap Map<String, Object> options
     ,@Query("page") int page );
 
 
     @GET("inner_product/{id}")
-    Single<Response<InnerProductResponse>> getInnerProductById(@Path("id") int id);
+    Single<Response<ObjectBaseResponse<ProductInfo>>> getInnerProductById(@Path("id") int id);
 
 
     @GET("governorate")
-    Single<Response<GovernorateResponse>> getAllGovernorate();
+    Single<Response<ArrayBaseResponse<GovernorateInfo>>> getAllGovernorate();
 
 
     @GET("city")
-    Single<Response<CitiesResponse>> getCitiesByGovernorateId(@Query("governorate_id") int id);
+    Single<Response<ArrayBaseResponse<CityInfo>>> getCitiesByGovernorateId(@Query("governorate_id") int id);
 
 
 
     @GET("order")
-    Single<Response<OrderResponse>> getUserOrders();
+    Single<Response<ArrayBaseResponse<OrderInfo>>> getUserOrders();
 
 
     @GET("client")
@@ -76,7 +72,7 @@ public interface AgheztyApi {
 
 
     @GET("addresses")
-    Single<Response<AddressResponse>> getUserAddresses();
+    Single<Response<ArrayBaseResponse<AddressInfo>>> getUserAddresses();
 
 
     @GET("delete_address/{id}")

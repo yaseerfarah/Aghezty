@@ -9,43 +9,27 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.balsikandar.crashreporter.utils.CrashUtil;
 import com.example.aghezty.Data.AgheztyApi;
 import com.example.aghezty.Data.CartInfoRoomMethod;
-import com.example.aghezty.Data.CartRoomDatabase;
 import com.example.aghezty.Data.SharedPreferencesMethod;
 import com.example.aghezty.Interface.CheckCoupon;
 import com.example.aghezty.Interface.CompletableListener;
-import com.example.aghezty.Interface.InnerProductListener;
+import com.example.aghezty.Interface.ObjectCompletableListener;
 import com.example.aghezty.Interface.RoomCartInfoListener;
 import com.example.aghezty.POJO.AddressInfo;
-import com.example.aghezty.POJO.BrandCategoriesResponse;
-import com.example.aghezty.POJO.BrandInfo;
+import com.example.aghezty.POJO.ArrayBaseResponse;
 import com.example.aghezty.POJO.CartInfo;
-import com.example.aghezty.POJO.CategoryInfo;
 import com.example.aghezty.POJO.CheckOutInfo;
-import com.example.aghezty.POJO.CitiesResponse;
 import com.example.aghezty.POJO.CityInfo;
 import com.example.aghezty.POJO.ErrorResponse;
-import com.example.aghezty.POJO.FilterInfo;
-import com.example.aghezty.POJO.FilterOption;
 import com.example.aghezty.POJO.GovernorateInfo;
-import com.example.aghezty.POJO.GovernorateResponse;
-import com.example.aghezty.POJO.HomeData;
-import com.example.aghezty.POJO.HomeResponse;
-import com.example.aghezty.POJO.InnerProductResponse;
 import com.example.aghezty.POJO.OrderInfo;
-import com.example.aghezty.POJO.OrderResponse;
-import com.example.aghezty.POJO.ParentCategoriesResponse;
-import com.example.aghezty.POJO.PayPalPaymentDetails;
-import com.example.aghezty.POJO.ProductFilterData;
+
+
 import com.example.aghezty.POJO.ProductInfo;
 import com.example.aghezty.POJO.UserInfo;
 import com.example.aghezty.Util.FileUtils;
-import com.example.aghezty.View.CheckOut;
-import com.example.aghezty.View.Login;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -57,12 +41,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Scanner;
 
 import javax.inject.Inject;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -77,6 +59,7 @@ import static com.example.aghezty.Constants.USER_COUPON_DISCOUNT;
 import static com.example.aghezty.Constants.USER_INFO;
 import static com.example.aghezty.Constants.USER_TOKEN;
 import static com.example.aghezty.Constants.localeLanguage;
+import static com.example.aghezty.View.Payment.CASH;
 
 public class UserViewModel extends ViewModel {
 
@@ -104,7 +87,7 @@ public class UserViewModel extends ViewModel {
 
     private int couponDiscount;
 
-    private PayPalPaymentDetails payPalPaymentDetails;
+
 
     private CheckOutInfo checkOutInfo=new CheckOutInfo();
 
@@ -216,13 +199,6 @@ public class UserViewModel extends ViewModel {
         return checkOutInfo;
     }
 
-    public PayPalPaymentDetails getPayPalPaymentDetails() {
-        return payPalPaymentDetails;
-    }
-
-    public void setPayPalPaymentDetails(PayPalPaymentDetails payPalPaymentDetails) {
-        this.payPalPaymentDetails = payPalPaymentDetails;
-    }
 
     public void setCheckOutInfo(CheckOutInfo checkOutInfo) {
         this.checkOutInfo = checkOutInfo;
@@ -588,9 +564,9 @@ public class UserViewModel extends ViewModel {
                     .subscribe(addressResponseResponse -> {
 
                         if (addressResponseResponse.isSuccessful()) {
-                            List<AddressInfo> addressInfos = addressResponseResponse.body().getAddressInfoList();
+                            List<AddressInfo> addressInfos = addressResponseResponse.body().getResponseList();
 
-                            if (!addressInfos.isEmpty()) {
+                            if (addressInfos!=null&&!addressInfos.isEmpty()) {
 
                                /* currentUserInfo.setCityId(addressInfos.get(0).getCity_id());
                                 currentUserInfo.setCity(addressInfos.get(0).getCity_en());
@@ -694,7 +670,7 @@ public class UserViewModel extends ViewModel {
 
 
 
-    public  void checkOut(CompletableListener completableListener){
+    public  void checkOut(ObjectCompletableListener<String> objectCompletableListener){
 
         checkOutInfo.setCartInfoList(cartInfolist);
         disposables.add(agheztyApi.checkOut(checkOutInfo)
@@ -703,22 +679,15 @@ public class UserViewModel extends ViewModel {
                 .subscribe(responseBodyResponse -> {
 
                     if (responseBodyResponse.isSuccessful()){
+                        JSONObject jsonObject=new JSONObject(responseBodyResponse.body().string());
+                        String orderId=jsonObject.getJSONObject("data").getString("id");
 
-                        cartInfoRoomMethod.deleteAllCartInfos(new CompletableListener() {
-                            @Override
-                            public void onSuccess() {
-                                cartInfolist.clear();
-                                cartListMediatorLiveData.postValue(cartInfolist);
+                       // delete all carts
+                        if (checkOutInfo.getPaymentId()==CASH){
+                            deleteAllCarts();
+                        }
+                        objectCompletableListener.onSuccess(orderId);
 
-                            }
-
-                            @Override
-                            public void onFailure(String message) {
-                                Log.e(getClass().getName(),message);
-                            }
-                        });
-
-                        completableListener.onSuccess();
                     }else {
 
                         Gson gson=new Gson();
@@ -729,7 +698,7 @@ public class UserViewModel extends ViewModel {
                             Toasty.error(context,message,Toast.LENGTH_SHORT).show();
                         }
 
-                        completableListener.onFailure(errorResponse.getMessages().toString());
+                        objectCompletableListener.onFailure(errorResponse.getMessages().toString());
 
                     }
 
@@ -740,6 +709,10 @@ public class UserViewModel extends ViewModel {
 
     }
 
+
+
+
+
     public void getUserOrders(){
 
 
@@ -748,10 +721,10 @@ public class UserViewModel extends ViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(orderResponseResponse -> {
                         if (orderResponseResponse.isSuccessful()) {
-                            OrderResponse orderResponse=orderResponseResponse.body();
-                            if (orderResponse != null && orderResponse.getOrderInfoList() != null) {
+                            ArrayBaseResponse<OrderInfo> orderResponse=orderResponseResponse.body();
+                            if (orderResponse != null && orderResponse.getResponseList() != null) {
                                 orderInfoList.clear();
-                                orderInfoList.addAll(orderResponse.getOrderInfoList());
+                                orderInfoList.addAll(orderResponse.getResponseList());
                             }
 
                             orderListMediatorLiveData.postValue(orderInfoList);
@@ -812,7 +785,7 @@ public class UserViewModel extends ViewModel {
             disposables.add(agheztyApi.getAllGovernorate()
                     .subscribeOn(Schedulers.io())
                     .map(Response::body)
-                    .map(GovernorateResponse::getGovernorateInfoList)
+                    .map(ArrayBaseResponse::getResponseList)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(governorateInfos -> {
                         governorateInfoList.clear();
@@ -832,7 +805,7 @@ public class UserViewModel extends ViewModel {
         disposables.add(agheztyApi.getCitiesByGovernorateId(id)
                 .subscribeOn(Schedulers.io())
                 .map(Response::body)
-                .map(CitiesResponse::getCityInfoList)
+                .map(ArrayBaseResponse::getResponseList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cityInfos -> {
 
@@ -868,6 +841,22 @@ public class UserViewModel extends ViewModel {
     }
 
 
+    public void deleteAllCarts(){
+        cartInfoRoomMethod.deleteAllCartInfos(new CompletableListener() {
+            @Override
+            public void onSuccess() {
+                cartInfolist.clear();
+                cartListMediatorLiveData.postValue(cartInfolist);
+
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.e(getClass().getName(),message);
+            }
+        });
+    }
 
     public void updateCartInfo(CartInfo cartInfo,int position){
 
@@ -879,6 +868,19 @@ public class UserViewModel extends ViewModel {
 
     }
 
+
+    private void deleteCartFromList(CartInfo cartInfo){
+
+        for (int i=0;i<cartInfolist.size();i++){
+
+            if (cartInfo.getProduct_id()==cartInfolist.get(i).getProduct_id()){
+                cartInfolist.remove(i);
+                cartListMediatorLiveData.postValue(cartInfolist);
+            }
+
+        }
+
+    }
 
 
     private boolean checkIsLogin(){
@@ -895,18 +897,7 @@ public class UserViewModel extends ViewModel {
         isLogin=login;
     }
 
-    private void deleteCartFromList(CartInfo cartInfo){
 
-        for (int i=0;i<cartInfolist.size();i++){
-
-            if (cartInfo.getProduct_id()==cartInfolist.get(i).getProduct_id()){
-                cartInfolist.remove(i);
-                cartListMediatorLiveData.postValue(cartInfolist);
-            }
-
-        }
-
-    }
 
 
     private void updateAddressFromList(AddressInfo addressInfo){
